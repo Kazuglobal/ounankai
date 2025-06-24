@@ -153,21 +153,29 @@ const Home: React.FC = () => {
                   会長からのご挨拶
                 </h2>
                 <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                  同窓生の皆様へ
+                  八戸西高等学校同窓会奧南会の皆様へ
                 </p>
-                <p className="text-gray-600 mb-6 leading-relaxed">
-                  青森県立八戸西高等学校同窓会奥南会へようこそ。私たちが成長し発展を続ける中で、
-                  つながりを育み、お互いを支え合い、母校に恩返しをするという
-                  私たちのコミットメントは、これまで以上に強固なものとなっています。
+                <p className="text-gray-600 mb-4 leading-relaxed">
+                  八戸西高等学校同窓会奧南会の皆様におかれましては、各方面においてご活躍の事とお喜び申し上げます。また、日頃より同窓会活動に対してご理解とご協力を頂きお礼申し上げます。
+                </p>
+                <p className="text-gray-600 mb-4 leading-relaxed">
+                  同窓会会員名簿は八戸西高等学校創立40周年時に第１号（株式会社サラト様作成依頼）を発行しておりますが、この度創立50周年を記念し、坪校長先生をはじめとする先生方そして同窓生の皆様のご協力を得て、第２号となる同窓会会員名簿を発行することになりました。
+                </p>
+                <p className="text-gray-600 mb-4 leading-relaxed">
+                  近年全国的に人口減少が進んでおり、また青森県では少子化が深刻な問題となっております。そのため廃校や学校統合という事が進められて来ておりますが、このような状況でも本校は４年前に普通科が１クラス増加となり、スポーツ科学科と合わせて１学年が６学級となりました。この八戸西高等学校に入学を希望する生徒さんは大きな夢と期待感を抱き受験している事でしょう。現在卒業生は12,000名を超えております。自啓自発の校訓の下、文武両道を目指して高校生活を送り、心身ともに成長を遂げ社会人として信用を確立しているからこその結果であると思います。
+                </p>
+                <p className="text-gray-600 mb-4 leading-relaxed">
+                  2021年春、第93回選抜高等学校野球大会に八戸西高野球部が出場が決定した際には、同窓生が歓喜の声を上げたことを思いだします。その後、後援会、PTA、野球部OB会や同窓会等の呼びかけによって運営費の寄付を頂きました。やはり同窓会という強固な繋がりを持つ、行動する集団がこの事業を成功裡に収めたものと感じております。当時野球部で活躍した皆様もこれからはこのネットワークの一員として後輩のために力を発揮して欲しいものと思います。
+                </p>
+                <p className="text-gray-600 mb-4 leading-relaxed">
+                  皆様は、この同窓会名簿を手にした時、楽しかった事、うれしかったこと、悲しかったことや恥ずかしかったことなどなど、在学していた頃の若き日を思い巡らすことでしょう。今回発行の名簿を活用して、クラス会や同期会を企画、開催し、積極的に交流、情報交換をして同窓生のネットワークの構築を推進して頂きたいと切に願います。
                 </p>
                 <p className="text-gray-600 mb-8 leading-relaxed">
-                  私たちは共に、世代を超えた卓越性の遺産を築いています。
-                  昨年卒業された方も、何十年も前に卒業された方も、
-                  皆様は私たちの物語の重要な一部です。
+                  結びに、名簿編集にあたり全面的にご協力くださいました株式会社サラト様を始め、広告掲載や名簿作成協賛金へのご協力、また名簿を購入された会員の皆さま、名簿作成に携わって頂いた学校関係者に対し心から感謝申し上げますとともに、皆様の益々のご健勝と今後のご活躍を御祈念申し上げます。
                 </p>
                 <div className="text-right">
                   <p className="text-2xl font-script text-blue-600 mb-2" style={{fontFamily: 'cursive'}}>
-                    田中 美智子
+                    松井 正文
                   </p>
                   <p className="text-gray-600 font-medium">青森県立八戸西高等学校同窓会奥南会 会長</p>
                   <p className="text-gray-500 text-sm">1995年卒</p>
@@ -177,7 +185,7 @@ const Home: React.FC = () => {
                 <div className="relative">
                   <img
                     src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=500&h=600&fit=crop"
-                    alt="田中美智子 同窓会会長"
+                    alt="松井正文 同窓会会長"
                     className="w-80 h-96 object-cover rounded-3xl shadow-2xl"
                   />
                   <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center">
@@ -198,22 +206,22 @@ const Home: React.FC = () => {
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Users className="w-8 h-8 text-blue-600" />
               </div>
-              <h3 className="text-4xl font-bold text-gray-900 mb-2">15,000+</h3>
-              <p className="text-gray-600 font-medium">活動中の同窓生</p>
+              <h3 className="text-4xl font-bold text-gray-900 mb-2">12,000+</h3>
+              <p className="text-gray-600 font-medium">卒業生</p>
             </div>
             <div className="bg-white rounded-3xl p-8 text-center shadow-xl hover:shadow-2xl transition-shadow duration-300">
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <MapPin className="w-8 h-8 text-blue-600" />
               </div>
-              <h3 className="text-4xl font-bold text-gray-900 mb-2">75+</h3>
-              <p className="text-gray-600 font-medium">世界各国</p>
+              <h3 className="text-4xl font-bold text-gray-900 mb-2">50</h3>
+              <p className="text-gray-600 font-medium">創立周年</p>
             </div>
             <div className="bg-white rounded-3xl p-8 text-center shadow-xl hover:shadow-2xl transition-shadow duration-300">
               <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Calendar className="w-8 h-8 text-blue-600" />
               </div>
-              <h3 className="text-4xl font-bold text-gray-900 mb-2">50+</h3>
-              <p className="text-gray-600 font-medium">年間イベント</p>
+              <h3 className="text-4xl font-bold text-gray-900 mb-2">6</h3>
+              <p className="text-gray-600 font-medium">学級数</p>
             </div>
           </div>
         </div>
