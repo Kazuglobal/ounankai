@@ -26,7 +26,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   const navigation = [
     { name: 'ホーム', href: '/' },
-    { name: '同窓会について', href: '/about' },
+    { name: '会則', href: '/bylaws' },
+    { name: '役員名簿', href: '/board-of-directors' },
     { name: 'ギャラリー', href: '/gallery' },
     { name: '同窓生紹介', href: '/alumni-profiles' },
     { name: 'お知らせ', href: '/announcements' },
@@ -75,7 +76,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
             {/* Tablet Navigation */}
             <div className="hidden md:flex lg:hidden items-center space-x-2">
-              {navigation.slice(0, 4).map((item) => (
+              {navigation.slice(0, 5).map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
@@ -85,7 +86,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                       : 'text-gray-700 hover:bg-white hover:text-blue-600 hover:shadow-md'
                   }`}
                 >
-                  {item.name.length > 4 ? item.name.substring(0, 4) + '...' : item.name}
+                  {item.name === '役員名簿' ? '役員' : (item.name.length > 3 ? item.name.substring(0, 3) + '...' : item.name)}
                 </Link>
               ))}
             </div>
@@ -167,9 +168,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <div>
               <h4 className="text-lg font-semibold text-gray-900 mb-4">クイックリンク</h4>
               <ul className="space-y-3">
-                <li><Link to="/about" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">同窓会について</Link></li>
                 <li><Link to="/bylaws" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">会則</Link></li>
-                <li><Link to="/board-of-directors" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">役員紹介</Link></li>
+                <li><Link to="/board-of-directors" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">役員名簿</Link></li>
                 <li><Link to="/alumni-profiles" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">同窓生名簿</Link></li>
               </ul>
             </div>
@@ -180,17 +180,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
                   <MapPin className="w-5 h-5 text-blue-600" />
-                  <span className="text-gray-600">〒123-4567<br />東京都〇〇区〇〇1-2-3</span>
+                  <span className="text-gray-600">〒039-1101<br />青森県八戸市大字尻内町字中根市14</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Mail className="w-5 h-5 text-blue-600" />
-                  <a href="mailto:alumni@hachinohe-nishi.ed.jp" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">
-                    alumni@hachinohe-nishi.ed.jp
+                  <a href="mailto:ounankai@gmail.com" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">
+                    ounankai@gmail.com
                   </a>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Calendar className="w-5 h-5 text-blue-600" />
-                  <span className="text-gray-600">月〜金 9:00-17:00</span>
                 </div>
               </div>
             </div>
