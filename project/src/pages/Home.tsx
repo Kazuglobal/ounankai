@@ -7,19 +7,13 @@ const Home: React.FC = () => {
 
   const heroSlides = [
     {
-      image: 'https://images.pexels.com/photos/207692/pexels-photo-207692.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop',
-      title: '世代を繋ぐ',
-      subtitle: '共に未来を築く'
+      image: '/images/school-building.png'
     },
     {
-      image: 'https://images.pexels.com/photos/1205651/pexels-photo-1205651.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop',
-      title: '同窓生の輝き',
-      subtitle: '成功の物語を祝う'
+      image: '/images/school-aerial.png'
     },
     {
-      image: 'https://images.pexels.com/photos/1153213/pexels-photo-1153213.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop',
-      title: '共に歩む',
-      subtitle: '成果のコミュニティ'
+      image: '/images/school-emblem.png'
     }
   ];
 
@@ -82,34 +76,23 @@ const Home: React.FC = () => {
           >
             <img
               src={slide.image}
-              alt={slide.title}
-              className="w-full h-full object-cover"
+              alt="青森県立八戸西高等学校"
+              className={`w-full h-full ${
+                index === 2 ? 'object-contain object-center bg-white' : 'object-cover'
+              }`}
+              style={index === 2 ? { transform: 'scale(0.6)' } : undefined}
             />
-            <div className="absolute inset-0 bg-black/40" />
           </div>
         ))}
 
         {/* Hero Content */}
-        <div className="absolute inset-0 flex items-center justify-center text-center text-white">
-          <div className="max-w-4xl px-4">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-              {heroSlides[currentSlide].title}
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 font-light">
-              {heroSlides[currentSlide].subtitle}
-            </p>
-            <p className="text-lg mb-12 max-w-2xl mx-auto">
-              世界中で活躍する同窓生の活気あるコミュニティにご参加ください
-            </p>
-            <div className="flex justify-center">
-              <Link
-                to="/announcements"
-                className="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/30 transition-all duration-200 transform hover:scale-105 border border-white/30"
-              >
-                今後のイベント
-              </Link>
-            </div>
-          </div>
+        <div className="absolute inset-0 flex items-end justify-center pb-20">
+          <Link
+            to="/announcements"
+            className="bg-blue-600/90 backdrop-blur-sm text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-700/90 transition-all duration-200 transform hover:scale-105 shadow-xl"
+          >
+            今後のイベント
+          </Link>
         </div>
 
         {/* Navigation Arrows */}
