@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Clock, Send, MessageCircle, Calendar } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+import { EMAIL_CONFIG } from '../config/emailjs';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +14,9 @@ const Contact: React.FC = () => {
     message: ''
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -20,11 +25,56 @@ const Contact: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    alert('メッセージありがとうございます！お返事いたします。');
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const templateParams = {
+        to_email: 'ounankai@gmail.com',
+        from_name: formData.name,
+        from_email: formData.email,
+        phone: formData.phone,
+        graduation_year: formData.graduationYear,
+        subject: formData.subject,
+        category: formData.category,
+        message: formData.message,
+      };
+
+      // デモモード: 実際のEmailJS設定がない場合のフォールバック
+      if (EMAIL_CONFIG.PUBLIC_KEY === 'demo_public_key_placeholder') {
+        console.log('🎯 デモモード: メール送信内容', templateParams);
+        // デモ用の遅延
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        console.log('✅ デモ: ounankai@gmail.com への送信完了');
+      } else {
+        // 実際のEmailJS送信
+        await emailjs.send(
+          EMAIL_CONFIG.SERVICE_ID,
+          EMAIL_CONFIG.TEMPLATE_ID,
+          templateParams,
+          EMAIL_CONFIG.PUBLIC_KEY
+        );
+      }
+      
+      setSubmitStatus('success');
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        graduationYear: '',
+        subject: '',
+        category: 'general',
+        message: ''
+      });
+    } catch (error) {
+      console.error('Email sending failed:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -213,11 +263,33 @@ const Contact: React.FC = () => {
                 />
               </div>
 
+              {/* Status Messages */}
+              {submitStatus === 'success' && (
+                <div className="p-4 bg-green-50 border border-green-200 rounded-2xl">
+                  <p className="text-green-800 font-medium">
+                    メッセージを送信いたしました。ありがとうございます！
+                  </p>
+                </div>
+              )}
+              
+              {submitStatus === 'error' && (
+                <div className="p-4 bg-red-50 border border-red-200 rounded-2xl">
+                  <p className="text-red-800 font-medium">
+                    送信に失敗しました。時間をおいて再度お試しください。
+                  </p>
+                </div>
+              )}
+
               <button
                 type="submit"
-                className="inline-flex items-center bg-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-700 transition-all duration-200 transform hover:scale-105 shadow-xl"
+                disabled={isSubmitting}
+                className={`inline-flex items-center px-8 py-4 rounded-full text-lg font-semibold transition-all duration-200 shadow-xl ${
+                  isSubmitting
+                    ? 'bg-gray-400 cursor-not-allowed'
+                    : 'bg-blue-600 hover:bg-blue-700 transform hover:scale-105'
+                } text-white`}
               >
-                送信
+                {isSubmitting ? '送信中...' : '送信'}
                 <Send className="w-5 h-5 ml-2" />
               </button>
             </form>

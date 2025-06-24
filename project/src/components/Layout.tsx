@@ -43,18 +43,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           : 'bg-transparent'
       }`}>
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 sm:h-20 gap-2 sm:gap-4">
+          <div className="flex justify-between items-center h-20 sm:h-24 md:h-28 lg:h-32 xl:h-36 gap-2 sm:gap-4">
             {/* Logo */}
-            <Link to="/" className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-shrink">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
-                <Users className="w-5 h-5 sm:w-7 sm:h-7 text-white" />
-              </div>
-              <div className="min-w-0 flex-shrink">
-                <h1 className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold text-gray-900 truncate">
-                  青森県立八戸西高等学校同窓会奥南会
-                </h1>
-                <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">八戸西高同窓会</p>
-              </div>
+            <Link to="/" className="flex items-center">
+              <img 
+                src="/images/logo-ounankai.png" 
+                alt="青森県立八戸西高等学校同窓会奥南会" 
+                className="h-16 sm:h-20 md:h-24 lg:h-28 xl:h-32 w-auto max-h-full"
+              />
             </Link>
 
             {/* Desktop Navigation */}
@@ -124,7 +120,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       </header>
 
       {/* Main Content */}
-      <main className="pt-16 sm:pt-20">
+      <main className="pt-20 sm:pt-24 md:pt-28 lg:pt-32 xl:pt-36">
         {children}
       </main>
 
@@ -134,16 +130,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Logo and Description */}
             <div className="lg:col-span-2">
-              <div className="flex items-center space-x-2 sm:space-x-3">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Users className="w-5 h-5 sm:w-7 sm:h-7 text-white" />
-                </div>
-                <div className="min-w-0">
-                  <h3 className="text-sm sm:text-base lg:text-lg xl:text-xl font-bold text-gray-900 truncate">
-                    青森県立八戸西高等学校同窓会奥南会
-                  </h3>
-                  <p className="text-xs sm:text-sm text-gray-600">八戸西高同窓会</p>
-                </div>
+              <div className="flex items-center">
+                <img 
+                  src="/images/logo-ounankai.png" 
+                  alt="青森県立八戸西高等学校同窓会奥南会" 
+                  className="h-24 sm:h-28 md:h-32 lg:h-36 xl:h-40 w-auto"
+                />
               </div>
               <p className="mt-4 text-gray-600 max-w-md">
                 卒業生の絆を深め、生涯にわたる関係を築く活気ある同窓生コミュニティを通じて、世代を繋いでいます。
