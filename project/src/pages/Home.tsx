@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Calendar, Users, Award, MapPin, ArrowRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, Users, Award, MapPin, ArrowRight, Volume2, VolumeX } from 'lucide-react';
 
 const Home: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true); // 初期状態を再生中に設定
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   const heroSlides = [
     {
@@ -55,6 +57,43 @@ const Home: React.FC = () => {
     return () => clearInterval(timer);
   }, [heroSlides.length]);
 
+  // 音楽自動再生機能
+  useEffect(() => {
+    const playAudio = async () => {
+      if (audioRef.current) {
+        try {
+          audioRef.current.volume = 0.5; // 音量を50%に設定
+          await audioRef.current.play();
+          setIsPlaying(true);
+        } catch (error) {
+          console.log('自動再生が制限されています。ユーザーの操作が必要です。');
+          setIsPlaying(false);
+        }
+      }
+    };
+
+    // 即座に再生を試行
+    playAudio();
+
+    // ユーザーの最初のクリックやタッチで再生を試行
+    const handleUserInteraction = () => {
+      if (!isPlaying && audioRef.current) {
+        playAudio();
+      }
+      // イベントリスナーを一度だけ実行
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('touchstart', handleUserInteraction);
+    };
+
+    document.addEventListener('click', handleUserInteraction);
+    document.addEventListener('touchstart', handleUserInteraction);
+
+    return () => {
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('touchstart', handleUserInteraction);
+    };
+  }, [isPlaying]);
+
   const nextSlide = () => {
     setCurrentSlide((prevSlide) => (prevSlide + 1) % heroSlides.length);
   };
@@ -63,8 +102,42 @@ const Home: React.FC = () => {
     setCurrentSlide((prevSlide) => (prevSlide - 1 + heroSlides.length) % heroSlides.length);
   };
 
+  const toggleMusic = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        audioRef.current.play().then(() => {
+          setIsPlaying(true);
+        }).catch(() => {
+          setIsPlaying(false);
+        });
+      }
+    }
+  };
+
   return (
     <div>
+      {/* Background Music */}
+      <audio
+        ref={audioRef}
+        src="/background-music.mp3"
+        loop
+        autoPlay
+        muted={false}
+        preload="auto"
+      />
+
+      {/* Music Control Button */}
+      <button
+        onClick={toggleMusic}
+        className="fixed top-24 right-6 z-50 w-12 h-12 bg-blue-600/90 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-blue-700/90 transition-all duration-200 shadow-xl"
+        aria-label={isPlaying ? '音楽を停止' : '音楽を再生'}
+      >
+        {isPlaying ? <Volume2 className="w-6 h-6" /> : <VolumeX className="w-6 h-6" />}
+      </button>
+
       {/* Hero Section with Slideshow */}
       <section className="relative h-[80vh] overflow-hidden rounded-b-3xl">
         {heroSlides.map((slide, index) => (
