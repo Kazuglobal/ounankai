@@ -71,9 +71,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   {item.name}
                 </Link>
               ))}
-              <button className="bg-blue-600 text-white px-4 xl:px-6 py-2 rounded-full text-xs xl:text-sm font-medium hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl whitespace-nowrap">
-                会員登録
-              </button>
             </div>
 
             {/* Tablet Navigation */}
@@ -91,9 +88,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   {item.name.length > 4 ? item.name.substring(0, 4) + '...' : item.name}
                 </Link>
               ))}
-              <button className="bg-blue-600 text-white px-3 py-2 rounded-full text-xs font-medium hover:bg-blue-700 transition-colors duration-200 shadow-lg">
-                登録
-              </button>
             </div>
 
             {/* Mobile menu button */}
@@ -122,9 +116,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     {item.name}
                   </Link>
                 ))}
-                <button className="w-full bg-blue-600 text-white px-6 py-3 rounded-xl text-sm font-medium hover:bg-blue-700 transition-colors duration-200">
-                  会員登録
-                </button>
               </div>
             </div>
           )}

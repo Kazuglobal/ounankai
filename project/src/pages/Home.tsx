@@ -101,10 +101,7 @@ const Home: React.FC = () => {
             <p className="text-lg mb-12 max-w-2xl mx-auto">
               世界中で活躍する同窓生の活気あるコミュニティにご参加ください
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-700 transition-all duration-200 transform hover:scale-105 shadow-2xl">
-                同窓会に入会
-              </button>
+            <div className="flex justify-center">
               <Link
                 to="/announcements"
                 className="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/30 transition-all duration-200 transform hover:scale-105 border border-white/30"
@@ -292,10 +289,7 @@ const Home: React.FC = () => {
             <p className="text-xl mb-8 max-w-2xl mx-auto">
               すでに活気あるコミュニティの一員となっている数千人の同窓生に参加しませんか
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-50 transition-all duration-200 transform hover:scale-105 shadow-xl">
-                会員になる
-              </button>
+            <div className="flex justify-center">
               <Link
                 to="/contact"
                 className="bg-blue-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-400 transition-all duration-200 transform hover:scale-105 border-2 border-blue-400"

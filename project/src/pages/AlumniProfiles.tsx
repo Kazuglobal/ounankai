@@ -287,20 +287,6 @@ const AlumniProfiles: React.FC = () => {
           </div>
         )}
 
-        {/* Call to Action */}
-        <div className="mt-20 text-center">
-          <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-3xl p-12 text-white">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              プロフィールを登録
-            </h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto">
-              特集同窓生ディレクトリに参加し、次世代の卒業生にインスピレーションを与えましょう。
-            </p>
-            <button className="bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-50 transition-colors duration-200 shadow-xl">
-              プロフィールを送信
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );
