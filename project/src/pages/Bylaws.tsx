@@ -1,18 +1,6 @@
-import React, { useState } from 'react';
-import { ChevronDown, ChevronRight, FileText, Download, Calendar } from 'lucide-react';
+import React from 'react';
 
 const Bylaws: React.FC = () => {
-  const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({
-    'article-1': true
-  });
-
-  const toggleSection = (sectionId: string) => {
-    setExpandedSections(prev => ({
-      ...prev,
-      [sectionId]: !prev[sectionId]
-    }));
-  };
-
   const bylawsSections = [
     {
       id: 'chapter-1',
@@ -152,122 +140,47 @@ const Bylaws: React.FC = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-            奧南会規約
+            奧南会会則
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            青森県立八戸西高等学校同窓会奧南会の組織構造、運営、会員の権利と責任を定めた規約です。
-          </p>
         </div>
 
-        {/* Document Info */}
-        <div className="bg-white rounded-3xl p-8 shadow-xl mb-12">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-            <div className="flex items-center mb-4 md:mb-0">
-              <FileText className="w-8 h-8 text-blue-600 mr-3" />
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900">Official Bylaws Document</h2>
-                <div className="flex items-center text-gray-600 mt-1">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  <span>Last Updated: March 15, 2024</span>
-                </div>
-              </div>
-            </div>
-            <button className="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-2xl font-semibold hover:bg-blue-700 transition-colors duration-200">
-              <Download className="w-5 h-5 mr-2" />
-              Download PDF
-            </button>
-          </div>
-        </div>
-
-        {/* Table of Contents */}
-        <div className="bg-blue-50 rounded-3xl p-8 mb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Table of Contents</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {bylawsSections.map((section, index) => (
-              <button
-                key={section.id}
-                onClick={() => {
-                  const element = document.getElementById(section.id);
-                  element?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="text-left p-3 rounded-xl hover:bg-white hover:shadow-md transition-all duration-200"
-              >
-                <span className="text-blue-600 font-semibold">Article {index + 1}</span>
-                <p className="text-gray-700 font-medium">{section.title.replace(`Article ${index + 1} - `, '')}</p>
-              </button>
-            ))}
-          </div>
-        </div>
 
         {/* Bylaws Content */}
-        <div className="space-y-8">
-          {bylawsSections.map((article, index) => (
-            <div key={article.id} id={article.id} className="bg-white rounded-3xl shadow-xl overflow-hidden">
-              <button
-                onClick={() => toggleSection(article.id)}
-                className="w-full p-8 text-left hover:bg-gray-50 transition-colors duration-200"
-              >
-                <div className="flex items-center justify-between">
-                  <h2 className="text-2xl font-bold text-gray-900">{article.title}</h2>
-                  {expandedSections[article.id] ? (
-                    <ChevronDown className="w-6 h-6 text-gray-500" />
-                  ) : (
-                    <ChevronRight className="w-6 h-6 text-gray-500" />
-                  )}
-                </div>
-              </button>
-
-              {expandedSections[article.id] && (
-                <div className="px-8 pb-8">
-                  <div className="space-y-6">
-                    {article.content.map((section, sectionIndex) => (
-                      <div key={sectionIndex} className="border-l-4 border-blue-200 pl-6">
-                        <h3 className="text-lg font-semibold text-blue-800 mb-3">
-                          {section.section}
-                        </h3>
-                        <p className="text-gray-700 leading-relaxed">
-                          {section.text}
-                        </p>
+        <div className="space-y-12">
+          {bylawsSections.map((section) => (
+            <div key={section.id} className="bg-white rounded-3xl shadow-xl overflow-hidden">
+              <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-6">
+                <h2 className="text-2xl font-bold text-white">
+                  {section.title}
+                </h2>
+              </div>
+              
+              <div className="p-8">
+                <div className="space-y-8">
+                  {section.content.map((item, index) => (
+                    <div key={index} className="border-l-4 border-blue-200 pl-6">
+                      <h4 className="text-xl font-bold text-gray-900 mb-4">
+                        {item.section}
+                      </h4>
+                      <div className="text-gray-700 leading-relaxed whitespace-pre-line">
+                        {item.text}
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
-              )}
+              </div>
             </div>
           ))}
         </div>
 
-        {/* Additional Information */}
-        <div className="mt-16 bg-gradient-to-r from-blue-600 to-blue-800 rounded-3xl p-12 text-white text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Questions About Our Bylaws?
-          </h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            If you have questions about our governing documents or would like to propose amendments, 
-            please contact our Board of Directors.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/contact"
-              className="bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-50 transition-colors duration-200 shadow-xl"
-            >
-              Contact Board
-            </a>
-            <a
-              href="/board-of-directors"
-              className="bg-blue-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-400 transition-colors duration-200 border-2 border-blue-400"
-            >
-              Meet Our Board
-            </a>
+        {/* Footer Note */}
+        <div className="mt-16 text-center">
+          <div className="bg-gray-50 rounded-2xl p-8">
+            <p className="text-gray-600 leading-relaxed">
+              この会則は、青森県立八戸西高等学校同窓会奧南会の組織運営に関する基本的な事項を定めたものです。
+              ご質問やご不明な点がございましたら、事務局までお問い合わせください。
+            </p>
           </div>
-        </div>
-
-        {/* Legal Notice */}
-        <div className="mt-12 text-center">
-          <p className="text-gray-500 text-sm">
-            These bylaws were last amended and approved by the Board of Directors on March 15, 2024. 
-            This document supersedes all previous versions of the Association bylaws.
-          </p>
         </div>
       </div>
     </div>
