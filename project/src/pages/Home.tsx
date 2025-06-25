@@ -207,10 +207,10 @@ const Home: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-              注目の同窓生
+              つながりの輪
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              同窓生コミュニティの素晴らしい成果を祝福します
+              同窓生との新しいつながりを築きましょう
             </p>
           </div>
 

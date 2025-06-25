@@ -155,10 +155,10 @@ const AlumniProfiles: React.FC = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-            同窓生プロフィール
+            同窓生とつながる
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            多彩なキャリアと卓越した功績を持つ同窓生たちをご紹介します
+            多彩なキャリアと卓越した功績を持つ同窓生たちとつながりましょう
           </p>
         </div>
 
