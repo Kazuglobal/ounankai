@@ -9,60 +9,60 @@ const AlumniProfile: React.FC = () => {
   const alumniData: { [key: string]: any } = {
     '1': {
       id: 1,
-      name: 'Sarah Johnson',
+      name: '田中 さくら',
       year: '2018',
-      degree: 'Bachelor of Science in Computer Science',
-      profession: 'Tech Entrepreneur & CEO',
-      company: 'InnovateTech Solutions',
-      location: 'San Francisco, CA',
-      industry: 'Technology',
+      degree: 'コンピューターサイエンス学士',
+      profession: 'テクノロジー起業家・CEO',
+      company: 'イノベートテック・ソリューションズ',
+      location: 'サンフランシスコ、カリフォルニア州',
+      industry: 'テクノロジー',
       image: 'https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop',
       coverImage: 'https://images.pexels.com/photos/1181533/pexels-photo-1181533.jpeg?auto=compress&cs=tinysrgb&w=1200&h=400&fit=crop',
-      achievement: 'Founded successful AI startup valued at $50M',
-      bio: 'Sarah Johnson is a visionary entrepreneur who has made significant contributions to the field of artificial intelligence and healthcare technology. After graduating with honors from our Computer Science program, she quickly established herself as a leader in Silicon Valley\'s tech ecosystem. Her company, InnovateTech Solutions, focuses on developing AI-powered diagnostic tools that have revolutionized patient care in hospitals across the country.',
+      achievement: '5000万ドルの価値を持つAIスタートアップを創設',
+      bio: '田中さくらは、人工知能とヘルスケアテクノロジー分野で重要な貢献をしたビジョナリー起業家です。コンピューターサイエンスプログラムを優秀な成績で卒業後、シリコンバレーのテックエコシステムでリーダーとしての地位を素早く確立しました。彼女の会社であるイノベートテック・ソリューションズは、全国の病院で患者ケアを革新したAIパワー診断ツールの開発に焦点を当てています。',
       careerJourney: [
         {
           year: '2018-2019',
-          role: 'Software Engineer',
+          role: 'ソフトウェアエンジニア',
           company: 'Google',
-          description: 'Started career at Google working on machine learning algorithms for search optimization.'
+          description: '検索最適化のための機械学習アルゴリズムに取り組み、Googleでキャリアをスタート。'
         },
         {
           year: '2019-2021',
-          role: 'Senior ML Engineer',
+          role: 'シニアMLエンジニア',
           company: 'Apple',
-          description: 'Led development of privacy-preserving machine learning features for iOS applications.'
+          description: 'iOSアプリケーションのプライバシー保護機械学習機能の開発を主導。'
         },
         {
-          year: '2021-Present',
-          role: 'Founder & CEO',
-          company: 'InnovateTech Solutions',
-          description: 'Founded company focused on AI-powered healthcare diagnostics, raised $50M in Series A funding.'
+          year: '2021-現在',
+          role: '创設者・CEO',
+          company: 'イノベートテック・ソリューションズ',
+          description: 'AIパワーヘルスケア診断に焦点を当てた会社を設立、シリーズAラウンドで5000万ドルを調達。'
         }
       ],
       achievements: [
         'Forbes 30 Under 30 (2022)',
-        'TechCrunch Disruptor Award (2023)',
-        'MIT Technology Review Innovator (2024)',
-        'Featured speaker at AI Healthcare Summit',
-        'Published 12 research papers on AI in healthcare',
-        'Mentor to 25+ startup founders'
+        'TechCrunchディスラプター賞 (2023)',
+        'MITテクノロジーレビューイノベーター (2024)',
+        'AIヘルスケアサミット特別講演',
+        'ヘルスケア分野のAIに関する研究論文　12本公開',
+        '25人以上のスタートアップ创設者のメンター'
       ],
       education: [
         {
-          degree: 'Bachelor of Science in Computer Science',
-          institution: 'University Name',
+          degree: 'コンピューターサイエンス学士',
+          institution: '八戸西高等学校',
           year: '2018',
-          honors: 'Magna Cum Laude, Phi Beta Kappa'
+          honors: '優等卒業、ファイ・ベータ・カッパ'
         }
       ],
       personalInfo: {
-        hometown: 'Portland, OR',
-        interests: ['Rock Climbing', 'Photography', 'Sustainable Technology', 'Mentoring'],
-        languages: ['English', 'Spanish', 'Mandarin'],
-        volunteerWork: 'Board member of TechCorps, teaching coding to underserved youth'
+        hometown: 'ポートランド、オレゴン州',
+        interests: ['ロッククライミング', '写真', '持続可能テクノロジー', 'メンタリング'],
+        languages: ['英語', 'スペイン語', '中国語'],
+        volunteerWork: 'TechCorps理事、支援の行き届かない若者へのプログラミング教育'
       },
-      quote: 'The university didn\'t just give me a degree – it gave me the foundation to think critically, dream big, and the network to make those dreams reality.',
+      quote: '大学は単に学位を与えてくれただけではありません。批判的に考え、大きな夢を描き、その夢を現実にするネットワークを与えてくれました。',
       contact: {
         email: 'sarah.johnson@innovatetech.com',
         linkedin: 'https://linkedin.com/in/sarahjohnsontech',
@@ -71,66 +71,66 @@ const AlumniProfile: React.FC = () => {
     },
     '2': {
       id: 2,
-      name: 'Michael Chen',
+      name: '陳 健太',
       year: '2015',
-      degree: 'Doctor of Medicine',
-      profession: 'Medical Researcher & Oncologist',
-      company: 'Harvard Medical School',
-      location: 'Boston, MA',
-      industry: 'Healthcare',
+      degree: '医学博士',
+      profession: '医学研究者・がん専門医',
+      company: 'ハーバード医科大学',
+      location: 'ボストン、マサチューセッツ州',
+      industry: 'ヘルスケア',
       image: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop',
       coverImage: 'https://images.pexels.com/photos/356040/pexels-photo-356040.jpeg?auto=compress&cs=tinysrgb&w=1200&h=400&fit=crop',
-      achievement: 'Leading breakthrough cancer research initiatives',
-      bio: 'Dr. Michael Chen is a renowned oncologist and researcher whose groundbreaking work in immunotherapy has transformed cancer treatment protocols worldwide. His research has led to three FDA-approved treatments that have extended the lives of thousands of patients. Currently serving as Associate Professor at Harvard Medical School, he continues to push the boundaries of cancer research while maintaining an active clinical practice.',
+      achievement: '画期的ながん研究プロジェクトを主導',
+      bio: '陳健太博士は、免疫療法における画期的な研究で世界のがん治療プロトコルを変革した著名ながん専門医・研究者です。彼の研究はFDA承認、3つの治療法を生み出し、何千人もの患者の命を延ばしてきました。現在はハーバード医科大学の準教授として、継続的にがん研究の限界を押し広げる一方、アクティブな臨床練習を維持しています。',
       careerJourney: [
         {
           year: '2015-2018',
-          role: 'Medical Resident',
-          company: 'Johns Hopkins Hospital',
-          description: 'Completed internal medicine residency with focus on oncology and hematology.'
+          role: '医学研修医',
+          company: 'ジョンズ・ホプキンス病院',
+          description: 'がん学と血液学に焦点を当てた内科医学研修を修了。'
         },
         {
           year: '2018-2021',
-          role: 'Oncology Fellow',
-          company: 'Memorial Sloan Kettering',
-          description: 'Specialized fellowship in medical oncology with research in immunotherapy.'
+          role: 'がん専門フェロー',
+          company: 'メモリアル・スローン・ケタリング',
+          description: '免疫療法研究を伴う腐瘤内科の専門フェローシップ。'
         },
         {
-          year: '2021-Present',
-          role: 'Associate Professor & Researcher',
-          company: 'Harvard Medical School',
-          description: 'Leading cancer immunotherapy research lab while treating patients at Dana-Farber.'
+          year: '2021-現在',
+          role: '準教授・研究者',
+          company: 'ハーバード医科大学',
+          description: 'ダナファーバーで患者を治療しながら、がん免疫療法研究ラボを主導。'
         }
       ],
       achievements: [
-        'Nature Publication Lead Author (3 papers)',
-        'NIH Research Grant Recipient ($2.3M)',
-        'American Cancer Society Fellow',
-        'ASCO Young Investigator Award',
-        'Developed 3 FDA-approved cancer treatments',
-        'Over 50 peer-reviewed publications'
+        'Nature誌筆頭著者（3本）',
+        'NIH研究助成金受賞（230万ドル）',
+        'アメリカがん学会フェロー',
+        'ASCO若手研究者賞',
+        'FDA承認がん治療法3種類を開発',
+        '査読付き論文、50本以上'
       ],
       education: [
         {
-          degree: 'Doctor of Medicine',
-          institution: 'University Name School of Medicine',
+          degree: '医学博士',
+          institution: '八戸西高等学校連携大学医学部',
           year: '2015',
-          honors: 'Alpha Omega Alpha Honor Society'
+          honors: 'アルファ・オメガ・アルファ名誉学会'
         },
         {
-          degree: 'Bachelor of Science in Biochemistry',
-          institution: 'University Name',
+          degree: '生化学学士',
+          institution: '八戸西高等学校',
           year: '2011',
-          honors: 'Summa Cum Laude'
+          honors: '最優等卒業'
         }
       ],
       personalInfo: {
-        hometown: 'Seattle, WA',
-        interests: ['Classical Music', 'Marathon Running', 'Medical Education', 'Global Health'],
-        languages: ['English', 'Mandarin', 'French'],
-        volunteerWork: 'Provides free cancer screenings in underserved communities'
+        hometown: 'シアトル、ワシントン州',
+        interests: ['クラシック音楽', 'マラソン', '医学教育', 'グローバルヘルス'],
+        languages: ['英語', '中国語', 'フランス語'],
+        volunteerWork: '支援の行き届かない地域での無料がん検診を提供'
       },
-      quote: 'Every patient I treat reminds me why I chose medicine. The university instilled in me not just the scientific rigor, but the compassion that drives my research.',
+      quote: '治療する患者の皆さんが、なぜ医学を選んだかを思い出させてくれます。大学で学んだのは科学的厳密さだけではなく、研究の原動力となる悲惇の心でした。',
       contact: {
         email: 'm.chen@harvard.edu',
         linkedin: 'https://linkedin.com/in/drmichaelchen'
@@ -138,66 +138,66 @@ const AlumniProfile: React.FC = () => {
     },
     '3': {
       id: 3,
-      name: 'Emily Rodriguez',
+      name: '山田 美咲',
       year: '2012',
-      degree: 'Juris Doctor',
-      profession: 'Environmental Lawyer & Policy Advocate',
-      company: 'Green Justice Coalition',
-      location: 'Washington, DC',
-      industry: 'Legal',
+      degree: '法務博士',
+      profession: '環境弁護士・政策推進者',
+      company: 'グリーン・ジャスティス連合',
+      location: 'ワシントンDC',
+      industry: '法律',
       image: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop',
       coverImage: 'https://images.pexels.com/photos/1209978/pexels-photo-1209978.jpeg?auto=compress&cs=tinysrgb&w=1200&h=400&fit=crop',
-      achievement: 'Championing climate policy reform at federal level',
-      bio: 'Emily Rodriguez is a passionate environmental lawyer who has dedicated her career to fighting climate change through legal advocacy and policy reform. Her landmark Supreme Court case victory in 2023 established new precedents for corporate environmental accountability. As Executive Director of the Green Justice Coalition, she leads a team of attorneys working on climate litigation across the nation.',
+      achievement: '連邦レベルでの気候政策改革を推進',
+      bio: '山田美咲は、法的な推進活動と政策改革を通じて気候変動と闘うことにキャリアを捧げた情熱的な環境弁護士です。2023年の最高裁判所の画期的な勝訴は、企業の環境責任に新しい判例を確立しました。グリーン・ジャスティス連合のエグゼクティブディレクターとして、全国で気候訴訟に取り組む弁護士チームを率いています。',
       careerJourney: [
         {
           year: '2012-2015',
-          role: 'Associate Attorney',
-          company: 'Natural Resources Defense Council',
-          description: 'Worked on clean air and water litigation, gaining experience in environmental law.'
+          role: 'アソシエイト弁護士',
+          company: '自然資源防衛評議会',
+          description: '大気と水質の汚染訴訟に取り組み、環境法の経験を積んでいました。'
         },
         {
           year: '2015-2019',
-          role: 'Senior Environmental Attorney',
-          company: 'Earthjustice',
-          description: 'Led major climate litigation cases, including successful challenges to coal plant permits.'
+          role: 'シニア環境弁護士',
+          company: 'アースジャスティス',
+          description: '石炭発電所許可への成功した異議申し立てを含む、主要な気候訴訟事件を主導。'
         },
         {
-          year: '2019-Present',
-          role: 'Executive Director',
-          company: 'Green Justice Coalition',
-          description: 'Founded and leads coalition of environmental lawyers working on climate policy reform.'
+          year: '2019-現在',
+          role: 'エグゼクティブディレクター',
+          company: 'グリーン・ジャスティス連合',
+          description: '気候政策改革に取り組む環境弁護士の連合を設立し、率いています。'
         }
       ],
       achievements: [
-        'Supreme Court Case Victory (2023)',
-        'Environmental Law Institute Award',
-        'White House Climate Policy Advisor',
-        'Harvard Environmental Law Review Editor',
-        'Argued 15+ federal court cases',
-        'Led coalition of 50+ environmental organizations'
+        '最高裁判所訴訟勝訴 (2023)',
+        '環境法研究所賞',
+        'ホワイトハウス気候政策アドバイザー',
+        'ハーバード環境法レビュー編集者',
+        '連邦裁判所の訴訟15件以上を担当',
+        '50以上の環境団体の連合を率いる'
       ],
       education: [
         {
-          degree: 'Juris Doctor',
-          institution: 'University Name School of Law',
+          degree: '法務博士',
+          institution: '八戸西高等学校連携大学法学部',
           year: '2012',
-          honors: 'Order of the Coif, Environmental Law Review Editor-in-Chief'
+          honors: 'オーダー・オブ・ザ・コイフ、環境法レビュー編集長'
         },
         {
-          degree: 'Bachelor of Arts in Environmental Studies',
-          institution: 'University Name',
+          degree: '環境学学士',
+          institution: '八戸西高等学校',
           year: '2009',
-          honors: 'Phi Beta Kappa'
+          honors: 'ファイ・ベータ・カッパ'
         }
       ],
       personalInfo: {
-        hometown: 'Denver, CO',
-        interests: ['Hiking', 'Sustainable Living', 'Environmental Photography', 'Policy Writing'],
-        languages: ['English', 'Spanish', 'Portuguese'],
-        volunteerWork: 'Pro bono legal services for indigenous communities affected by climate change'
+        hometown: 'デンバー、コロラド州',
+        interests: ['ハイキング', '持続可能な生活', '環境写真', '政策文書作成'],
+        languages: ['英語', 'スペイン語', 'ポルトガル語'],
+        volunteerWork: '気候変動の影響を受ける先住民コミュニティへのプロボノ法的サービス'
       },
-      quote: 'The law school taught me that legal precedent can be a powerful force for environmental justice. Every case we win protects our planet for future generations.',
+      quote: '法科大学院では、法的判例が環境正義のための強力な力になり得ることを学びました。私たちが勝ち取る一つ一つの訴訟が、将来の世代のために地球を守っているのです。',
       contact: {
         email: 'e.rodriguez@greenjustice.org',
         linkedin: 'https://linkedin.com/in/emilyrodriguezlaw'
@@ -211,14 +211,14 @@ const AlumniProfile: React.FC = () => {
     return (
       <div className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Alumni Not Found</h1>
-          <p className="text-gray-600 mb-8">The requested alumni profile could not be found.</p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">同窓生が見つかりません</h1>
+          <p className="text-gray-600 mb-8">リクエストされた同窓生のプロフィールが見つかりませんでした。</p>
           <Link
             to="/alumni-profiles"
             className="inline-flex items-center text-blue-600 font-semibold hover:text-blue-700"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Alumni Directory
+同窓生名簿に戻る
           </Link>
         </div>
       </div>
@@ -255,7 +255,7 @@ const AlumniProfile: React.FC = () => {
               <div className="text-white">
                 <div className="flex items-center space-x-3 mb-4">
                   <Calendar className="w-5 h-5" />
-                  <span className="text-lg font-medium">Class of {alumni.year}</span>
+                  <span className="text-lg font-medium">{alumni.year}年卒業</span>
                 </div>
                 <h1 className="text-5xl md:text-6xl font-bold mb-4 leading-tight">
                   {alumni.name}
@@ -296,13 +296,13 @@ const AlumniProfile: React.FC = () => {
 
               {/* Biography */}
               <div className="bg-white rounded-3xl p-8 shadow-xl">
-                <h2 className="text-3xl font-bold text-gray-900 mb-6">Biography</h2>
+                <h2 className="text-3xl font-bold text-gray-900 mb-6">経歴</h2>
                 <p className="text-gray-600 leading-relaxed text-lg">{alumni.bio}</p>
               </div>
 
               {/* Career Journey */}
               <div className="bg-white rounded-3xl p-8 shadow-xl">
-                <h2 className="text-3xl font-bold text-gray-900 mb-6">Career Journey</h2>
+                <h2 className="text-3xl font-bold text-gray-900 mb-6">キャリアジャーニー</h2>
                 <div className="space-y-6">
                   {alumni.careerJourney.map((job: any, index: number) => (
                     <div key={index} className="flex gap-4">
@@ -325,7 +325,7 @@ const AlumniProfile: React.FC = () => {
 
               {/* Achievements */}
               <div className="bg-white rounded-3xl p-8 shadow-xl">
-                <h2 className="text-3xl font-bold text-gray-900 mb-6">Key Achievements</h2>
+                <h2 className="text-3xl font-bold text-gray-900 mb-6">主な実績</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {alumni.achievements.map((achievement: string, index: number) => (
                     <div key={index} className="flex items-start space-x-3">
@@ -341,7 +341,7 @@ const AlumniProfile: React.FC = () => {
             <div className="space-y-8">
               {/* Contact Info */}
               <div className="bg-white rounded-3xl p-8 shadow-xl">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Connect</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">連絡先</h3>
                 <div className="space-y-4">
                   {alumni.contact.email && (
                     <a
@@ -349,7 +349,7 @@ const AlumniProfile: React.FC = () => {
                       className="flex items-center space-x-3 text-gray-600 hover:text-blue-600 transition-colors duration-200"
                     >
                       <Mail className="w-5 h-5" />
-                      <span>Email</span>
+                      <span>メール</span>
                     </a>
                   )}
                   {alumni.contact.linkedin && (
@@ -371,7 +371,7 @@ const AlumniProfile: React.FC = () => {
                       className="flex items-center space-x-3 text-gray-600 hover:text-blue-600 transition-colors duration-200"
                     >
                       <ExternalLink className="w-5 h-5" />
-                      <span>Website</span>
+                      <span>ウェブサイト</span>
                     </a>
                   )}
                 </div>
@@ -379,7 +379,7 @@ const AlumniProfile: React.FC = () => {
 
               {/* Education */}
               <div className="bg-white rounded-3xl p-8 shadow-xl">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Education</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">学歴</h3>
                 <div className="space-y-4">
                   {alumni.education.map((edu: any, index: number) => (
                     <div key={index}>
@@ -401,14 +401,14 @@ const AlumniProfile: React.FC = () => {
 
               {/* Personal Info */}
               <div className="bg-white rounded-3xl p-8 shadow-xl">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Personal</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">個人情報</h3>
                 <div className="space-y-4">
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Hometown</h4>
+                    <h4 className="font-semibold text-gray-900 mb-2">出身地</h4>
                     <p className="text-gray-600">{alumni.personalInfo.hometown}</p>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Interests</h4>
+                    <h4 className="font-semibold text-gray-900 mb-2">趣味</h4>
                     <div className="flex flex-wrap gap-2">
                       {alumni.personalInfo.interests.map((interest: string, index: number) => (
                         <span
@@ -421,11 +421,11 @@ const AlumniProfile: React.FC = () => {
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Languages</h4>
+                    <h4 className="font-semibold text-gray-900 mb-2">言語</h4>
                     <p className="text-gray-600">{alumni.personalInfo.languages.join(', ')}</p>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Volunteer Work</h4>
+                    <h4 className="font-semibold text-gray-900 mb-2">ボランティア活動</h4>
                     <p className="text-gray-600">{alumni.personalInfo.volunteerWork}</p>
                   </div>
                 </div>
@@ -440,13 +440,13 @@ const AlumniProfile: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              More Alumni in {alumni.industry}
+              {alumni.industry}分野の同窓生
             </h2>
             <Link
               to="/alumni-profiles"
               className="inline-flex items-center text-blue-600 font-semibold hover:text-blue-700"
             >
-              View All Alumni
+すべての同窓生を見る
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>
           </div>

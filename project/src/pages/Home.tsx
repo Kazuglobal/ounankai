@@ -22,28 +22,28 @@ const Home: React.FC = () => {
       id: 1,
       name: '田中 さくら',
       year: '2018年卒',
-      profession: 'テック起業家',
+      profession: 'テクノロジー起業家',
       location: '東京都',
       image: 'https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop',
-      achievement: 'AI スタートアップを成功に導く'
+      achievement: '5000万ドルの価値を持つAIスタートアップを創設'
     },
     {
       id: 2,
-      name: '佐藤 健太',
+      name: '陳 健太',
       year: '2015年卒',
       profession: '医学研究者',
       location: '大阪府',
       image: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop',
-      achievement: 'がん研究の最前線で活躍'
+      achievement: '画期的ながん研究プロジェクトを主導'
     },
     {
       id: 3,
       name: '山田 美咲',
       year: '2012年卒',
       profession: '環境弁護士',
-      location: '京都府',
+      location: '愛知県',
       image: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop',
-      achievement: '気候変動政策改革を推進'
+      achievement: '連邦レベルでの気候政策改革を推進'
     }
   ];
 
@@ -240,7 +240,7 @@ const Home: React.FC = () => {
                     to={`/alumni-profiles/${alumni.id}`}
                     className="inline-flex items-center text-blue-600 font-semibold hover:text-blue-700 transition-colors duration-200"
                   >
-                    詳細プロフィール
+                    詳細プロフィールを見る
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Link>
                 </div>
