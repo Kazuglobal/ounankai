@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Users, Calendar, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { Menu, X, Users, Calendar, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, Volume2, VolumeX } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -9,6 +9,8 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const audioRef = useRef<HTMLAudioElement>(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -24,6 +26,55 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     setIsMenuOpen(false);
   }, [location]);
 
+  // 音楽自動再生機能
+  useEffect(() => {
+    const playAudio = async () => {
+      if (audioRef.current) {
+        try {
+          audioRef.current.volume = 0.5;
+          await audioRef.current.play();
+          setIsPlaying(true);
+        } catch (error) {
+          console.log('自動再生が制限されています。ユーザーの操作が必要です。');
+          setIsPlaying(false);
+        }
+      }
+    };
+
+    playAudio();
+
+    const handleUserInteraction = () => {
+      if (!isPlaying && audioRef.current) {
+        playAudio();
+      }
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('touchstart', handleUserInteraction);
+    };
+
+    document.addEventListener('click', handleUserInteraction);
+    document.addEventListener('touchstart', handleUserInteraction);
+
+    return () => {
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('touchstart', handleUserInteraction);
+    };
+  }, [isPlaying]);
+
+  const toggleMusic = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        audioRef.current.play().then(() => {
+          setIsPlaying(true);
+        }).catch(() => {
+          setIsPlaying(false);
+        });
+      }
+    }
+  };
+
   const navigation = [
     { name: 'ホーム', href: '/' },
     { name: '会則', href: '/bylaws' },
@@ -36,6 +87,25 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <div className="min-h-screen bg-[#F7F3F0]">
+      {/* Background Music */}
+      <audio
+        ref={audioRef}
+        src="/background-music.mp3"
+        loop
+        autoPlay
+        muted={false}
+        preload="auto"
+      />
+
+      {/* Music Control Button */}
+      <button
+        onClick={toggleMusic}
+        className="fixed top-24 right-6 z-50 w-12 h-12 bg-blue-600/90 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-blue-700/90 transition-all duration-200 shadow-xl"
+        aria-label={isPlaying ? '音楽を停止' : '音楽を再生'}
+      >
+        {isPlaying ? <Volume2 className="w-6 h-6" /> : <VolumeX className="w-6 h-6" />}
+      </button>
+
       {/* Navigation */}
       <header className={`fixed w-full z-50 transition-all duration-300 ${
         isScrolled 
