@@ -232,8 +232,28 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <ul className="space-y-3">
                 <li><Link to="/bylaws" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">会則</Link></li>
                 <li><Link to="/board-of-directors" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">役員名簿</Link></li>
-                <li><Link to="/alumni-profiles" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">同窓生名簿</Link></li>
+                <li><Link to="/alumni-profiles" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">同窓生とつながる</Link></li>
               </ul>
+            </div>
+
+            {/* Member Registration */}
+            <div>
+              <h4 className="text-lg font-semibold text-gray-900 mb-4">参加しませんか？</h4>
+              <div className="bg-blue-50 rounded-2xl p-4 mb-4">
+                <p className="text-sm text-blue-900 mb-3">
+                  まだメンバーでない方も、<br />
+                  奥南会に参加できます！
+                </p>
+                <Link
+                  to="/member-registration"
+                  className="inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-700 transition-colors duration-200 w-full justify-center"
+                >
+                  メンバー登録
+                </Link>
+              </div>
+              <p className="text-xs text-gray-500">
+                同窓生ネットワークに参加して、新しいつながりを築きましょう
+              </p>
             </div>
 
             {/* Contact Info */}

@@ -10,6 +10,7 @@ import Announcements from './pages/Announcements';
 import Contact from './pages/Contact';
 import Bylaws from './pages/Bylaws';
 import BoardOfDirectors from './pages/BoardOfDirectors';
+import MemberRegistration from './pages/MemberRegistration';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/bylaws" element={<Bylaws />} />
           <Route path="/board-of-directors" element={<BoardOfDirectors />} />
+          <Route path="/member-registration" element={<MemberRegistration />} />
         </Routes>
       </Layout>
     </Router>

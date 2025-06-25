@@ -267,10 +267,17 @@ const Home: React.FC = () => {
             <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
               つながりませんか？
             </h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto">
-              すでに活気あるコミュニティの一員となっている数千人の同窓生に参加しませんか
+            <p className="text-xl mb-8 max-w-3xl mx-auto leading-relaxed">
+              同窓生とのつながりが、新たな人脈を築き、転職の機会を広げ、人生の可能性を無限に広げていきます。
+              先輩・後輩たちとつながろう！
             </p>
-            <div className="flex justify-center">
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Link
+                to="/member-registration"
+                className="bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-50 transition-all duration-200 transform hover:scale-105 border-2 border-white shadow-lg"
+              >
+                メンバー登録
+              </Link>
               <Link
                 to="/contact"
                 className="bg-blue-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-400 transition-all duration-200 transform hover:scale-105 border-2 border-blue-400"
