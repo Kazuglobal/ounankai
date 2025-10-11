@@ -1,6 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Calendar, Users, Award, MapPin, ArrowRight } from 'lucide-react';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Calendar,
+  Users,
+  Award,
+  MapPin,
+  ArrowRight,
+  Megaphone,
+  Trophy,
+  GraduationCap,
+  BookOpen,
+  Image as ImageIcon
+} from 'lucide-react';
 
 const Home: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -47,6 +60,87 @@ const Home: React.FC = () => {
     }
   ];
 
+  const newsItems = [
+    {
+      id: 1,
+      title: '2024年度 同窓会総会のお知らせ',
+      date: '2024年03月15日',
+      category: '楓',
+      image:
+        'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=640',
+      href: '/announcements'
+    },
+    {
+      id: 2,
+      title: '卒業30周年記念リユニオンを開催します',
+      date: '2024年04月02日',
+      category: '祝',
+      image:
+        'https://images.pexels.com/photos/1181438/pexels-photo-1181438.jpeg?auto=compress&cs=tinysrgb&w=640',
+      href: '/announcements'
+    },
+    {
+      id: 3,
+      title: '新しい奨学金制度がスタートしました',
+      date: '2024年04月10日',
+      category: '学',
+      image:
+        'https://images.pexels.com/photos/7096/people-woman-coffee-meeting.jpg?auto=compress&cs=tinysrgb&w=640',
+      href: '/announcements'
+    }
+  ];
+
+  const quickLinks = [
+    {
+      title: '広告ページ',
+      href: '/announcements',
+      icon: Megaphone,
+      gradientFrom: 'from-yellow-200',
+      gradientTo: 'to-yellow-100',
+      iconColor: 'text-yellow-700'
+    },
+    {
+      title: '同窓会活動',
+      href: '/announcements',
+      icon: Users,
+      gradientFrom: 'from-blue-200',
+      gradientTo: 'to-blue-100',
+      iconColor: 'text-blue-700'
+    },
+    {
+      title: '部活動報告',
+      href: '/announcements',
+      icon: Trophy,
+      gradientFrom: 'from-pink-200',
+      gradientTo: 'to-pink-100',
+      iconColor: 'text-pink-600'
+    },
+    {
+      title: '進路概要',
+      href: '/member-registration',
+      icon: GraduationCap,
+      gradientFrom: 'from-indigo-200',
+      gradientTo: 'to-indigo-100',
+      iconColor: 'text-indigo-600'
+    },
+    {
+      title: '過去の会報バックナンバー',
+      href: '/announcements',
+      icon: BookOpen,
+      gradientFrom: 'from-green-200',
+      gradientTo: 'to-green-100',
+      iconColor: 'text-green-600'
+    },
+    {
+      title: '思い出コーナー',
+      href: '/gallery',
+      icon: ImageIcon,
+      gradientFrom: 'from-purple-200',
+      gradientTo: 'to-purple-100',
+      iconColor: 'text-purple-600'
+    }
+  ];
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % heroSlides.length);
@@ -66,8 +160,129 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      {/* Hero Section with Slideshow */}
-      <section className="relative h-[80vh] overflow-hidden rounded-b-3xl">
+      {/* Mobile Layout */}
+      <div className="lg:hidden">
+        <div className="space-y-10 px-4 pb-24 pt-6">
+          <section className="relative h-56 overflow-hidden rounded-3xl shadow-lg">
+            {heroSlides.map((slide, index) => (
+              <div
+                key={index}
+                className={`absolute inset-0 transition-opacity duration-1000 ${
+                  index === currentSlide ? 'opacity-100' : 'opacity-0'
+                }`}
+              >
+                <img
+                  src={slide.image}
+                  alt="青森県立八戸西高等学校"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            ))}
+            <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-2">
+              {heroSlides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`h-2.5 w-2.5 rounded-full transition-all duration-200 ${
+                    index === currentSlide ? 'bg-white' : 'bg-white/50'
+                  }`}
+                  aria-label={`スライド ${index + 1}`}
+                />
+              ))}
+            </div>
+          </section>
+
+          <section className="rounded-3xl bg-gradient-to-br from-[#ffe5f4] via-[#f0e8ff] to-[#dbe9ff] p-6 shadow-lg">
+            <span className="inline-flex items-center rounded-full bg-pink-500 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white shadow-sm">
+              NEW
+            </span>
+            <h2 className="mt-4 text-xl font-semibold text-gray-900">広告ギャラリー公開中</h2>
+            <p className="mt-3 text-sm leading-relaxed text-gray-600">
+              同窓会の皆さま向けの最新広告をまとめました。スワイプで次の広告をチェックできます。
+            </p>
+            <Link
+              to="/announcements"
+              className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-blue-600"
+            >
+              詳細を見る
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </section>
+
+          <section className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-semibold text-gray-900">ニュース</h2>
+              <Link
+                to="/announcements"
+                className="inline-flex items-center gap-1 text-sm font-medium text-blue-600"
+              >
+                もっと見る
+                <ChevronRight className="h-4 w-4" />
+              </Link>
+            </div>
+            <div className="-mx-4 overflow-x-auto px-4 pb-2">
+              <div className="flex snap-x snap-mandatory gap-4">
+                {newsItems.map((item) => (
+                  <Link
+                    key={item.id}
+                    to={item.href}
+                    className="min-w-[85%] snap-center overflow-hidden rounded-3xl bg-white shadow-lg"
+                  >
+                    <div className="aspect-[4/3] w-full overflow-hidden">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                    <div className="p-4">
+                      <div className="flex items-center gap-2">
+                        <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-blue-50 text-sm font-semibold text-blue-600">
+                          {item.category}
+                        </span>
+                        <span className="text-xs font-medium text-blue-600">Ounan News</span>
+                      </div>
+                      <h3 className="mt-3 text-base font-semibold leading-snug text-gray-900">
+                        {item.title}
+                      </h3>
+                      <p className="mt-2 text-xs text-gray-500">{item.date}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="text-lg font-semibold text-gray-900">クイックアクセス</h2>
+            <div className="grid grid-cols-2 gap-4">
+              {quickLinks.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.title}
+                    to={item.href}
+                    className="flex flex-col items-center rounded-3xl bg-white p-4 text-center shadow-lg transition-shadow duration-200 hover:shadow-xl"
+                  >
+                    <div className="relative mb-4 flex h-16 w-16 items-center justify-center">
+                      <span
+                        className={`absolute inset-0 rounded-full bg-gradient-to-br ${item.gradientFrom} ${item.gradientTo}`}
+                      />
+                      <Icon className={`relative h-7 w-7 ${item.iconColor}`} />
+                    </div>
+                    <p className="text-sm font-semibold text-gray-800">{item.title}</p>
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        </div>
+      </div>
+
+      {/* Desktop Layout */}
+      <div className="hidden lg:block">
+        {/* Hero Section with Slideshow */}
+        <section className="relative h-[80vh] overflow-hidden rounded-b-3xl">
         {heroSlides.map((slide, index) => (
           <div
             key={index}
@@ -288,6 +503,7 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
+    </div>
     </div>
   );
 };
