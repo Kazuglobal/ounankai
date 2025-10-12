@@ -321,43 +321,27 @@ const AlumniProfiles: React.FC = () => {
   const [selectedLocation, setSelectedLocation] = useState('all');
   const [showConnectionModal, setShowConnectionModal] = useState(false);
 
-  // Career tab swipe state
-  const [careerSwipeIndex, setCareerSwipeIndex] = useState(0);
-  const [careerDragOffsetState, setCareerDragOffsetState] = useState(0);
-  const [careerIsDragging, setCareerIsDragging] = useState(false);
-  const [careerIsAnimating, setCareerIsAnimating] = useState(false);
-  const careerDragOffsetRef = useRef(0);
-  const careerStartXRef = useRef<number | null>(null);
-  const careerPointerIdRef = useRef<number | null>(null);
-  const careerAnimationTimeoutRef = useRef<number | undefined>();
-  const careerTopCardRef = useRef<HTMLDivElement | null>(null);
+  const filteredAlumni = useMemo(
+    () =>
+      alumniData.filter((alumni) => {
+        const lowerSearch = searchTerm.toLowerCase();
+        const matchesSearch =
+          alumni.name.toLowerCase().includes(lowerSearch) ||
+          alumni.profession.toLowerCase().includes(lowerSearch) ||
+          alumni.company.toLowerCase().includes(lowerSearch);
+        const matchesIndustry = selectedIndustry === 'all' || alumni.industry === selectedIndustry;
+        const matchesLocation = selectedLocation === 'all' || alumni.location === selectedLocation;
+        return matchesSearch && matchesIndustry && matchesLocation;
+      }),
+    [searchTerm, selectedIndustry, selectedLocation],
+  );
 
-  // Business tab swipe state
-  const [businessSwipeIndex, setBusinessSwipeIndex] = useState(0);
-  const [businessDragOffsetState, setBusinessDragOffsetState] = useState(0);
-  const [businessIsDragging, setBusinessIsDragging] = useState(false);
-  const [businessIsAnimating, setBusinessIsAnimating] = useState(false);
-  const businessDragOffsetRef = useRef(0);
-  const businessStartXRef = useRef<number | null>(null);
-  const businessPointerIdRef = useRef<number | null>(null);
-  const businessAnimationTimeoutRef = useRef<number | undefined>();
-  const businessTopCardRef = useRef<HTMLDivElement | null>(null);
+  // Initialize swipe cards for each tab
+  const careerSwipe = useSwipeCards({ items: filteredAlumni });
+  const businessSwipe = useSwipeCards({ items: businessHighlights });
+  const networkSwipe = useSwipeCards({ items: networkingPrograms });
 
-  // Network tab swipe state
-  const [networkSwipeIndex, setNetworkSwipeIndex] = useState(0);
-  const [networkDragOffsetState, setNetworkDragOffsetState] = useState(0);
-  const [networkIsDragging, setNetworkIsDragging] = useState(false);
-  const [networkIsAnimating, setNetworkIsAnimating] = useState(false);
-  const networkDragOffsetRef = useRef(0);
-  const networkStartXRef = useRef<number | null>(null);
-  const networkPointerIdRef = useRef<number | null>(null);
-  const networkAnimationTimeoutRef = useRef<number | undefined>();
-  const networkTopCardRef = useRef<HTMLDivElement | null>(null);
-
-  const setDragOffset = useCallback((value: number) => {
-    dragOffsetRef.current = value;
-    setDragOffsetState(value);
-  }, []);
+  const activeTabMeta = tabs.find((tab) => tab.id === activeTab);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -387,191 +371,6 @@ const AlumniProfiles: React.FC = () => {
       document.body.style.overflow = originalOverflow;
     };
   }, [showConnectionModal]);
-
-  useEffect(
-    () => () => {
-      if (animationTimeoutRef.current !== undefined) {
-        window.clearTimeout(animationTimeoutRef.current);
-      }
-    },
-    [],
-  );
-
-  const filteredAlumni = useMemo(
-    () =>
-      alumniData.filter((alumni) => {
-        const lowerSearch = searchTerm.toLowerCase();
-        const matchesSearch =
-          alumni.name.toLowerCase().includes(lowerSearch) ||
-          alumni.profession.toLowerCase().includes(lowerSearch) ||
-          alumni.company.toLowerCase().includes(lowerSearch);
-        const matchesIndustry = selectedIndustry === 'all' || alumni.industry === selectedIndustry;
-        const matchesLocation = selectedLocation === 'all' || alumni.location === selectedLocation;
-        return matchesSearch && matchesIndustry && matchesLocation;
-      }),
-    [searchTerm, selectedIndustry, selectedLocation],
-  );
-
-  const activeTabMeta = tabs.find((tab) => tab.id === activeTab);
-
-  useEffect(() => {
-    if (animationTimeoutRef.current !== undefined) {
-      window.clearTimeout(animationTimeoutRef.current);
-      animationTimeoutRef.current = undefined;
-    }
-
-    if (filteredAlumni.length === 0) {
-      setSwipeIndex(0);
-      setDragOffset(0);
-      setIsAnimatingCard(false);
-      setIsDraggingCard(false);
-      return;
-    }
-
-    setSwipeIndex((prev) => (prev >= filteredAlumni.length ? 0 : prev));
-    setDragOffset(0);
-    setIsAnimatingCard(false);
-    setIsDraggingCard(false);
-  }, [filteredAlumni, setDragOffset]);
-
-  const totalAlumni = filteredAlumni.length;
-  const dragOffset = dragOffsetState;
-  const SWIPE_THRESHOLD = 100;
-
-  const finalizeSwipe = useCallback(
-    (direction: 'left' | 'right') => {
-      if (isAnimatingCard || totalAlumni === 0) {
-        return;
-      }
-
-      setIsAnimatingCard(true);
-      setIsDraggingCard(false);
-      pointerIdRef.current = null;
-      startXRef.current = null;
-
-      const cardWidth = (topCardRef.current?.offsetWidth ?? 320) * 1.35;
-      const travel = direction === 'right' ? cardWidth : -cardWidth;
-      setDragOffset(travel);
-
-      if (animationTimeoutRef.current !== undefined) {
-        window.clearTimeout(animationTimeoutRef.current);
-      }
-
-      animationTimeoutRef.current = window.setTimeout(() => {
-        setSwipeIndex((prev) => {
-          if (totalAlumni === 0) {
-            return 0;
-          }
-          const next = prev + 1;
-          return next >= totalAlumni ? 0 : next;
-        });
-        setDragOffset(0);
-        setIsAnimatingCard(false);
-        animationTimeoutRef.current = undefined;
-      }, 260);
-    },
-    [isAnimatingCard, setDragOffset, totalAlumni],
-  );
-
-  const handlePointerDown = useCallback(
-    (event: React.PointerEvent<HTMLDivElement>) => {
-      if (isAnimatingCard || totalAlumni === 0) {
-        return;
-      }
-      const targetElement = event.target as HTMLElement | null;
-      if (targetElement && targetElement.closest('[data-swipe-ignore="true"]')) {
-        return;
-      }
-      if (event.pointerType === 'mouse' && event.button !== 0) {
-        return;
-      }
-      pointerIdRef.current = event.pointerId;
-      startXRef.current = event.clientX;
-      setIsDraggingCard(true);
-      if (event.currentTarget.setPointerCapture) {
-        event.currentTarget.setPointerCapture(event.pointerId);
-      }
-    },
-    [isAnimatingCard, totalAlumni],
-  );
-
-  const handlePointerMove = useCallback(
-    (event: React.PointerEvent<HTMLDivElement>) => {
-      if (!isDraggingCard || pointerIdRef.current !== event.pointerId) {
-        return;
-      }
-      const startX = startXRef.current;
-      if (startX === null) {
-        return;
-      }
-      const delta = event.clientX - startX;
-      setDragOffset(delta);
-    },
-    [isDraggingCard, setDragOffset],
-  );
-
-  const resetDragState = useCallback(() => {
-    setIsDraggingCard(false);
-    pointerIdRef.current = null;
-    startXRef.current = null;
-    setDragOffset(0);
-  }, [setDragOffset]);
-
-  const handlePointerUp = useCallback(
-    (event: React.PointerEvent<HTMLDivElement>) => {
-      if (pointerIdRef.current !== null && event.currentTarget.hasPointerCapture?.(pointerIdRef.current)) {
-        event.currentTarget.releasePointerCapture(pointerIdRef.current);
-      }
-      if (!isDraggingCard) {
-        return;
-      }
-
-      const currentOffset = dragOffsetRef.current;
-      if (Math.abs(currentOffset) > SWIPE_THRESHOLD) {
-        finalizeSwipe(currentOffset > 0 ? 'right' : 'left');
-      } else {
-        resetDragState();
-      }
-    },
-    [finalizeSwipe, isDraggingCard, resetDragState],
-  );
-
-  const handlePointerCancel = useCallback(
-    (event: React.PointerEvent<HTMLDivElement>) => {
-      if (pointerIdRef.current !== null && event.currentTarget.hasPointerCapture?.(pointerIdRef.current)) {
-        event.currentTarget.releasePointerCapture(pointerIdRef.current);
-      }
-      if (!isAnimatingCard) {
-        resetDragState();
-      }
-    },
-    [isAnimatingCard, resetDragState],
-  );
-
-  const handleManualSwipe = useCallback(
-    (direction: 'left' | 'right') => {
-      if (isAnimatingCard || totalAlumni === 0) {
-        return;
-      }
-      finalizeSwipe(direction);
-    },
-    [finalizeSwipe, isAnimatingCard, totalAlumni],
-  );
-
-  const visibleIndices = useMemo(() => {
-    if (totalAlumni === 0) {
-      return [] as number[];
-    }
-    const maxCards = Math.min(3, totalAlumni);
-    const indices: number[] = [];
-    for (let offset = 0; offset < maxCards; offset += 1) {
-      const index = (swipeIndex + offset) % totalAlumni;
-      if (!indices.includes(index)) {
-        indices.push(index);
-      }
-    }
-    return indices;
-  }, [swipeIndex, totalAlumni]);
 
   return (
     <div className="bg-[#F7F3F0] pb-24 pt-16">
@@ -695,7 +494,7 @@ const AlumniProfiles: React.FC = () => {
                   <>
                     <div className="lg:hidden">
                       <div className="relative mx-auto mt-2 h-[460px] max-w-sm">
-                        {visibleIndices.map((profileIndex, stackPosition) => {
+                        {careerSwipe.visibleIndices.map((profileIndex, stackPosition) => {
                           const alumni = filteredAlumni[profileIndex];
                           const isTopCard = stackPosition === 0;
                           const depth = stackPosition;
@@ -704,19 +503,19 @@ const AlumniProfiles: React.FC = () => {
                           const stackedOpacity = isTopCard ? 1 : 0.9 - depth * 0.12;
                           const cardStyle: React.CSSProperties = isTopCard
                             ? {
-                                transform: `translateX(${dragOffset}px) rotate(${dragOffset * 0.04}deg)`,
-                                transition: isDraggingCard ? 'none' : 'transform 0.35s ease, opacity 0.25s ease',
-                                opacity: isAnimatingCard ? 0 : 1,
-                                zIndex: visibleIndices.length - depth,
+                                transform: `translateX(${careerSwipe.dragOffset}px) rotate(${careerSwipe.dragOffset * 0.04}deg)`,
+                                transition: careerSwipe.isDragging ? 'none' : 'transform 0.35s ease, opacity 0.25s ease',
+                                opacity: careerSwipe.isAnimating ? 0 : 1,
+                                zIndex: careerSwipe.visibleIndices.length - depth,
                               }
                             : {
                                 transform: `scale(${scale}) translateY(${translateY}px)`,
                                 transition: 'transform 0.35s ease, opacity 0.35s ease',
                                 opacity: stackedOpacity,
-                                zIndex: visibleIndices.length - depth,
+                                zIndex: careerSwipe.visibleIndices.length - depth,
                               };
-                          const dragStrength = Math.min(Math.abs(dragOffset) / 150, 1);
-                          const isPositive = dragOffset > 0;
+                          const dragStrength = Math.min(Math.abs(careerSwipe.dragOffset) / 150, 1);
+                          const isPositive = careerSwipe.dragOffset > 0;
                           const topHighlights = alumni.highlights.slice(0, 2);
 
                           return (
@@ -725,7 +524,7 @@ const AlumniProfiles: React.FC = () => {
                               ref={
                                 isTopCard
                                   ? (node) => {
-                                      topCardRef.current = node;
+                                      careerSwipe.topCardRef.current = node;
                                     }
                                   : undefined
                               }
@@ -733,10 +532,10 @@ const AlumniProfiles: React.FC = () => {
                                 isTopCard ? 'cursor-grab touch-pan-y active:cursor-grabbing' : 'pointer-events-none'
                               }`}
                               style={cardStyle}
-                              onPointerDown={isTopCard ? handlePointerDown : undefined}
-                              onPointerMove={isTopCard ? handlePointerMove : undefined}
-                              onPointerUp={isTopCard ? handlePointerUp : undefined}
-                              onPointerCancel={isTopCard ? handlePointerCancel : undefined}
+                              onPointerDown={isTopCard ? careerSwipe.handlePointerDown : undefined}
+                              onPointerMove={isTopCard ? careerSwipe.handlePointerMove : undefined}
+                              onPointerUp={isTopCard ? careerSwipe.handlePointerUp : undefined}
+                              onPointerCancel={isTopCard ? careerSwipe.handlePointerCancel : undefined}
                             >
                               <img src={alumni.image} alt={alumni.name} className="absolute inset-0 h-full w-full object-cover" />
                               <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/35 to-black/80" />
@@ -801,7 +600,7 @@ const AlumniProfiles: React.FC = () => {
                                     <button
                                       type="button"
                                       data-swipe-ignore="true"
-                                      onClick={() => handleManualSwipe('right')}
+                                      onClick={() => careerSwipe.handleManualSwipe('right')}
                                       className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-blue-600 shadow-lg transition hover:bg-blue-50"
                                     >
                                       <Handshake className="h-4 w-4" />
@@ -816,21 +615,21 @@ const AlumniProfiles: React.FC = () => {
                       </div>
                       <div className="mt-6 flex items-center justify-between px-2">
                         <span className="text-xs font-semibold text-blue-600">
-                          {swipeIndex + 1} / {filteredAlumni.length}
+                          {careerSwipe.swipeIndex + 1} / {filteredAlumni.length}
                         </span>
                         <div className="flex items-center gap-4">
                           <button
                             type="button"
-                            onClick={() => handleManualSwipe('left')}
-                            disabled={isAnimatingCard || filteredAlumni.length === 0}
+                            onClick={() => careerSwipe.handleManualSwipe('left')}
+                            disabled={careerSwipe.isAnimating || filteredAlumni.length === 0}
                             className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-rose-500 shadow-lg ring-1 ring-rose-100 transition hover:bg-rose-50 disabled:opacity-40"
                           >
                             <X className="h-6 w-6" />
                           </button>
                           <button
                             type="button"
-                            onClick={() => handleManualSwipe('right')}
-                            disabled={isAnimatingCard || filteredAlumni.length === 0}
+                            onClick={() => careerSwipe.handleManualSwipe('right')}
+                            disabled={careerSwipe.isAnimating || filteredAlumni.length === 0}
                             className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 text-white shadow-xl ring-4 ring-blue-200/60 transition hover:from-blue-600 hover:to-indigo-500 disabled:opacity-40"
                           >
                             <Heart className="h-7 w-7" />
@@ -921,124 +720,415 @@ const AlumniProfiles: React.FC = () => {
             )}
 
             {activeTab === 'business' && (
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                {businessHighlights.map((business) => (
-                  <article
-                    key={business.id}
-                    className="flex flex-col overflow-hidden rounded-3xl border border-gray-100 bg-gradient-to-br from-blue-50 via-white to-white shadow-md transition hover:-translate-y-1 hover:shadow-2xl"
-                  >
-                    <div className="relative h-48 w-full overflow-hidden">
-                      <img src={business.image} alt={business.name} className="h-full w-full object-cover transition duration-500 hover:scale-105" />
-                      <span className="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-blue-600">
-                        <Store className="h-4 w-4 text-blue-500" />
-                        卒業生の事業
-                      </span>
+              <>
+                <div className="lg:hidden">
+                  <div className="relative mx-auto mt-2 h-[460px] max-w-sm">
+                    {businessSwipe.visibleIndices.map((businessIndex, stackPosition) => {
+                      const business = businessHighlights[businessIndex];
+                      const isTopCard = stackPosition === 0;
+                      const depth = stackPosition;
+                      const scale = 1 - depth * 0.05;
+                      const translateY = depth * 18;
+                      const stackedOpacity = isTopCard ? 1 : 0.9 - depth * 0.12;
+                      const cardStyle: React.CSSProperties = isTopCard
+                        ? {
+                            transform: `translateX(${businessSwipe.dragOffset}px) rotate(${businessSwipe.dragOffset * 0.04}deg)`,
+                            transition: businessSwipe.isDragging ? 'none' : 'transform 0.35s ease, opacity 0.25s ease',
+                            opacity: businessSwipe.isAnimating ? 0 : 1,
+                            zIndex: businessSwipe.visibleIndices.length - depth,
+                          }
+                        : {
+                            transform: `scale(${scale}) translateY(${translateY}px)`,
+                            transition: 'transform 0.35s ease, opacity 0.35s ease',
+                            opacity: stackedOpacity,
+                            zIndex: businessSwipe.visibleIndices.length - depth,
+                          };
+                      const dragStrength = Math.min(Math.abs(businessSwipe.dragOffset) / 150, 1);
+                      const isPositive = businessSwipe.dragOffset > 0;
+
+                      return (
+                        <article
+                          key={`${business.id}-${businessIndex}`}
+                          ref={
+                            isTopCard
+                              ? (node) => {
+                                  businessSwipe.topCardRef.current = node;
+                                }
+                              : undefined
+                          }
+                          className={`absolute inset-0 flex flex-col overflow-hidden rounded-[32px] shadow-[0_25px_60px_rgba(30,64,175,0.18)] ring-1 ring-black/5 ${
+                            isTopCard ? 'cursor-grab touch-pan-y active:cursor-grabbing' : 'pointer-events-none'
+                          }`}
+                          style={cardStyle}
+                          onPointerDown={isTopCard ? businessSwipe.handlePointerDown : undefined}
+                          onPointerMove={isTopCard ? businessSwipe.handlePointerMove : undefined}
+                          onPointerUp={isTopCard ? businessSwipe.handlePointerUp : undefined}
+                          onPointerCancel={isTopCard ? businessSwipe.handlePointerCancel : undefined}
+                        >
+                          <img src={business.image} alt={business.name} className="absolute inset-0 h-full w-full object-cover" />
+                          <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/35 to-black/80" />
+                          {isTopCard && (
+                            <div
+                              className="pointer-events-none absolute inset-0 transition-opacity duration-200"
+                              style={{ opacity: dragStrength }}
+                            >
+                              <div
+                                className={`absolute inset-0 rounded-[32px] bg-gradient-to-br ${
+                                  isPositive ? 'from-emerald-400/40 via-emerald-400/10 to-transparent' : 'from-rose-500/35 via-rose-500/10 to-transparent'
+                                }`}
+                              />
+                              <div
+                                className={`absolute top-6 ${isPositive ? 'right-6' : 'left-6'} rounded-full bg-white/90 px-4 py-2 text-xs font-semibold text-blue-700 shadow-lg`}
+                              >
+                                {isPositive ? 'SUPPORT' : 'PASS'}
+                              </div>
+                            </div>
+                          )}
+                          <div className="relative z-10 flex h-full flex-col justify-between p-6">
+                            <div className="flex items-start justify-between">
+                              <span className="inline-flex items-center gap-2 rounded-full bg-white/85 px-4 py-1 text-xs font-semibold text-blue-700 shadow">
+                                <Store className="h-4 w-4" />
+                                卒業生の事業
+                              </span>
+                              <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                                <MapPin className="h-3.5 w-3.5" />
+                                {business.location}
+                              </span>
+                            </div>
+                            <div className="space-y-4 text-white">
+                              <div>
+                                <h3 className="text-2xl font-bold">{business.name}</h3>
+                                <p className="mt-1 text-sm font-medium text-blue-100">{business.owner}</p>
+                                <p className="mt-3 flex items-center gap-2 text-xs font-medium text-white/75">
+                                  <Building2 className="h-4 w-4 text-white/70" />
+                                  {business.category}
+                                </p>
+                              </div>
+                              <div className="rounded-2xl bg-white/10 p-4 backdrop-blur-sm">
+                                <p className="text-sm leading-relaxed text-white/90">{business.description}</p>
+                              </div>
+                              <div className="flex flex-wrap gap-2">
+                                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
+                                  <UtensilsCrossed className="h-3.5 w-3.5" />
+                                  卒業生特典あり
+                                </span>
+                                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
+                                  <Sprout className="h-3.5 w-3.5" />
+                                  地域活性
+                                </span>
+                              </div>
+                              <div className="flex items-center justify-between gap-3">
+                                {business.url ? (
+                                  <a
+                                    href={business.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    data-swipe-ignore="true"
+                                    className="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-xs font-semibold text-white backdrop-blur-sm transition hover:bg-white/30"
+                                  >
+                                    詳細を見る
+                                    <ExternalLink className="h-4 w-4" />
+                                  </a>
+                                ) : (
+                                  <div />
+                                )}
+                                <button
+                                  type="button"
+                                  data-swipe-ignore="true"
+                                  onClick={() => businessSwipe.handleManualSwipe('right')}
+                                  className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-blue-600 shadow-lg transition hover:bg-blue-50"
+                                >
+                                  <Store className="h-4 w-4" />
+                                  応援する
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </article>
+                      );
+                    })}
+                  </div>
+                  <div className="mt-6 flex items-center justify-between px-2">
+                    <span className="text-xs font-semibold text-blue-600">
+                      {businessSwipe.swipeIndex + 1} / {businessHighlights.length}
+                    </span>
+                    <div className="flex items-center gap-4">
+                      <button
+                        type="button"
+                        onClick={() => businessSwipe.handleManualSwipe('left')}
+                        disabled={businessSwipe.isAnimating || businessHighlights.length === 0}
+                        className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-rose-500 shadow-lg ring-1 ring-rose-100 transition hover:bg-rose-50 disabled:opacity-40"
+                      >
+                        <X className="h-6 w-6" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => businessSwipe.handleManualSwipe('right')}
+                        disabled={businessSwipe.isAnimating || businessHighlights.length === 0}
+                        className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 text-white shadow-xl ring-4 ring-blue-200/60 transition hover:from-blue-600 hover:to-indigo-500 disabled:opacity-40"
+                      >
+                        <Heart className="h-7 w-7" />
+                      </button>
                     </div>
-                    <div className="flex flex-1 flex-col gap-4 p-6">
-                      <div>
-                        <h3 className="text-xl font-bold text-gray-900">{business.name}</h3>
-                        <p className="text-sm font-medium text-blue-600">{business.owner}</p>
-                      </div>
-                      <div className="space-y-3 text-sm text-gray-600">
-                        <p className="flex items-center gap-3">
-                          <Building2 className="h-4 w-4 text-blue-500" />
-                          {business.category}
-                        </p>
-                        <p className="flex items-center gap-3">
-                          <MapPin className="h-4 w-4 text-blue-500" />
-                          {business.location}
-                        </p>
-                      </div>
-                      <p className="text-sm leading-relaxed text-gray-600">{business.description}</p>
-                      <div className="mt-auto flex flex-wrap gap-2 text-xs font-semibold text-blue-600">
-                        <span className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-3 py-1">
-                          <UtensilsCrossed className="h-4 w-4" />
-                          卒業生特典あり
-                        </span>
-                        <span className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-3 py-1">
-                          <Sprout className="h-4 w-4" />
-                          地域活性プロジェクト
+                  </div>
+                </div>
+
+                <div className="hidden gap-6 lg:grid lg:grid-cols-2">
+                  {businessHighlights.map((business) => (
+                    <article
+                      key={business.id}
+                      className="flex flex-col overflow-hidden rounded-3xl border border-gray-100 bg-gradient-to-br from-blue-50 via-white to-white shadow-md transition hover:-translate-y-1 hover:shadow-2xl"
+                    >
+                      <div className="relative h-48 w-full overflow-hidden">
+                        <img src={business.image} alt={business.name} className="h-full w-full object-cover transition duration-500 hover:scale-105" />
+                        <span className="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-blue-600">
+                          <Store className="h-4 w-4 text-blue-500" />
+                          卒業生の事業
                         </span>
                       </div>
-                      <div className="flex flex-col gap-2 pt-2">
-                        <span className="flex items-center gap-2 text-xs text-gray-500">
-                          <Phone className="h-4 w-4 text-blue-500" />
-                          交流会や撮影利用の相談も受付中
-                        </span>
-                        {business.url && (
-                          <a
-                            href={business.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
-                          >
-                            サイトで詳しく見る
-                            <ExternalLink className="ml-2 h-4 w-4" />
-                          </a>
-                        )}
+                      <div className="flex flex-1 flex-col gap-4 p-6">
+                        <div>
+                          <h3 className="text-xl font-bold text-gray-900">{business.name}</h3>
+                          <p className="text-sm font-medium text-blue-600">{business.owner}</p>
+                        </div>
+                        <div className="space-y-3 text-sm text-gray-600">
+                          <p className="flex items-center gap-3">
+                            <Building2 className="h-4 w-4 text-blue-500" />
+                            {business.category}
+                          </p>
+                          <p className="flex items-center gap-3">
+                            <MapPin className="h-4 w-4 text-blue-500" />
+                            {business.location}
+                          </p>
+                        </div>
+                        <p className="text-sm leading-relaxed text-gray-600">{business.description}</p>
+                        <div className="mt-auto flex flex-wrap gap-2 text-xs font-semibold text-blue-600">
+                          <span className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-3 py-1">
+                            <UtensilsCrossed className="h-4 w-4" />
+                            卒業生特典あり
+                          </span>
+                          <span className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-3 py-1">
+                            <Sprout className="h-4 w-4" />
+                            地域活性プロジェクト
+                          </span>
+                        </div>
+                        <div className="flex flex-col gap-2 pt-2">
+                          <span className="flex items-center gap-2 text-xs text-gray-500">
+                            <Phone className="h-4 w-4 text-blue-500" />
+                            交流会や撮影利用の相談も受付中
+                          </span>
+                          {business.url && (
+                            <a
+                              href={business.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+                            >
+                              サイトで詳しく見る
+                              <ExternalLink className="ml-2 h-4 w-4" />
+                            </a>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </article>
-                ))}
-              </div>
+                    </article>
+                  ))}
+                </div>
+              </>
             )}
 
             {activeTab === 'network' && (
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                {networkingPrograms.map((program) => {
-                  const Icon = program.icon;
-                  return (
-                    <article key={program.id} className="flex flex-col gap-4 rounded-3xl border border-blue-100 bg-blue-50/60 p-6 shadow-inner">
-                      <div className="flex items-center gap-3">
-                        <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg">
-                          <Icon className="h-6 w-6" />
-                        </span>
-                        <div>
-                          <h3 className="text-lg font-semibold text-blue-800">{program.title}</h3>
-                          <p className="text-xs font-medium uppercase tracking-wider text-blue-500">Ounan Alumni Network</p>
-                        </div>
-                      </div>
-                      <p className="text-sm leading-relaxed text-blue-900">{program.description}</p>
-                      {program.cta && (
-                        <Link
-                          to={program.cta.href}
-                          className="inline-flex items-center justify-center rounded-xl bg-white px-4 py-2 text-sm font-semibold text-blue-600 shadow-sm transition hover:bg-blue-50"
+              <>
+                <div className="lg:hidden">
+                  <div className="relative mx-auto mt-2 h-[460px] max-w-sm">
+                    {networkSwipe.visibleIndices.map((programIndex, stackPosition) => {
+                      const program = networkingPrograms[programIndex];
+                      const Icon = program.icon;
+                      const isTopCard = stackPosition === 0;
+                      const depth = stackPosition;
+                      const scale = 1 - depth * 0.05;
+                      const translateY = depth * 18;
+                      const stackedOpacity = isTopCard ? 1 : 0.9 - depth * 0.12;
+                      const cardStyle: React.CSSProperties = isTopCard
+                        ? {
+                            transform: `translateX(${networkSwipe.dragOffset}px) rotate(${networkSwipe.dragOffset * 0.04}deg)`,
+                            transition: networkSwipe.isDragging ? 'none' : 'transform 0.35s ease, opacity 0.25s ease',
+                            opacity: networkSwipe.isAnimating ? 0 : 1,
+                            zIndex: networkSwipe.visibleIndices.length - depth,
+                          }
+                        : {
+                            transform: `scale(${scale}) translateY(${translateY}px)`,
+                            transition: 'transform 0.35s ease, opacity 0.35s ease',
+                            opacity: stackedOpacity,
+                            zIndex: networkSwipe.visibleIndices.length - depth,
+                          };
+                      const dragStrength = Math.min(Math.abs(networkSwipe.dragOffset) / 150, 1);
+                      const isPositive = networkSwipe.dragOffset > 0;
+
+                      return (
+                        <article
+                          key={`${program.id}-${programIndex}`}
+                          ref={
+                            isTopCard
+                              ? (node) => {
+                                  networkSwipe.topCardRef.current = node;
+                                }
+                              : undefined
+                          }
+                          className={`absolute inset-0 flex flex-col overflow-hidden rounded-[32px] shadow-[0_25px_60px_rgba(30,64,175,0.18)] ring-1 ring-black/5 ${
+                            isTopCard ? 'cursor-grab touch-pan-y active:cursor-grabbing' : 'pointer-events-none'
+                          }`}
+                          style={cardStyle}
+                          onPointerDown={isTopCard ? networkSwipe.handlePointerDown : undefined}
+                          onPointerMove={isTopCard ? networkSwipe.handlePointerMove : undefined}
+                          onPointerUp={isTopCard ? networkSwipe.handlePointerUp : undefined}
+                          onPointerCancel={isTopCard ? networkSwipe.handlePointerCancel : undefined}
                         >
-                          {program.cta.label}
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
-                      )}
-                    </article>
-                  );
-                })}
-                <article className="rounded-3xl bg-gradient-to-br from-blue-600 to-indigo-600 p-6 text-white shadow-xl">
-                  <h3 className="text-lg font-semibold">卒業生登録フォーム</h3>
-                  <p className="mt-3 text-sm text-blue-100">
-                    近況報告、イベント情報、キャリア情報をお寄せください。会報やメーリングリストでもご紹介します。
-                  </p>
-                  <a
-                    href="https://keen-whale-2c2.notion.site/2826e2231c40807aa844e554e4404588?pvs=105"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-5 inline-flex items-center justify-center rounded-xl bg-white px-4 py-2 text-sm font-semibold text-blue-600 transition hover:bg-blue-50"
-                  >
-                    卒業生登録フォームを開く
-                    <ExternalLink className="ml-2 h-4 w-4" />
-                  </a>
-                  <div className="mt-6 rounded-2xl bg-white/15 p-4 text-sm">
-                    <p className="flex items-center gap-2">
-                      <MessageCircle className="h-4 w-4" />
-                      フォーム記入後は事務局よりご連絡差し上げます。
-                    </p>
-                    <p className="mt-2 flex items-center gap-2">
-                      <Mail className="h-4 w-4" />
-                      <a href="mailto:ounankai@gmail.com" className="underline">
-                        ounankai@gmail.com
-                      </a>
-                    </p>
+                          <img src={program.image} alt={program.title} className="absolute inset-0 h-full w-full object-cover" />
+                          <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/35 to-black/80" />
+                          {isTopCard && (
+                            <div
+                              className="pointer-events-none absolute inset-0 transition-opacity duration-200"
+                              style={{ opacity: dragStrength }}
+                            >
+                              <div
+                                className={`absolute inset-0 rounded-[32px] bg-gradient-to-br ${
+                                  isPositive ? 'from-emerald-400/40 via-emerald-400/10 to-transparent' : 'from-rose-500/35 via-rose-500/10 to-transparent'
+                                }`}
+                              />
+                              <div
+                                className={`absolute top-6 ${isPositive ? 'right-6' : 'left-6'} rounded-full bg-white/90 px-4 py-2 text-xs font-semibold text-blue-700 shadow-lg`}
+                              >
+                                {isPositive ? 'INTERESTED' : 'PASS'}
+                              </div>
+                            </div>
+                          )}
+                          <div className="relative z-10 flex h-full flex-col justify-between p-6">
+                            <div className="flex items-start justify-between">
+                              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/85 text-blue-600 shadow">
+                                <Icon className="h-6 w-6" />
+                              </span>
+                              <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-medium uppercase tracking-wider text-white backdrop-blur-sm">
+                                Network
+                              </span>
+                            </div>
+                            <div className="space-y-4 text-white">
+                              <div>
+                                <h3 className="text-2xl font-bold">{program.title}</h3>
+                                <p className="mt-1 text-xs font-medium uppercase tracking-wider text-blue-100">Ounan Alumni Network</p>
+                              </div>
+                              <div className="rounded-2xl bg-white/10 p-4 backdrop-blur-sm">
+                                <p className="text-sm leading-relaxed text-white/90">{program.description}</p>
+                              </div>
+                              <div className="flex items-center justify-between gap-3">
+                                {program.cta ? (
+                                  <Link
+                                    to={program.cta.href}
+                                    data-swipe-ignore="true"
+                                    className="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-xs font-semibold text-white backdrop-blur-sm transition hover:bg-white/30"
+                                  >
+                                    {program.cta.label}
+                                    <ArrowRight className="h-4 w-4" />
+                                  </Link>
+                                ) : (
+                                  <div />
+                                )}
+                                <button
+                                  type="button"
+                                  data-swipe-ignore="true"
+                                  onClick={() => networkSwipe.handleManualSwipe('right')}
+                                  className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-blue-600 shadow-lg transition hover:bg-blue-50"
+                                >
+                                  <Icon className="h-4 w-4" />
+                                  参加する
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </article>
+                      );
+                    })}
                   </div>
-                </article>
-              </div>
+                  <div className="mt-6 flex items-center justify-between px-2">
+                    <span className="text-xs font-semibold text-blue-600">
+                      {networkSwipe.swipeIndex + 1} / {networkingPrograms.length}
+                    </span>
+                    <div className="flex items-center gap-4">
+                      <button
+                        type="button"
+                        onClick={() => networkSwipe.handleManualSwipe('left')}
+                        disabled={networkSwipe.isAnimating || networkingPrograms.length === 0}
+                        className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-rose-500 shadow-lg ring-1 ring-rose-100 transition hover:bg-rose-50 disabled:opacity-40"
+                      >
+                        <X className="h-6 w-6" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => networkSwipe.handleManualSwipe('right')}
+                        disabled={networkSwipe.isAnimating || networkingPrograms.length === 0}
+                        className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 text-white shadow-xl ring-4 ring-blue-200/60 transition hover:from-blue-600 hover:to-indigo-500 disabled:opacity-40"
+                      >
+                        <Heart className="h-7 w-7" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="hidden gap-6 lg:grid lg:grid-cols-2">
+                  {networkingPrograms.map((program) => {
+                    const Icon = program.icon;
+                    return (
+                      <article key={program.id} className="flex flex-col gap-4 rounded-3xl border border-blue-100 bg-blue-50/60 p-6 shadow-inner">
+                        <div className="flex items-center gap-3">
+                          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg">
+                            <Icon className="h-6 w-6" />
+                          </span>
+                          <div>
+                            <h3 className="text-lg font-semibold text-blue-800">{program.title}</h3>
+                            <p className="text-xs font-medium uppercase tracking-wider text-blue-500">Ounan Alumni Network</p>
+                          </div>
+                        </div>
+                        <p className="text-sm leading-relaxed text-blue-900">{program.description}</p>
+                        {program.cta && (
+                          <Link
+                            to={program.cta.href}
+                            className="inline-flex items-center justify-center rounded-xl bg-white px-4 py-2 text-sm font-semibold text-blue-600 shadow-sm transition hover:bg-blue-50"
+                          >
+                            {program.cta.label}
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                          </Link>
+                        )}
+                      </article>
+                    );
+                  })}
+                  <article className="rounded-3xl bg-gradient-to-br from-blue-600 to-indigo-600 p-6 text-white shadow-xl">
+                    <h3 className="text-lg font-semibold">卒業生登録フォーム</h3>
+                    <p className="mt-3 text-sm text-blue-100">
+                      近況報告、イベント情報、キャリア情報をお寄せください。会報やメーリングリストでもご紹介します。
+                    </p>
+                    <a
+                      href="https://keen-whale-2c2.notion.site/2826e2231c40807aa844e554e4404588?pvs=105"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-5 inline-flex items-center justify-center rounded-xl bg-white px-4 py-2 text-sm font-semibold text-blue-600 transition hover:bg-blue-50"
+                    >
+                      卒業生登録フォームを開く
+                      <ExternalLink className="ml-2 h-4 w-4" />
+                    </a>
+                    <div className="mt-6 rounded-2xl bg-white/15 p-4 text-sm">
+                      <p className="flex items-center gap-2">
+                        <MessageCircle className="h-4 w-4" />
+                        フォーム記入後は事務局よりご連絡差し上げます。
+                      </p>
+                      <p className="mt-2 flex items-center gap-2">
+                        <Mail className="h-4 w-4" />
+                        <a href="mailto:ounankai@gmail.com" className="underline">
+                          ounankai@gmail.com
+                        </a>
+                      </p>
+                    </div>
+                  </article>
+                </div>
+              </>
             )}
           </div>
         </section>
