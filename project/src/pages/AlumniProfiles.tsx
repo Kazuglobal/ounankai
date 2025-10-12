@@ -20,6 +20,9 @@ import {
   Megaphone,
   Handshake,
   Mail,
+  ChevronLeft,
+  ChevronRight,
+  Hand,
 } from 'lucide-react';
 import { useSwipeCards } from '../hooks/useSwipeCards';
 
@@ -320,6 +323,7 @@ const AlumniProfiles: React.FC = () => {
   const [selectedIndustry, setSelectedIndustry] = useState('all');
   const [selectedLocation, setSelectedLocation] = useState('all');
   const [showConnectionModal, setShowConnectionModal] = useState(false);
+  const [showSwipeHint, setShowSwipeHint] = useState(true);
 
   const filteredAlumni = useMemo(
     () =>
@@ -337,9 +341,18 @@ const AlumniProfiles: React.FC = () => {
   );
 
   // Initialize swipe cards for each tab
-  const careerSwipe = useSwipeCards({ items: filteredAlumni });
-  const businessSwipe = useSwipeCards({ items: businessHighlights });
-  const networkSwipe = useSwipeCards({ items: networkingPrograms });
+  const careerSwipe = useSwipeCards({
+    items: filteredAlumni,
+    onSwipe: () => setShowSwipeHint(false),
+  });
+  const businessSwipe = useSwipeCards({
+    items: businessHighlights,
+    onSwipe: () => setShowSwipeHint(false),
+  });
+  const networkSwipe = useSwipeCards({
+    items: networkingPrograms,
+    onSwipe: () => setShowSwipeHint(false),
+  });
 
   const activeTabMeta = tabs.find((tab) => tab.id === activeTab);
 
@@ -350,6 +363,15 @@ const AlumniProfiles: React.FC = () => {
 
     return () => window.clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    setShowSwipeHint(true);
+    const hintTimer = window.setTimeout(() => {
+      setShowSwipeHint(false);
+    }, 4000);
+
+    return () => window.clearTimeout(hintTimer);
+  }, [activeTab]);
 
   useEffect(() => {
     if (!showConnectionModal) {
@@ -493,6 +515,20 @@ const AlumniProfiles: React.FC = () => {
                 {filteredAlumni.length > 0 ? (
                   <>
                     <div className="lg:hidden">
+                      {showSwipeHint && (
+                        <div
+                          onClick={() => setShowSwipeHint(false)}
+                          className="mb-4 cursor-pointer animate-pulse rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-500 p-4 text-white shadow-lg transition hover:from-blue-600 hover:to-indigo-600"
+                        >
+                          <div className="flex items-center justify-center gap-3">
+                            <ChevronLeft className="h-6 w-6 animate-bounce" style={{ animationDirection: 'alternate' }} />
+                            <Hand className="h-6 w-6" />
+                            <ChevronRight className="h-6 w-6 animate-bounce" style={{ animationDirection: 'alternate' }} />
+                          </div>
+                          <p className="mt-2 text-center text-sm font-semibold">カードをスワイプして閲覧</p>
+                          <p className="mt-1 text-center text-xs text-blue-100">左右にドラッグ または ボタンをタップ</p>
+                        </div>
+                      )}
                       <div className="relative mx-auto mt-2 h-[460px] max-w-sm">
                         {careerSwipe.visibleIndices.map((profileIndex, stackPosition) => {
                           const alumni = filteredAlumni[profileIndex];
@@ -722,6 +758,20 @@ const AlumniProfiles: React.FC = () => {
             {activeTab === 'business' && (
               <>
                 <div className="lg:hidden">
+                  {showSwipeHint && (
+                    <div
+                      onClick={() => setShowSwipeHint(false)}
+                      className="mb-4 cursor-pointer animate-pulse rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-500 p-4 text-white shadow-lg transition hover:from-blue-600 hover:to-indigo-600"
+                    >
+                      <div className="flex items-center justify-center gap-3">
+                        <ChevronLeft className="h-6 w-6 animate-bounce" style={{ animationDirection: 'alternate' }} />
+                        <Hand className="h-6 w-6" />
+                        <ChevronRight className="h-6 w-6 animate-bounce" style={{ animationDirection: 'alternate' }} />
+                      </div>
+                      <p className="mt-2 text-center text-sm font-semibold">カードをスワイプして閲覧</p>
+                      <p className="mt-1 text-center text-xs text-blue-100">左右にドラッグ または ボタンをタップ</p>
+                    </div>
+                  )}
                   <div className="relative mx-auto mt-2 h-[460px] max-w-sm">
                     {businessSwipe.visibleIndices.map((businessIndex, stackPosition) => {
                       const business = businessHighlights[businessIndex];
@@ -939,6 +989,20 @@ const AlumniProfiles: React.FC = () => {
             {activeTab === 'network' && (
               <>
                 <div className="lg:hidden">
+                  {showSwipeHint && (
+                    <div
+                      onClick={() => setShowSwipeHint(false)}
+                      className="mb-4 cursor-pointer animate-pulse rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-500 p-4 text-white shadow-lg transition hover:from-blue-600 hover:to-indigo-600"
+                    >
+                      <div className="flex items-center justify-center gap-3">
+                        <ChevronLeft className="h-6 w-6 animate-bounce" style={{ animationDirection: 'alternate' }} />
+                        <Hand className="h-6 w-6" />
+                        <ChevronRight className="h-6 w-6 animate-bounce" style={{ animationDirection: 'alternate' }} />
+                      </div>
+                      <p className="mt-2 text-center text-sm font-semibold">カードをスワイプして閲覧</p>
+                      <p className="mt-1 text-center text-xs text-blue-100">左右にドラッグ または ボタンをタップ</p>
+                    </div>
+                  )}
                   <div className="relative mx-auto mt-2 h-[460px] max-w-sm">
                     {networkSwipe.visibleIndices.map((programIndex, stackPosition) => {
                       const program = networkingPrograms[programIndex];
