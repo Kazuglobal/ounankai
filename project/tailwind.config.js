@@ -6,6 +6,8 @@ export default {
       fontFamily: {
         sans: ['Noto Sans JP', 'system-ui', 'sans-serif'],
         script: ['cursive'],
+        gothic: ['"Noto Sans JP"', '"Hiragino Kaku Gothic ProN"', 'Meiryo', 'sans-serif'],
+        mincho: ['"Shippori Mincho"', '"Hiragino Mincho ProN"', 'serif'],
       },
       colors: {
         beige: {

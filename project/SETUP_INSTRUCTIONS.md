@@ -19,7 +19,8 @@
 ### 2. Gmail サービス連携 (3分)
 ```
 EmailJSダッシュボードで：
-1. 「Email Services」→「Add New Service」
+1. 「Em
+ail Services」→「Add New Service」
 2. 「Gmail」選択
 3. 「Connect Account」でounankai@gmail.com連携
 4. Service ID をコピー（例：service_abc123）

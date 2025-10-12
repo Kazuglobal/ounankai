@@ -95,49 +95,49 @@ const Home: React.FC = () => {
       title: '広告ページ',
       href: '/announcements',
       icon: Megaphone,
-      gradientFrom: 'from-yellow-200',
-      gradientTo: 'to-yellow-100',
-      iconColor: 'text-yellow-700'
+      bubbleGradient: 'from-amber-200 via-amber-100 to-yellow-200',
+      iconColor: 'text-blue-700',
+      iconBg: 'bg-white'
     },
     {
       title: '同窓会活動',
       href: '/announcements',
       icon: Users,
-      gradientFrom: 'from-blue-200',
-      gradientTo: 'to-blue-100',
-      iconColor: 'text-blue-700'
+      bubbleGradient: 'from-sky-300 via-sky-200 to-sky-200',
+      iconColor: 'text-blue-700',
+      iconBg: 'bg-white'
     },
     {
       title: '部活動報告',
       href: '/announcements',
       icon: Trophy,
-      gradientFrom: 'from-pink-200',
-      gradientTo: 'to-pink-100',
-      iconColor: 'text-pink-600'
+      bubbleGradient: 'from-pink-300 via-pink-200 to-rose-200',
+      iconColor: 'text-blue-700',
+      iconBg: 'bg-white'
     },
     {
       title: '進路概要',
       href: '/member-registration',
       icon: GraduationCap,
-      gradientFrom: 'from-indigo-200',
-      gradientTo: 'to-indigo-100',
-      iconColor: 'text-indigo-600'
+      bubbleGradient: 'from-sky-300 via-cyan-200 to-sky-200',
+      iconColor: 'text-blue-700',
+      iconBg: 'bg-white'
     },
     {
       title: '過去の会報バックナンバー',
       href: '/announcements',
       icon: BookOpen,
-      gradientFrom: 'from-green-200',
-      gradientTo: 'to-green-100',
-      iconColor: 'text-green-600'
+      bubbleGradient: 'from-emerald-300 via-teal-200 to-green-200',
+      iconColor: 'text-blue-700',
+      iconBg: 'bg-white'
     },
     {
       title: '思い出コーナー',
       href: '/gallery',
       icon: ImageIcon,
-      gradientFrom: 'from-purple-200',
-      gradientTo: 'to-purple-100',
-      iconColor: 'text-purple-600'
+      bubbleGradient: 'from-indigo-300 via-violet-200 to-purple-200',
+      iconColor: 'text-blue-700',
+      iconBg: 'bg-white'
     }
   ];
 
@@ -226,26 +226,17 @@ const Home: React.FC = () => {
                   <Link
                     key={item.id}
                     to={item.href}
-                    className="min-w-[85%] snap-center overflow-hidden rounded-3xl bg-white shadow-lg"
+                    className="relative w-[234px] shrink-0 snap-center overflow-hidden rounded-[32px] bg-white shadow-[0_16px_32px_rgba(30,64,175,0.08)] ring-1 ring-blue-50 transition-transform duration-200 hover:-translate-y-1"
                   >
-                    <div className="aspect-[4/3] w-full overflow-hidden">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                    <div className="p-4">
-                      <div className="flex items-center gap-2">
-                        <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-blue-50 text-sm font-semibold text-blue-600">
-                          {item.category}
-                        </span>
-                        <span className="text-xs font-medium text-blue-600">Ounan News</span>
-                      </div>
-                      <h3 className="mt-3 text-base font-semibold leading-snug text-gray-900">
+                    <div className="absolute inset-0 bg-gradient-to-b from-[#f3f6fb] via-[#eef2f9] to-[#e6ecf8]" />
+                    <div className="relative flex min-h-[230px] flex-col justify-end p-6">
+                      <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-blue-600 text-xs font-semibold tracking-wide text-white shadow-[0_6px_14px_rgba(30,64,175,0.25)]">
+                        {item.category}
+                      </span>
+                      <h3 className="mt-6 text-sm font-semibold leading-snug text-slate-900">
                         {item.title}
                       </h3>
-                      <p className="mt-2 text-xs text-gray-500">{item.date}</p>
+                      <p className="mt-2 text-xs text-slate-500">{item.date}</p>
                     </div>
                   </Link>
                 ))}
@@ -255,22 +246,24 @@ const Home: React.FC = () => {
 
           <section className="space-y-4">
             <h2 className="text-lg font-semibold text-gray-900">クイックアクセス</h2>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-3">
               {quickLinks.map((item) => {
                 const Icon = item.icon;
                 return (
                   <Link
                     key={item.title}
                     to={item.href}
-                    className="flex flex-col items-center rounded-3xl bg-white p-4 text-center shadow-lg transition-shadow duration-200 hover:shadow-xl"
+                    className="group relative overflow-hidden rounded-[28px] bg-white px-5 pb-6 pt-6 text-left shadow-[0_16px_32px_rgba(30,64,175,0.08)] ring-1 ring-blue-50 transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_20px_45px_rgba(30,64,175,0.14)]"
                   >
-                    <div className="relative mb-4 flex h-16 w-16 items-center justify-center">
-                      <span
-                        className={`absolute inset-0 rounded-full bg-gradient-to-br ${item.gradientFrom} ${item.gradientTo}`}
-                      />
-                      <Icon className={`relative h-7 w-7 ${item.iconColor}`} />
+                    <div
+                      className={`absolute -top-8 right-[-18px] h-32 w-32 rounded-full bg-gradient-to-br ${item.bubbleGradient} opacity-90 transition-transform duration-300 group-hover:scale-105`}
+                    />
+                    <div className="relative z-10 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-[0_10px_20px_rgba(30,64,175,0.15)]">
+                      <Icon className={`h-6 w-6 ${item.iconColor}`} />
                     </div>
-                    <p className="text-sm font-semibold text-gray-800">{item.title}</p>
+                    <p className="relative z-10 mt-5 text-xs font-semibold leading-snug text-slate-800">
+                      {item.title}
+                    </p>
                   </Link>
                 );
               })}

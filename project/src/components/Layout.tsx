@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Users, Calendar, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, Volume2, VolumeX } from 'lucide-react';
+import MobileTabBar from './MobileTabBar';
+import MobileHeader from './MobileHeader';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -100,84 +102,37 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       {/* Music Control Button */}
       <button
         onClick={toggleMusic}
-        className="fixed top-24 right-6 z-50 w-12 h-12 bg-blue-600/90 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-blue-700/90 transition-all duration-200 shadow-xl"
+        className="fixed bottom-28 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-blue-600/90 text-white shadow-xl transition-all duration-200 hover:bg-blue-700/90 backdrop-blur-sm sm:bottom-auto sm:right-6 sm:top-24"
         aria-label={isPlaying ? '音楽を停止' : '音楽を再生'}
       >
         {isPlaying ? <Volume2 className="w-6 h-6" /> : <VolumeX className="w-6 h-6" />}
       </button>
 
       {/* Navigation */}
-      <header className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-white/95 backdrop-blur-sm shadow-lg' 
-          : 'bg-transparent'
-      }`}>
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20 sm:h-24 md:h-28 lg:h-32 xl:h-36 gap-2 sm:gap-4">
-            {/* Logo */}
-            <Link to="/" className="flex items-center">
-              <img 
-                src="/images/logo-ounankai.png" 
-                alt="青森県立八戸西高等学校同窓会奥南会" 
-                className="h-16 sm:h-20 md:h-24 lg:h-28 xl:h-32 w-auto max-h-full"
-              />
-            </Link>
-
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-4 xl:space-x-6">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className={`px-3 xl:px-4 py-2 rounded-full text-xs xl:text-sm font-medium transition-all duration-200 whitespace-nowrap ${
-                    location.pathname === item.href
-                      ? 'bg-blue-600 text-white shadow-lg'
-                      : 'text-gray-700 hover:bg-white hover:text-blue-600 hover:shadow-md'
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-
-            {/* Tablet Navigation */}
-            <div className="hidden md:flex lg:hidden items-center space-x-2">
-              {navigation.slice(0, 5).map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className={`px-2 py-2 rounded-full text-xs font-medium transition-all duration-200 ${
-                    location.pathname === item.href
-                      ? 'bg-blue-600 text-white shadow-lg'
-                      : 'text-gray-700 hover:bg-white hover:text-blue-600 hover:shadow-md'
-                  }`}
-                >
-                  {item.name === '役員名簿' ? '役員' : (item.name.length > 3 ? item.name.substring(0, 3) + '...' : item.name)}
-                </Link>
-              ))}
-            </div>
-
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 rounded-lg bg-white shadow-md flex-shrink-0"
-            >
-              {isMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
-            </button>
-          </div>
-
-          {/* Mobile Navigation */}
-          {isMenuOpen && (
-            <div className="md:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-sm shadow-lg z-40">
-              <div className="px-4 py-4 space-y-2">
+      <header
+        className={`z-50 w-full transition-all duration-300 ${
+          isScrolled ? 'lg:bg-white/95 lg:backdrop-blur-sm lg:shadow-lg' : 'lg:bg-transparent'
+        } lg:fixed`}
+      >
+        <div className="hidden lg:block">
+          <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="flex h-24 items-center justify-between gap-4 xl:h-32">
+              <Link to="/" className="flex items-center">
+                <img
+                  src="/images/logo-ounankai.png"
+                  alt="青森県立八戸西高等学校同窓会奥南会"
+                  className="h-20 w-auto xl:h-28"
+                />
+              </Link>
+              <div className="flex items-center space-x-4 xl:space-x-6">
                 {navigation.map((item) => (
                   <Link
                     key={item.name}
                     to={item.href}
-                    className={`block px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                    className={`rounded-full px-3 py-2 text-sm font-medium transition-all duration-200 ${
                       location.pathname === item.href
-                        ? 'bg-blue-600 text-white'
-                        : 'text-gray-700 hover:bg-gray-50'
+                        ? 'bg-blue-600 text-white shadow-lg'
+                        : 'text-gray-700 hover:bg-white hover:text-blue-600 hover:shadow-md'
                     }`}
                   >
                     {item.name}
@@ -185,18 +140,53 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 ))}
               </div>
             </div>
+          </nav>
+        </div>
+
+        <div className="lg:hidden">
+          <div className="relative">
+            <MobileHeader />
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="absolute right-4 top-4 rounded-2xl bg-white/95 p-2 shadow-md transition hover:bg-white"
+              aria-label="メニュー"
+            >
+              {isMenuOpen ? <X className="h-6 w-6 text-blue-600" /> : <Menu className="h-6 w-6 text-blue-600" />}
+            </button>
+          </div>
+          {isMenuOpen && (
+            <div className="space-y-2 bg-white/95 px-4 py-4 shadow-lg backdrop-blur-md">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={`block rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 ${
+                    location.pathname === item.href
+                      ? 'bg-blue-600 text-white shadow-md'
+                      : 'text-gray-700 hover:bg-blue-50'
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </div>
           )}
-        </nav>
+        </div>
       </header>
 
       {/* Main Content */}
-      <main className="pt-20 sm:pt-24 md:pt-28 lg:pt-32 xl:pt-36">
+      <main className="pb-36 pt-4 sm:pt-6 lg:pb-0 lg:pt-36 xl:pt-40">
         {children}
       </main>
 
+      {/* Mobile Tab Bar */}
+      <div className="fixed bottom-0 left-1/2 z-40 w-full -translate-x-1/2 px-4 pb-3 lg:hidden">
+        <MobileTabBar />
+      </div>
+
       {/* Footer */}
       <footer className="bg-white rounded-t-3xl mt-20 shadow-2xl">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-32 lg:pb-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Logo and Description */}
             <div className="lg:col-span-2">
