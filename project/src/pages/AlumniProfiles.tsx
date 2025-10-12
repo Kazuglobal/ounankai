@@ -21,6 +21,7 @@ import {
   Handshake,
   Mail,
 } from 'lucide-react';
+import { useSwipeCards } from '../hooks/useSwipeCards';
 
 type TabId = 'career' | 'business' | 'network';
 
@@ -284,12 +285,15 @@ const businessHighlights: BusinessHighlight[] = [
   },
 ];
 
-const networkingPrograms: ProgramHighlight[] = [
+type ProgramHighlightWithImage = ProgramHighlight & { image: string };
+
+const networkingPrograms: ProgramHighlightWithImage[] = [
   {
     id: 'mentoring',
     title: 'キャリアメンタリング',
     description: '先輩卒業生が就職・転職・起業をサポート。オンライン面談の調整も可能です。',
     icon: Handshake,
+    image: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
     cta: { label: 'メンター登録・相談', href: '/contact' },
   },
   {
@@ -297,6 +301,7 @@ const networkingPrograms: ProgramHighlight[] = [
     title: '交流イベント & オンラインサロン',
     description: '年3回のリアル交流会と、月1回のオンライン勉強会で全国の同窓生と交流。',
     icon: Megaphone,
+    image: 'https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
     cta: { label: 'イベント情報を見る', href: '/announcements' },
   },
   {
@@ -304,6 +309,7 @@ const networkingPrograms: ProgramHighlight[] = [
     title: '同窓会サポートデスク',
     description: '転居・転職・起業などのお知らせや、母校へのサポートについてお気軽にご相談ください。',
     icon: Mail,
+    image: 'https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
     cta: { label: 'お問い合わせ', href: '/contact' },
   },
 ];
@@ -314,15 +320,39 @@ const AlumniProfiles: React.FC = () => {
   const [selectedIndustry, setSelectedIndustry] = useState('all');
   const [selectedLocation, setSelectedLocation] = useState('all');
   const [showConnectionModal, setShowConnectionModal] = useState(false);
-  const [swipeIndex, setSwipeIndex] = useState(0);
-  const [dragOffsetState, setDragOffsetState] = useState(0);
-  const [isDraggingCard, setIsDraggingCard] = useState(false);
-  const [isAnimatingCard, setIsAnimatingCard] = useState(false);
-  const dragOffsetRef = useRef(0);
-  const startXRef = useRef<number | null>(null);
-  const pointerIdRef = useRef<number | null>(null);
-  const animationTimeoutRef = useRef<number | undefined>();
-  const topCardRef = useRef<HTMLDivElement | null>(null);
+
+  // Career tab swipe state
+  const [careerSwipeIndex, setCareerSwipeIndex] = useState(0);
+  const [careerDragOffsetState, setCareerDragOffsetState] = useState(0);
+  const [careerIsDragging, setCareerIsDragging] = useState(false);
+  const [careerIsAnimating, setCareerIsAnimating] = useState(false);
+  const careerDragOffsetRef = useRef(0);
+  const careerStartXRef = useRef<number | null>(null);
+  const careerPointerIdRef = useRef<number | null>(null);
+  const careerAnimationTimeoutRef = useRef<number | undefined>();
+  const careerTopCardRef = useRef<HTMLDivElement | null>(null);
+
+  // Business tab swipe state
+  const [businessSwipeIndex, setBusinessSwipeIndex] = useState(0);
+  const [businessDragOffsetState, setBusinessDragOffsetState] = useState(0);
+  const [businessIsDragging, setBusinessIsDragging] = useState(false);
+  const [businessIsAnimating, setBusinessIsAnimating] = useState(false);
+  const businessDragOffsetRef = useRef(0);
+  const businessStartXRef = useRef<number | null>(null);
+  const businessPointerIdRef = useRef<number | null>(null);
+  const businessAnimationTimeoutRef = useRef<number | undefined>();
+  const businessTopCardRef = useRef<HTMLDivElement | null>(null);
+
+  // Network tab swipe state
+  const [networkSwipeIndex, setNetworkSwipeIndex] = useState(0);
+  const [networkDragOffsetState, setNetworkDragOffsetState] = useState(0);
+  const [networkIsDragging, setNetworkIsDragging] = useState(false);
+  const [networkIsAnimating, setNetworkIsAnimating] = useState(false);
+  const networkDragOffsetRef = useRef(0);
+  const networkStartXRef = useRef<number | null>(null);
+  const networkPointerIdRef = useRef<number | null>(null);
+  const networkAnimationTimeoutRef = useRef<number | undefined>();
+  const networkTopCardRef = useRef<HTMLDivElement | null>(null);
 
   const setDragOffset = useCallback((value: number) => {
     dragOffsetRef.current = value;
