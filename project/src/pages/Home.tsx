@@ -192,17 +192,17 @@ const Home: React.FC = () => {
             </div>
           </section>
 
-          <section className="rounded-3xl bg-gradient-to-br from-[#ffe5f4] via-[#f0e8ff] to-[#dbe9ff] p-6 shadow-lg">
-            <span className="inline-flex items-center rounded-full bg-pink-500 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white shadow-sm">
+          <section className="rounded-3xl bg-gradient-to-br from-[#ffe5f4] via-[#f0e8ff] to-[#dbe9ff] p-5 shadow-lg">
+            <span className="inline-flex items-center rounded-full bg-pink-500 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-white shadow-sm">
               NEW
             </span>
-            <h2 className="mt-4 text-xl font-semibold text-gray-900">広告ギャラリー公開中</h2>
-            <p className="mt-3 text-sm leading-relaxed text-gray-600">
-              同窓会の皆さま向けの最新広告をまとめました。スワイプで次の広告をチェックできます。
+            <h2 className="mt-3 text-lg font-semibold text-gray-900">広告ギャラリー公開中</h2>
+            <p className="mt-2 text-sm leading-relaxed text-gray-600">
+              最新広告をまとめました。
             </p>
             <Link
               to="/announcements"
-              className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-blue-600"
+              className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-blue-600"
             >
               詳細を見る
               <ArrowRight className="h-4 w-4" />
@@ -479,18 +479,12 @@ const Home: React.FC = () => {
               同窓生とのつながりが、新たな人脈を築き、転職の機会を広げ、人生の可能性を無限に広げていきます。
               先輩・後輩たちとつながろう！
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <div className="flex justify-center">
               <Link
                 to="/member-registration"
                 className="bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-50 transition-all duration-200 transform hover:scale-105 border-2 border-white shadow-lg"
               >
-                メンバー登録
-              </Link>
-              <Link
-                to="/contact"
-                className="bg-blue-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-400 transition-all duration-200 transform hover:scale-105 border-2 border-blue-400"
-              >
-                お問い合わせ
+                メンバー登録をする
               </Link>
             </div>
           </div>

@@ -548,36 +548,29 @@ const AlumniProfiles: React.FC = () => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 text-white shadow-2xl">
           <div className="absolute inset-0 opacity-30 mix-blend-overlay bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDMwaDEybC0yIDRoMTZ6Ii8+PC9nPjwvZz48L3N2Zz4=')]"></div>
-          <div className="relative px-6 py-12 sm:px-10 sm:py-16 lg:px-16">
-            <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+          <div className="relative px-5 py-8 sm:px-10 sm:py-12 lg:px-16 lg:py-16">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
               <div className="max-w-2xl">
-                <span className="inline-flex items-center rounded-full bg-white/20 px-4 py-1.5 text-sm font-semibold tracking-wide">
+                <span className="inline-flex items-center rounded-full bg-white/20 px-3 py-1 text-xs font-semibold tracking-wide">
                   卒業生とつながろう
                 </span>
-                <h1 className="mt-4 text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-                  同窓生とつながり、新しい可能性を広げましょう
+                <h1 className="mt-3 text-2xl font-bold leading-tight sm:text-4xl lg:text-5xl">
+                  同窓生とつながり、新しい可能性を
                 </h1>
-                <p className="mt-6 text-base leading-relaxed text-blue-100 sm:text-lg">
-                  国内外で活躍する卒業生のキャリアと活動を紹介しています。メンタリング、交流イベント、起業支援などさまざまな機会をご用意しています。
+                <p className="mt-3 text-sm leading-relaxed text-blue-100 sm:text-base lg:text-lg">
+                  国内外で活躍する卒業生のキャリアを紹介。メンタリングや交流イベントで新しいつながりを。
                 </p>
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:gap-3">
                   <Link
                     to="/member-registration"
-                    className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-blue-600 transition hover:bg-blue-50"
+                    className="inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-blue-600 transition hover:bg-blue-50"
                   >
                     メンバー登録をする
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
-                  <Link
-                    to="/contact"
-                    className="inline-flex items-center justify-center rounded-full bg-white/20 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/25"
-                  >
-                    ご相談はこちら
-                    <Mail className="ml-2 h-4 w-4" />
-                  </Link>
                 </div>
               </div>
-              <div className="grid w-full max-w-sm grid-cols-2 gap-4 rounded-3xl bg-white/10 p-5 text-sm backdrop-blur-md sm:max-w-md">
+              <div className="hidden lg:grid w-full max-w-sm grid-cols-2 gap-4 rounded-3xl bg-white/10 p-5 text-sm backdrop-blur-md">
                 <div className="rounded-2xl bg-white/20 p-4 text-white shadow-inner">
                   <p className="text-xs uppercase tracking-wide text-blue-100">交流登録数</p>
                   <p className="mt-2 text-3xl font-bold">1,250+</p>
