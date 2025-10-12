@@ -23,6 +23,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Hand,
+  Sparkles,
+  Newspaper,
 } from 'lucide-react';
 import { useSwipeCards } from '../hooks/useSwipeCards';
 
@@ -62,6 +64,26 @@ type ProgramHighlight = {
     label: string;
     href: string;
   };
+};
+
+type JobOpportunity = {
+  id: string;
+  title: string;
+  company: string;
+  location: string;
+  type: string;
+  description: string;
+  postedBy: string;
+  salary?: string;
+};
+
+type AlumniTopic = {
+  id: string;
+  title: string;
+  date: string;
+  category: string;
+  description: string;
+  url?: string;
 };
 
 const tabs: { id: TabId; label: string; description: string }[] = [
@@ -314,6 +336,74 @@ const networkingPrograms: ProgramHighlightWithImage[] = [
     icon: Mail,
     image: 'https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
     cta: { label: 'お問い合わせ', href: '/contact' },
+  },
+];
+
+const jobOpportunities: JobOpportunity[] = [
+  {
+    id: 'job1',
+    title: 'Webデザイナー',
+    company: '株式会社デザインラボ',
+    location: '東京都渋谷区（リモート可）',
+    type: '正社員',
+    description: 'UI/UXデザインの経験者歓迎。同窓生が経営するスタートアップで、地方創生プロジェクトに携われます。',
+    postedBy: '小林 彩乃（2012年卒）',
+    salary: '年収400〜600万円',
+  },
+  {
+    id: 'job2',
+    title: 'ソフトウェアエンジニア',
+    company: 'テックイノベート株式会社',
+    location: '大阪府（フルリモート）',
+    type: '正社員・契約社員',
+    description: 'AIプロダクト開発に興味のある方を募集。同窓生チームと一緒に最先端技術に挑戦できます。',
+    postedBy: '田中 さくら（2018年卒）',
+    salary: '年収500〜800万円',
+  },
+  {
+    id: 'job3',
+    title: '農業スタッフ',
+    company: '遠野グリーンファーム',
+    location: '岩手県遠野市',
+    type: '正社員・アルバイト',
+    description: 'スマート農業に興味のある方歓迎。未経験でも丁寧に指導します。地域おこし協力隊との連携も可能。',
+    postedBy: '田村 亮（2005年卒）',
+    salary: '月給20万円〜（経験による）',
+  },
+];
+
+const alumniTopics: AlumniTopic[] = [
+  {
+    id: 'topic1',
+    title: '卒業生ネットワークインタビュー',
+    date: '2024年03月12日',
+    category: 'インタビュー',
+    description: '全国で活躍する同窓生にインタビュー。キャリアの選択や地元への想いを語っていただきました。',
+    url: '/announcements',
+  },
+  {
+    id: 'topic2',
+    title: '春の同窓会イベント開催報告',
+    date: '2024年04月05日',
+    category: 'イベント',
+    description: '東京・大阪・青森の3会場で同時開催された春の同窓会の様子をレポート。100名以上が参加しました。',
+    url: '/announcements',
+  },
+  {
+    id: 'topic3',
+    title: '卒業生起業家特集',
+    date: '2024年02月20日',
+    category: '特集',
+    description: '地元で起業した卒業生3名の事業紹介。地域貢献と新しいビジネスモデルへの挑戦について。',
+    url: '/announcements',
+  },
+  {
+    id: 'topic4',
+    title: 'メンタリングプログラム開始',
+    date: '2024年01月15日',
+    category: 'お知らせ',
+    description: 'キャリア相談や就職活動をサポートする新しいメンタリングプログラムがスタートしました。',
+    url: '/contact',
   },
 ];
 
@@ -1248,6 +1338,102 @@ const AlumniProfiles: React.FC = () => {
                       </article>
                     );
                   })}
+
+                  <article className="col-span-2 rounded-3xl border border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 p-6 shadow-lg">
+                    <div className="mb-4 flex items-center gap-3">
+                      <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-lg">
+                        <Sparkles className="h-6 w-6" />
+                      </span>
+                      <div>
+                        <h3 className="text-lg font-semibold text-amber-900">同窓生からの求人情報</h3>
+                        <p className="text-xs font-medium uppercase tracking-wider text-amber-600">Job Opportunities from Alumni</p>
+                      </div>
+                    </div>
+                    <div className="grid gap-4 md:grid-cols-3">
+                      {jobOpportunities.map((job) => (
+                        <div key={job.id} className="rounded-2xl border border-amber-200 bg-white p-4 shadow-sm transition hover:shadow-md">
+                          <div className="mb-3">
+                            <h4 className="font-semibold text-gray-900">{job.title}</h4>
+                            <p className="mt-1 text-xs text-amber-600">{job.company}</p>
+                          </div>
+                          <div className="space-y-2 text-xs text-gray-600">
+                            <p className="flex items-center gap-2">
+                              <MapPin className="h-3.5 w-3.5 text-amber-500" />
+                              {job.location}
+                            </p>
+                            <p className="flex items-center gap-2">
+                              <Briefcase className="h-3.5 w-3.5 text-amber-500" />
+                              {job.type}
+                            </p>
+                            {job.salary && (
+                              <p className="font-medium text-amber-700">{job.salary}</p>
+                            )}
+                          </div>
+                          <p className="mt-3 text-xs leading-relaxed text-gray-600">{job.description}</p>
+                          <p className="mt-3 text-xs text-gray-500">掲載: {job.postedBy}</p>
+                          <Link
+                            to="/contact"
+                            className="mt-3 inline-flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 px-3 py-2 text-xs font-semibold text-white shadow-sm transition hover:from-amber-600 hover:to-orange-600"
+                          >
+                            応募・問い合わせ
+                            <ArrowRight className="ml-2 h-3.5 w-3.5" />
+                          </Link>
+                        </div>
+                      ))}
+                    </div>
+                    <p className="mt-4 text-center text-xs text-amber-700">
+                      求人情報の掲載をご希望の同窓生の方は
+                      <Link to="/contact" className="ml-1 font-semibold underline">
+                        こちらからお問い合わせください
+                      </Link>
+                    </p>
+                  </article>
+
+                  <article className="col-span-2 rounded-3xl border border-blue-200 bg-gradient-to-br from-blue-50 to-indigo-50 p-6 shadow-lg">
+                    <div className="mb-4 flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-lg">
+                          <Newspaper className="h-6 w-6" />
+                        </span>
+                        <div>
+                          <h3 className="text-lg font-semibold text-blue-900">卒業生トピックス</h3>
+                          <p className="text-xs font-medium uppercase tracking-wider text-blue-600">Alumni Topics</p>
+                        </div>
+                      </div>
+                      <Link
+                        to="/announcements"
+                        className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 transition hover:text-blue-700"
+                      >
+                        もっと見る
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </div>
+                    <div className="space-y-3">
+                      {alumniTopics.map((topic) => (
+                        <Link
+                          key={topic.id}
+                          to={topic.url || '/announcements'}
+                          className="flex items-start gap-4 rounded-2xl border border-blue-200 bg-white p-4 transition hover:border-blue-300 hover:shadow-md"
+                        >
+                          <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 text-white shadow">
+                            <Newspaper className="h-6 w-6" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="mb-1 flex items-center gap-2">
+                              <span className="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-700">
+                                {topic.category}
+                              </span>
+                              <span className="text-xs text-gray-500">{topic.date}</span>
+                            </div>
+                            <h4 className="font-semibold text-gray-900">{topic.title}</h4>
+                            <p className="mt-1 text-sm text-gray-600">{topic.description}</p>
+                          </div>
+                          <ArrowRight className="h-5 w-5 flex-shrink-0 text-blue-500" />
+                        </Link>
+                      ))}
+                    </div>
+                  </article>
+
                   <article className="rounded-3xl bg-gradient-to-br from-blue-600 to-indigo-600 p-6 text-white shadow-xl">
                     <h3 className="text-lg font-semibold">卒業生登録フォーム</h3>
                     <p className="mt-3 text-sm text-blue-100">

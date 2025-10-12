@@ -12,7 +12,8 @@ import {
   Trophy,
   GraduationCap,
   BookOpen,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Newspaper
 } from 'lucide-react';
 
 const Home: React.FC = () => {
@@ -138,6 +139,41 @@ const Home: React.FC = () => {
       bubbleGradient: 'from-indigo-300 via-violet-200 to-purple-200',
       iconColor: 'text-blue-700',
       iconBg: 'bg-white'
+    }
+  ];
+
+  const alumniTopics = [
+    {
+      id: 'topic1',
+      title: '卒業生ネットワークインタビュー',
+      date: '2024年03月12日',
+      category: 'インタビュー',
+      description: '全国で活躍する同窓生にインタビュー。キャリアの選択や地元への想いを語っていただきました。',
+      url: '/announcements'
+    },
+    {
+      id: 'topic2',
+      title: '春の同窓会イベント開催報告',
+      date: '2024年04月05日',
+      category: 'イベント',
+      description: '東京・大阪・青森の3会場で同時開催された春の同窓会の様子をレポート。100名以上が参加しました。',
+      url: '/announcements'
+    },
+    {
+      id: 'topic3',
+      title: '卒業生起業家特集',
+      date: '2024年02月20日',
+      category: '特集',
+      description: '地元で起業した卒業生3名の事業紹介。地域貢献と新しいビジネスモデルへの挑戦について。',
+      url: '/announcements'
+    },
+    {
+      id: 'topic4',
+      title: 'メンタリングプログラム開始',
+      date: '2024年01月15日',
+      category: 'お知らせ',
+      description: 'キャリア相談や就職活動をサポートする新しいメンタリングプログラムがスタートしました。',
+      url: '/contact'
     }
   ];
 
@@ -267,6 +303,51 @@ const Home: React.FC = () => {
                   </Link>
                 );
               })}
+            </div>
+          </section>
+
+          <section className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-lg">
+                  <Newspaper className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold text-gray-900">卒業生トピックス</h2>
+                  <p className="text-xs font-medium uppercase tracking-wider text-blue-600">ALUMNI TOPICS</p>
+                </div>
+              </div>
+              <Link
+                to="/announcements"
+                className="inline-flex items-center gap-1 text-sm font-medium text-blue-600"
+              >
+                もっと見る
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+            <div className="space-y-3">
+              {alumniTopics.map((topic) => (
+                <Link
+                  key={topic.id}
+                  to={topic.url}
+                  className="flex items-start gap-3 rounded-3xl border border-blue-100 bg-white p-4 shadow-[0_8px_20px_rgba(30,64,175,0.06)] ring-1 ring-blue-50 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(30,64,175,0.12)]"
+                >
+                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 shadow-md">
+                    <Newspaper className="h-6 w-6 text-white" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="mb-1 flex items-center gap-2">
+                      <span className="inline-flex rounded-full bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-700">
+                        {topic.category}
+                      </span>
+                      <span className="text-xs text-gray-500">{topic.date}</span>
+                    </div>
+                    <h3 className="font-semibold text-gray-900 leading-snug">{topic.title}</h3>
+                    <p className="mt-1 text-sm text-gray-600 leading-relaxed line-clamp-2">{topic.description}</p>
+                  </div>
+                  <ArrowRight className="h-5 w-5 flex-shrink-0 text-blue-500 mt-1" />
+                </Link>
+              ))}
             </div>
           </section>
         </div>
