@@ -518,15 +518,43 @@ const AlumniProfiles: React.FC = () => {
                       {showSwipeHint && (
                         <div
                           onClick={() => setShowSwipeHint(false)}
-                          className="mb-4 cursor-pointer animate-pulse rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-500 p-4 text-white shadow-lg transition hover:from-blue-600 hover:to-indigo-600"
+                          className="mb-4 cursor-pointer rounded-3xl bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600 p-6 text-white shadow-2xl transition hover:from-blue-600 hover:via-indigo-600 hover:to-purple-700"
                         >
-                          <div className="flex items-center justify-center gap-3">
-                            <ChevronLeft className="h-6 w-6 animate-bounce" style={{ animationDirection: 'alternate' }} />
-                            <Hand className="h-6 w-6" />
-                            <ChevronRight className="h-6 w-6 animate-bounce" style={{ animationDirection: 'alternate' }} />
+                          <div className="flex flex-col items-center gap-4">
+                            <div className="text-center">
+                              <p className="text-lg font-bold">スワイプして閲覧</p>
+                              <p className="mt-1 text-xs text-blue-100">カードを左右にスワイプできます</p>
+                            </div>
+
+                            <div className="relative flex items-center justify-center py-6">
+                              <ChevronLeft className="absolute left-0 h-8 w-8 animate-bounce text-white/80" style={{ animationDuration: '1s' }} />
+                              <div className="relative mx-12">
+                                <div className="h-32 w-24 rounded-2xl bg-white/20 backdrop-blur-sm shadow-xl ring-2 ring-white/30 animate-pulse" style={{ animationDuration: '2s' }} />
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                  <Hand className="h-12 w-12 animate-pulse" style={{ animationDuration: '1.5s' }} />
+                                </div>
+                              </div>
+                              <ChevronRight className="absolute right-0 h-8 w-8 animate-bounce text-white/80" style={{ animationDuration: '1s' }} />
+                            </div>
+
+                            <div className="flex items-center gap-4 text-xs">
+                              <div className="flex items-center gap-2">
+                                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
+                                  <ChevronLeft className="h-5 w-5" />
+                                </div>
+                                <span>スキップ</span>
+                              </div>
+                              <div className="h-4 w-px bg-white/30" />
+                              <div className="flex items-center gap-2">
+                                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
+                                  <ChevronRight className="h-5 w-5" />
+                                </div>
+                                <span>次へ</span>
+                              </div>
+                            </div>
+
+                            <p className="text-center text-xs text-blue-100 opacity-80">タップして閉じる</p>
                           </div>
-                          <p className="mt-2 text-center text-sm font-semibold">カードをスワイプして閲覧</p>
-                          <p className="mt-1 text-center text-xs text-blue-100">左右にドラッグ または ボタンをタップ</p>
                         </div>
                       )}
                       <div className="relative mx-auto mt-2 h-[460px] max-w-sm">
@@ -761,15 +789,43 @@ const AlumniProfiles: React.FC = () => {
                   {showSwipeHint && (
                     <div
                       onClick={() => setShowSwipeHint(false)}
-                      className="mb-4 cursor-pointer animate-pulse rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-500 p-4 text-white shadow-lg transition hover:from-blue-600 hover:to-indigo-600"
+                      className="mb-4 cursor-pointer rounded-3xl bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600 p-6 text-white shadow-2xl transition hover:from-blue-600 hover:via-indigo-600 hover:to-purple-700"
                     >
-                      <div className="flex items-center justify-center gap-3">
-                        <ChevronLeft className="h-6 w-6 animate-bounce" style={{ animationDirection: 'alternate' }} />
-                        <Hand className="h-6 w-6" />
-                        <ChevronRight className="h-6 w-6 animate-bounce" style={{ animationDirection: 'alternate' }} />
+                      <div className="flex flex-col items-center gap-4">
+                        <div className="text-center">
+                          <p className="text-lg font-bold">スワイプして閲覧</p>
+                          <p className="mt-1 text-xs text-blue-100">カードを左右にスワイプできます</p>
+                        </div>
+
+                        <div className="relative flex items-center justify-center py-6">
+                          <ChevronLeft className="absolute left-0 h-8 w-8 animate-bounce text-white/80" style={{ animationDuration: '1s' }} />
+                          <div className="relative mx-12">
+                            <div className="h-32 w-24 rounded-2xl bg-white/20 backdrop-blur-sm shadow-xl ring-2 ring-white/30 animate-pulse" style={{ animationDuration: '2s' }} />
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <Hand className="h-12 w-12 animate-pulse" style={{ animationDuration: '1.5s' }} />
+                            </div>
+                          </div>
+                          <ChevronRight className="absolute right-0 h-8 w-8 animate-bounce text-white/80" style={{ animationDuration: '1s' }} />
+                        </div>
+
+                        <div className="flex items-center gap-4 text-xs">
+                          <div className="flex items-center gap-2">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
+                              <ChevronLeft className="h-5 w-5" />
+                            </div>
+                            <span>スキップ</span>
+                          </div>
+                          <div className="h-4 w-px bg-white/30" />
+                          <div className="flex items-center gap-2">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
+                              <ChevronRight className="h-5 w-5" />
+                            </div>
+                            <span>次へ</span>
+                          </div>
+                        </div>
+
+                        <p className="text-center text-xs text-blue-100 opacity-80">タップして閉じる</p>
                       </div>
-                      <p className="mt-2 text-center text-sm font-semibold">カードをスワイプして閲覧</p>
-                      <p className="mt-1 text-center text-xs text-blue-100">左右にドラッグ または ボタンをタップ</p>
                     </div>
                   )}
                   <div className="relative mx-auto mt-2 h-[460px] max-w-sm">
@@ -992,15 +1048,43 @@ const AlumniProfiles: React.FC = () => {
                   {showSwipeHint && (
                     <div
                       onClick={() => setShowSwipeHint(false)}
-                      className="mb-4 cursor-pointer animate-pulse rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-500 p-4 text-white shadow-lg transition hover:from-blue-600 hover:to-indigo-600"
+                      className="mb-4 cursor-pointer rounded-3xl bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600 p-6 text-white shadow-2xl transition hover:from-blue-600 hover:via-indigo-600 hover:to-purple-700"
                     >
-                      <div className="flex items-center justify-center gap-3">
-                        <ChevronLeft className="h-6 w-6 animate-bounce" style={{ animationDirection: 'alternate' }} />
-                        <Hand className="h-6 w-6" />
-                        <ChevronRight className="h-6 w-6 animate-bounce" style={{ animationDirection: 'alternate' }} />
+                      <div className="flex flex-col items-center gap-4">
+                        <div className="text-center">
+                          <p className="text-lg font-bold">スワイプして閲覧</p>
+                          <p className="mt-1 text-xs text-blue-100">カードを左右にスワイプできます</p>
+                        </div>
+
+                        <div className="relative flex items-center justify-center py-6">
+                          <ChevronLeft className="absolute left-0 h-8 w-8 animate-bounce text-white/80" style={{ animationDuration: '1s' }} />
+                          <div className="relative mx-12">
+                            <div className="h-32 w-24 rounded-2xl bg-white/20 backdrop-blur-sm shadow-xl ring-2 ring-white/30 animate-pulse" style={{ animationDuration: '2s' }} />
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <Hand className="h-12 w-12 animate-pulse" style={{ animationDuration: '1.5s' }} />
+                            </div>
+                          </div>
+                          <ChevronRight className="absolute right-0 h-8 w-8 animate-bounce text-white/80" style={{ animationDuration: '1s' }} />
+                        </div>
+
+                        <div className="flex items-center gap-4 text-xs">
+                          <div className="flex items-center gap-2">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
+                              <ChevronLeft className="h-5 w-5" />
+                            </div>
+                            <span>スキップ</span>
+                          </div>
+                          <div className="h-4 w-px bg-white/30" />
+                          <div className="flex items-center gap-2">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
+                              <ChevronRight className="h-5 w-5" />
+                            </div>
+                            <span>次へ</span>
+                          </div>
+                        </div>
+
+                        <p className="text-center text-xs text-blue-100 opacity-80">タップして閉じる</p>
                       </div>
-                      <p className="mt-2 text-center text-sm font-semibold">カードをスワイプして閲覧</p>
-                      <p className="mt-1 text-center text-xs text-blue-100">左右にドラッグ または ボタンをタップ</p>
                     </div>
                   )}
                   <div className="relative mx-auto mt-2 h-[460px] max-w-sm">
