@@ -168,8 +168,8 @@ const Home: React.FC = () => {
     <div>
       {/* Mobile Layout */}
       <div className="lg:hidden">
-        <div className="space-y-10 px-4 pb-24 pt-6">
-          <section className="relative h-56 overflow-hidden rounded-3xl shadow-lg">
+        <div className="px-4 pb-0 pt-4">
+          <section className="relative h-56 overflow-hidden rounded-3xl shadow-lg mb-4">
             {heroSlides.map((slide, index) => (
               <div
                 key={index}
@@ -198,7 +198,7 @@ const Home: React.FC = () => {
             </div>
           </section>
 
-          <section className="rounded-3xl bg-gradient-to-br from-[#ffe5f4] via-[#f0e8ff] to-[#dbe9ff] p-5 shadow-lg">
+          <section className="rounded-3xl bg-gradient-to-br from-[#ffe5f4] via-[#f0e8ff] to-[#dbe9ff] p-4 shadow-lg mb-4">
             <span className="inline-flex items-center rounded-full bg-pink-500 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-white shadow-sm">
               NEW
             </span>
@@ -215,8 +215,8 @@ const Home: React.FC = () => {
             </Link>
           </section>
 
-          <section className="space-y-4">
-            <div className="flex items-center justify-between">
+          <section className="mb-4">
+            <div className="mb-2 flex items-center justify-between">
               <h2 className="text-lg font-semibold text-gray-900">ニュース</h2>
               <Link
                 to="/announcements"
@@ -250,8 +250,8 @@ const Home: React.FC = () => {
             </div>
           </section>
 
-          <section className="space-y-4">
-            <h2 className="text-lg font-semibold text-gray-900">クイックアクセス</h2>
+          <section className="mb-8">
+            <h2 className="mb-2 text-lg font-semibold text-gray-900">クイックアクセス</h2>
             <div className="grid grid-cols-3 gap-3">
               {quickLinks.map((item) => {
                 const Icon = item.icon;
@@ -276,8 +276,8 @@ const Home: React.FC = () => {
             </div>
           </section>
 
-          <section className="rounded-[20px] bg-white p-4 shadow-lg">
-            <div className="mb-4 flex items-center gap-3">
+          <section className="rounded-[20px] bg-white p-2 shadow-lg">
+            <div className="mb-2 flex items-center gap-2">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md">
                 <Newspaper className="h-6 w-6 text-white" />
               </div>
@@ -293,12 +293,12 @@ const Home: React.FC = () => {
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
-            <div className="space-y-1">
+            <div className="space-y-0.5">
               {alumniTopics.map((topic, index) => (
                 <Link
                   key={topic.id}
                   to={topic.url ?? '/announcements'}
-                  className={`group flex items-center gap-3 rounded-[10px] p-3 transition-all duration-300 ${
+                  className={`group flex items-center gap-2 rounded-[10px] p-2 transition-all duration-300 ${
                     index === 0
                       ? 'bg-blue-50/80 shadow-sm ring-1 ring-blue-100 animate-pulse'
                       : 'hover:bg-gray-100'

@@ -175,7 +175,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       </header>
 
       {/* Main Content */}
-      <main className="pb-36 pt-4 sm:pt-6 lg:pb-0 lg:pt-36 xl:pt-40">
+      <main className="pb-16 pt-4 sm:pt-6 lg:pb-0 lg:pt-36 xl:pt-40">
         {children}
       </main>
 
@@ -185,8 +185,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-white rounded-t-3xl mt-20 shadow-2xl">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-32 lg:pb-16">
+      <footer className="bg-white rounded-t-3xl mt-8 shadow-2xl">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-20 lg:pb-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Logo and Description */}
             <div className="lg:col-span-2">
