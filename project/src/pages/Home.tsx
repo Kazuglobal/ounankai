@@ -15,6 +15,11 @@ import {
   Image as ImageIcon,
   Newspaper
 } from 'lucide-react';
+import { alumniTopics } from '../data/alumniTopics';
+
+// Constants for animations and UI
+const PULSE_BAR_COUNT = 4;
+const PULSE_BAR_DELAY_STEP = 0.2; // seconds
 
 const Home: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -139,41 +144,6 @@ const Home: React.FC = () => {
       bubbleGradient: 'from-indigo-300 via-violet-200 to-purple-200',
       iconColor: 'text-blue-700',
       iconBg: 'bg-white'
-    }
-  ];
-
-  const alumniTopics = [
-    {
-      id: 'topic1',
-      title: '卒業生ネットワークインタビュー',
-      date: '2024年03月12日',
-      category: 'インタビュー',
-      description: '全国で活躍する同窓生にインタビュー。キャリアの選択や地元への想いを語っていただきました。',
-      url: '/announcements'
-    },
-    {
-      id: 'topic2',
-      title: '春の同窓会イベント開催報告',
-      date: '2024年04月05日',
-      category: 'イベント',
-      description: '東京・大阪・青森の3会場で同時開催された春の同窓会の様子をレポート。100名以上が参加しました。',
-      url: '/announcements'
-    },
-    {
-      id: 'topic3',
-      title: '卒業生起業家特集',
-      date: '2024年02月20日',
-      category: '特集',
-      description: '地元で起業した卒業生3名の事業紹介。地域貢献と新しいビジネスモデルへの挑戦について。',
-      url: '/announcements'
-    },
-    {
-      id: 'topic4',
-      title: 'メンタリングプログラム開始',
-      date: '2024年01月15日',
-      category: 'お知らせ',
-      description: 'キャリア相談や就職活動をサポートする新しいメンタリングプログラムがスタートしました。',
-      url: '/contact'
     }
   ];
 
@@ -327,48 +297,59 @@ const Home: React.FC = () => {
               {alumniTopics.map((topic, index) => (
                 <Link
                   key={topic.id}
-                  to={topic.url}
-                  className="group flex items-center gap-3 rounded-[10px] p-3 transition-all duration-300 hover:bg-gray-100"
+                  to={topic.url ?? '/announcements'}
+                  className={`group flex items-center gap-3 rounded-[10px] p-3 transition-all duration-300 ${
+                    index === 0
+                      ? 'bg-blue-50/80 shadow-sm ring-1 ring-blue-100 animate-pulse'
+                      : 'hover:bg-gray-100'
+                  }`}
+                  aria-label={`${topic.title} - ${topic.category}`}
+                  title={topic.title}
                 >
-                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-gradient-to-br from-gray-100 to-gray-200 shadow-sm">
-                    <Newspaper className="h-5 w-5 text-blue-600" />
+                  <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md shadow-sm transition-all duration-300 ${
+                    index === 0
+                      ? 'bg-gradient-to-br from-blue-500 to-indigo-500 scale-105'
+                      : 'bg-gradient-to-br from-gray-100 to-gray-200'
+                  }`}>
+                    <Newspaper className={`h-5 w-5 ${index === 0 ? 'text-white' : 'text-blue-600'}`} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="truncate text-sm font-semibold text-gray-900">{topic.title}</h3>
+                    <h3 className={`truncate text-sm font-semibold ${
+                      index === 0 ? 'text-blue-700' : 'text-gray-900'
+                    }`}>{topic.title}</h3>
                     <div className="mt-0.5 flex items-center gap-2">
-                      <span className="text-xs text-gray-500">{topic.category}</span>
-                      <span className="text-xs text-gray-400">•</span>
+                      <span className={`text-xs font-medium ${
+                        index === 0 ? 'text-blue-600' : 'text-gray-500'
+                      }`}>{topic.category}</span>
+                      <span className="text-xs text-gray-400" aria-hidden="true">•</span>
                       <span className="text-xs text-gray-400">{topic.date}</span>
                     </div>
                   </div>
                   {index === 0 ? (
-                    <div className="flex items-center gap-0.5">
-                      {[...Array(4)].map((_, i) => (
+                    <div className="flex items-center gap-0.5" aria-label="現在注目のトピック" role="status">
+                      {Array.from({ length: PULSE_BAR_COUNT }, (_, i) => (
                         <div
                           key={i}
                           className="h-7 w-0.5 rounded-full bg-blue-500"
                           style={{
-                            animation: 'pulse-bar 1s ease-in-out infinite',
-                            animationDelay: `${i * 0.2}s`
+                            animation: 'pulseBar 1s ease-in-out infinite',
+                            animationDelay: `${i * PULSE_BAR_DELAY_STEP}s`
                           }}
                         />
                       ))}
                     </div>
                   ) : (
-                    <div className="flex h-6 w-6 items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
+                    <div
+                      className="flex h-6 w-6 items-center justify-center opacity-0 transition-opacity group-hover:opacity-100"
+                      aria-label="トピックを読む"
+                      role="button"
+                    >
                       <div className="h-0 w-0 border-y-[6px] border-l-[10px] border-y-transparent border-l-gray-900" />
                     </div>
                   )}
                 </Link>
               ))}
             </div>
-            <style>{`
-              @keyframes pulse-bar {
-                0%, 100% { height: 0.5rem; }
-                25% { height: 1rem; }
-                50% { height: 1.75rem; }
-              }
-            `}</style>
           </section>
         </div>
       </div>

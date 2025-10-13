@@ -27,6 +27,7 @@ export default {
         'fade-in': 'fadeIn 0.5s ease-in-out',
         'slide-up': 'slideUp 0.5s ease-out',
         'scale-in': 'scaleIn 0.3s ease-out',
+        'pulse-bar': 'pulseBar 1s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -40,6 +41,11 @@ export default {
         scaleIn: {
           '0%': { transform: 'scale(0.95)', opacity: '0' },
           '100%': { transform: 'scale(1)', opacity: '1' },
+        },
+        pulseBar: {
+          '0%, 100%': { height: '0.5rem' },
+          '25%': { height: '1rem' },
+          '50%': { height: '1.75rem' },
         },
       },
     },
