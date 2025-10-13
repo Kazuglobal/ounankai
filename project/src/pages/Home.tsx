@@ -306,49 +306,69 @@ const Home: React.FC = () => {
             </div>
           </section>
 
-          <section className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-lg">
-                  <Newspaper className="h-5 w-5 text-white" />
-                </div>
-                <div>
-                  <h2 className="text-lg font-semibold text-gray-900">卒業生トピックス</h2>
-                  <p className="text-xs font-medium uppercase tracking-wider text-blue-600">ALUMNI TOPICS</p>
-                </div>
+          <section className="rounded-[20px] bg-white p-4 shadow-lg">
+            <div className="mb-4 flex items-center gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md">
+                <Newspaper className="h-6 w-6 text-white" />
+              </div>
+              <div className="flex-1">
+                <h2 className="text-lg font-bold text-gray-900">卒業生トピックス</h2>
+                <p className="text-xs font-medium uppercase tracking-wider text-blue-600">ALUMNI TOPICS</p>
               </div>
               <Link
                 to="/announcements"
-                className="inline-flex items-center gap-1 text-sm font-medium text-blue-600"
+                className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600"
               >
                 もっと見る
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
-            <div className="space-y-3">
-              {alumniTopics.map((topic) => (
+            <div className="space-y-1">
+              {alumniTopics.map((topic, index) => (
                 <Link
                   key={topic.id}
                   to={topic.url}
-                  className="flex items-start gap-3 rounded-3xl border border-blue-100 bg-white p-4 shadow-[0_8px_20px_rgba(30,64,175,0.06)] ring-1 ring-blue-50 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(30,64,175,0.12)]"
+                  className="group flex items-center gap-3 rounded-[10px] p-3 transition-all duration-300 hover:bg-gray-100"
                 >
-                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 shadow-md">
-                    <Newspaper className="h-6 w-6 text-white" />
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-gradient-to-br from-gray-100 to-gray-200 shadow-sm">
+                    <Newspaper className="h-5 w-5 text-blue-600" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="mb-1 flex items-center gap-2">
-                      <span className="inline-flex rounded-full bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-700">
-                        {topic.category}
-                      </span>
-                      <span className="text-xs text-gray-500">{topic.date}</span>
+                    <h3 className="truncate text-sm font-semibold text-gray-900">{topic.title}</h3>
+                    <div className="mt-0.5 flex items-center gap-2">
+                      <span className="text-xs text-gray-500">{topic.category}</span>
+                      <span className="text-xs text-gray-400">•</span>
+                      <span className="text-xs text-gray-400">{topic.date}</span>
                     </div>
-                    <h3 className="font-semibold text-gray-900 leading-snug">{topic.title}</h3>
-                    <p className="mt-1 text-sm text-gray-600 leading-relaxed line-clamp-2">{topic.description}</p>
                   </div>
-                  <ArrowRight className="h-5 w-5 flex-shrink-0 text-blue-500 mt-1" />
+                  {index === 0 ? (
+                    <div className="flex items-center gap-0.5">
+                      {[...Array(4)].map((_, i) => (
+                        <div
+                          key={i}
+                          className="h-7 w-0.5 rounded-full bg-blue-500"
+                          style={{
+                            animation: 'pulse-bar 1s ease-in-out infinite',
+                            animationDelay: `${i * 0.2}s`
+                          }}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="flex h-6 w-6 items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
+                      <div className="h-0 w-0 border-y-[6px] border-l-[10px] border-y-transparent border-l-gray-900" />
+                    </div>
+                  )}
                 </Link>
               ))}
             </div>
+            <style>{`
+              @keyframes pulse-bar {
+                0%, 100% { height: 0.5rem; }
+                25% { height: 1rem; }
+                50% { height: 1.75rem; }
+              }
+            `}</style>
           </section>
         </div>
       </div>
