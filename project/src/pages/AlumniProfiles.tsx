@@ -6,7 +6,7 @@ import {
   Heart,
   MessageCircle,
   ExternalLink,
-  X,
+  X as CloseIcon,
   Search,
   Briefcase,
   MapPin,
@@ -25,6 +25,10 @@ import {
   Hand,
   Sparkles,
   Newspaper,
+  Linkedin,
+  Facebook,
+  Instagram,
+  Twitter as XIcon,
 } from 'lucide-react';
 import { useSwipeCards } from '../hooks/useSwipeCards';
 import { alumniTopics } from '../data/alumniTopics';
@@ -44,6 +48,10 @@ type AlumniProfile = {
   description: string;
   club: string;
   highlights: string[];
+  linkedin?: string;
+  facebook?: string;
+  instagram?: string;
+  x?: string;
 };
 
 type BusinessHighlight = {
@@ -232,6 +240,10 @@ const alumniClubMap: Record<number, string> = {
 const alumniData: AlumniProfile[] = rawAlumniData.map((alumni) => ({
   ...alumni,
   club: alumniClubMap[alumni.id] ?? '部活情報は準備中',
+  linkedin: 'https://www.linkedin.com/in/example',
+  facebook: 'https://www.facebook.com/example',
+  instagram: 'https://www.instagram.com/example',
+  x: 'https://x.com/example',
 }));
 
 const industries = ['all', 'テクノロジー', 'ヘルスケア', '法律', '金融', 'メディア', 'エンジニアリング', '非営利', '航空宇宙', '飲食'];
@@ -698,7 +710,7 @@ const AlumniProfiles: React.FC = () => {
                           </div>
                         </div>
                       )}
-                      <div className="relative mx-auto mt-2 h-[540px] max-w-sm" aria-live="polite">
+                      <div className="relative mx-auto mt-2 h-[520px] max-w-sm" aria-live="polite">
                         {careerSwipe.visibleIndices.map((profileIndex, stackPosition) => {
                           const alumni = filteredAlumni[profileIndex];
                           const isTopCard = stackPosition === 0;
@@ -768,27 +780,33 @@ const AlumniProfiles: React.FC = () => {
                                   />
                                   <div
                                     className={`absolute top-6 ${isPositive ? 'right-6' : 'left-6'} rounded-full bg-white/95 px-5 py-2.5 text-sm font-bold shadow-2xl ${
-                                      isPositive ? 'text-emerald-600' : 'text-rose-600'
+                                      isPositive ? 'text-blue-600' : 'text-rose-600'
                                     }`}
                                   >
-                                    {isPositive ? '✓ つながる' : '✕ スキップ'}
+                                    {isPositive ? '✓ 詳細表示' : '✕ スキップ'}
                                   </div>
                                 </div>
                               )}
-                              <div className="relative z-10 flex h-full flex-col">
-                                <div className="flex items-start justify-between p-6 text-white">
-                                  <span className="rounded-full bg-white/85 px-4 py-1 text-xs font-semibold text-blue-700 shadow">
+                              <div className="relative z-10 flex h-full flex-col p-4">
+                                <div className="flex items-center justify-between mb-2">
+                                  <span className="rounded-full bg-white/85 px-3 py-1 text-xs font-semibold text-blue-700 shadow">
                                     {alumni.year}年卒
                                   </span>
-                                  <span className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
-                                    <MapPin className="h-3.5 w-3.5" />
+                                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                                    <MapPin className="h-3 w-3" />
                                     {alumni.location}
                                   </span>
                                 </div>
-                                <div className="mt-auto flex flex-col gap-4 p-6 pt-0">
-                                    <div className="rounded-3xl bg-white/85 p-5 text-slate-900 shadow-xl backdrop-blur-md ring-1 ring-white/40">
-                                    <div className="flex flex-col items-center gap-4 text-center">
-                                      <div className="h-36 w-36 overflow-hidden rounded-3xl border-[6px] border-white shadow-2xl">
+                                <div className="rounded-xl bg-gradient-to-r from-blue-500/80 to-indigo-500/80 px-3 py-1.5 backdrop-blur-sm mb-3">
+                                  <p className="flex items-center justify-center gap-1.5 text-xs font-bold text-white">
+                                    <Sparkles className="h-3 w-3" />
+                                    {alumni.club}
+                                  </p>
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <div className="rounded-3xl bg-white/85 p-3 text-slate-900 shadow-xl backdrop-blur-md ring-1 ring-white/40">
+                                    <div className="flex flex-col items-center gap-2 text-center">
+                                      <div className="h-24 w-24 overflow-hidden rounded-2xl border-4 border-white shadow-xl">
                                         <img 
                                           src={alumni.image} 
                                           alt={alumni.name} 
@@ -800,51 +818,84 @@ const AlumniProfiles: React.FC = () => {
                                         />
                                       </div>
                                       <div>
-                                        <h3 className="text-2xl font-bold text-slate-900">{alumni.name}</h3>
-                                        <p className="mt-1 text-sm font-medium text-blue-600">{alumni.profession}</p>
+                                        <h3 className="text-lg font-bold text-slate-900">{alumni.name}</h3>
+                                        <p className="text-xs font-medium text-blue-600">{alumni.profession}</p>
                                       </div>
                                     </div>
-                                    <div className="mt-4 space-y-3 text-base text-slate-700">
-                                      <p className="flex items-center justify-center gap-2 text-xs font-semibold text-slate-600 sm:text-sm">
-                                        <Briefcase className="h-4 w-4 text-blue-500" />
+                                    <div className="mt-2">
+                                      <p className="flex items-center justify-center gap-1.5 text-xs font-semibold text-slate-600">
+                                        <Briefcase className="h-3 w-3 text-blue-500" />
                                         {alumni.company}
                                       </p>
-                                      <p className="flex items-center justify-center gap-2 text-xs font-semibold text-slate-600 sm:text-sm">
-                                        <Sparkles className="h-4 w-4 text-blue-500" />
-                                        {alumni.club}
-                                      </p>
                                     </div>
-                                    <div className="mt-4 rounded-2xl bg-slate-900/5 p-4 text-left">
-                                      <p className="text-xs font-semibold uppercase tracking-wider text-blue-600">ハイライト</p>
-                                      <p className="mt-2 text-sm text-slate-800">{alumni.achievement}</p>
-                                      <ul className="mt-3 space-y-1 text-sm text-slate-700">
-                                        {topHighlights.map((highlight) => (
-                                          <li key={highlight} className="flex items-center gap-2">
-                                            <span className="h-1.5 w-1.5 rounded-full bg-blue-500/70" />
-                                            {highlight}
-                                          </li>
-                                        ))}
-                                      </ul>
+                                    <div className="mt-2 rounded-xl bg-slate-900/5 p-2 text-left">
+                                      <p className="text-xs font-bold text-blue-600">ハイライト</p>
+                                      <p className="mt-1 text-xs text-slate-800 line-clamp-2">{alumni.achievement}</p>
                                     </div>
-                                    <p className="mt-4 text-sm leading-relaxed text-slate-700">{alumni.description}</p>
-                                    <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                                    {alumni.description && (
+                                      <div className="mt-2 text-left">
+                                        <p className="text-xs leading-relaxed text-slate-600 line-clamp-3">{alumni.description}</p>
+                                      </div>
+                                    )}
+                                    <div className="mt-2 flex flex-col gap-1.5">
                                       <Link
                                         to={`/alumni-profiles/${alumni.id}`}
                                         data-swipe-ignore="true"
-                                        className="inline-flex items-center justify-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow transition hover:bg-blue-500"
+                                        className="inline-flex items-center justify-center gap-1.5 rounded-full bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow transition hover:bg-blue-500"
                                       >
                                         詳細を見る
-                                        <ArrowRight className="h-4 w-4" />
+                                        <ArrowRight className="h-3.5 w-3.5" />
                                       </Link>
-                                      <button
-                                        type="button"
-                                        data-swipe-ignore="true"
-                                        onClick={() => careerSwipe.handleManualSwipe('right')}
-                                        className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-blue-700 shadow transition hover:bg-blue-50"
-                                      >
-                                        <Handshake className="h-4 w-4" />
-                                        つながる
-                                      </button>
+                                      <div className="grid grid-cols-2 gap-1.5">
+                                        {alumni.linkedin && (
+                                          <a
+                                            href={alumni.linkedin}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            data-swipe-ignore="true"
+                                            className="inline-flex items-center justify-center gap-1 rounded-full bg-[#0A66C2] px-2.5 py-1.5 text-xs font-semibold text-white shadow transition hover:bg-[#004182]"
+                                          >
+                                            <Linkedin className="h-3 w-3" />
+                                            LinkedIn
+                                          </a>
+                                        )}
+                                        {alumni.facebook && (
+                                          <a
+                                            href={alumni.facebook}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            data-swipe-ignore="true"
+                                            className="inline-flex items-center justify-center gap-1 rounded-full bg-[#1877F2] px-2.5 py-1.5 text-xs font-semibold text-white shadow transition hover:bg-[#0C63D4]"
+                                          >
+                                            <Facebook className="h-3 w-3" />
+                                            Facebook
+                                          </a>
+                                        )}
+                                        {alumni.instagram && (
+                                          <a
+                                            href={alumni.instagram}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            data-swipe-ignore="true"
+                                            className="inline-flex items-center justify-center gap-1 rounded-full bg-gradient-to-r from-[#833AB4] via-[#E1306C] to-[#F77737] px-2.5 py-1.5 text-xs font-semibold text-white shadow transition hover:opacity-90"
+                                          >
+                                            <Instagram className="h-3 w-3" />
+                                            Instagram
+                                          </a>
+                                        )}
+                                        {alumni.x && (
+                                          <a
+                                            href={alumni.x}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            data-swipe-ignore="true"
+                                            className="inline-flex items-center justify-center gap-1 rounded-full bg-black px-2.5 py-1.5 text-xs font-semibold text-white shadow transition hover:bg-gray-800"
+                                          >
+                                            <XIcon className="h-3 w-3" />
+                                            X
+                                          </a>
+                                        )}
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
@@ -875,16 +926,16 @@ const AlumniProfiles: React.FC = () => {
                             className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-rose-500 shadow-lg ring-1 ring-rose-100 transition hover:bg-rose-50 disabled:opacity-40"
                             aria-label="スキップ"
                           >
-                            <X className="h-6 w-6" />
+                            <CloseIcon className="h-6 w-6" />
                           </button>
                           <button
                             type="button"
                             onClick={() => careerSwipe.handleManualSwipe('right')}
                             disabled={careerSwipe.isAnimating || filteredAlumni.length === 0}
                             className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 text-white shadow-xl ring-4 ring-blue-200/60 transition hover:from-blue-600 hover:to-indigo-500 disabled:opacity-40"
-                            aria-label="つながる"
+                            aria-label="詳細表示"
                           >
-                            <Heart className="h-7 w-7" />
+                            <ArrowRight className="h-7 w-7" />
                           </button>
                         </div>
                       </div>
@@ -967,7 +1018,7 @@ const AlumniProfiles: React.FC = () => {
                       }}
                       className="mt-6 inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-blue-500"
                     >
-                      <X className="h-4 w-4" />
+                      <CloseIcon className="h-4 w-4" />
                       フィルタをクリア
                     </button>
                   </div>
@@ -1020,7 +1071,7 @@ const AlumniProfiles: React.FC = () => {
                       </div>
                     </div>
                   )}
-                  <div className="relative mx-auto mt-2 h-[540px] max-w-sm" aria-live="polite">
+                  <div className="relative mx-auto mt-2 h-[520px] max-w-sm" aria-live="polite">
                     {businessSwipe.visibleIndices.map((businessIndex, stackPosition) => {
                       const business = businessHighlights[businessIndex];
                       const isTopCard = stackPosition === 0;
@@ -1107,14 +1158,14 @@ const AlumniProfiles: React.FC = () => {
                                 {business.location}
                               </span>
                             </div>
-                            <div className="mt-auto flex flex-col gap-4 p-6 pt-0">
-                              <div className="rounded-3xl bg-white/85 p-5 text-slate-900 shadow-xl backdrop-blur-md ring-1 ring-white/40">
+                            <div className="mt-auto flex flex-col gap-3 p-5 pt-0 pb-6">
+                              <div className="rounded-3xl bg-white/85 p-4 text-slate-900 shadow-xl backdrop-blur-md ring-1 ring-white/40">
                                 <div className="text-center">
-                                  <h3 className="text-2xl font-bold text-slate-900">{business.name}</h3>
-                                  <p className="mt-2 text-sm font-medium text-blue-600">{business.owner}</p>
+                                  <h3 className="text-xl font-bold text-slate-900">{business.name}</h3>
+                                  <p className="mt-1.5 text-xs font-medium text-blue-600">{business.owner}</p>
                                 </div>
-                                <p className="mt-4 text-sm leading-relaxed text-slate-700">{business.description}</p>
-                                <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                                <p className="mt-3 text-xs leading-relaxed text-slate-700">{business.description}</p>
+                                <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                                   {business.url ? (
                                     <a
                                       href={business.url}
@@ -1292,7 +1343,7 @@ const AlumniProfiles: React.FC = () => {
                       </div>
                     </div>
                   )}
-                  <div className="relative mx-auto mt-2 h-[540px] max-w-sm" aria-live="polite">
+                  <div className="relative mx-auto mt-2 h-[520px] max-w-sm" aria-live="polite">
                     {networkSwipe.visibleIndices.map((programIndex, stackPosition) => {
                       const program = networkingPrograms[programIndex];
                       const Icon = program.icon;
@@ -1364,24 +1415,24 @@ const AlumniProfiles: React.FC = () => {
                               </div>
                             </div>
                           )}
-                          <div className="relative z-10 flex h-full flex-col justify-between p-6">
+                          <div className="relative z-10 flex h-full flex-col justify-between p-5 pb-6">
                             <div className="flex items-start justify-between">
-                              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/85 text-blue-600 shadow">
-                                <Icon className="h-6 w-6" />
+                              <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/85 text-blue-600 shadow">
+                                <Icon className="h-5 w-5" />
                               </span>
                               <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-medium uppercase tracking-wider text-white backdrop-blur-sm">
                                 Network
                               </span>
                             </div>
-                            <div className="space-y-4 text-white">
+                            <div className="space-y-3 text-white">
                               <div>
-                                <h3 className="text-2xl font-bold">{program.title}</h3>
+                                <h3 className="text-xl font-bold">{program.title}</h3>
                                 <p className="mt-1 text-xs font-medium uppercase tracking-wider text-blue-100">Ounan Alumni Network</p>
                               </div>
-                              <div className="rounded-2xl bg-white/10 p-4 backdrop-blur-sm">
-                                <p className="text-sm leading-relaxed text-white/90">{program.description}</p>
+                              <div className="rounded-2xl bg-white/10 p-3 backdrop-blur-sm">
+                                <p className="text-xs leading-relaxed text-white/90">{program.description}</p>
                               </div>
-                              <div className="flex items-center justify-between gap-3">
+                              <div className="flex items-center justify-between gap-2">
                                 {program.cta ? (
                                   <Link
                                     to={program.cta.href}
@@ -1612,7 +1663,7 @@ const AlumniProfiles: React.FC = () => {
               aria-label="閉じる"
               className="absolute right-4 top-4 rounded-full bg-gray-100 p-2 text-gray-500 transition hover:bg-gray-200 hover:text-gray-700"
             >
-              <X className="h-4 w-4" />
+              <CloseIcon className="h-4 w-4" />
             </button>
             <div className="text-center">
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-lg">
@@ -1656,3 +1707,4 @@ const AlumniProfiles: React.FC = () => {
 };
 
 export default AlumniProfiles;
+
