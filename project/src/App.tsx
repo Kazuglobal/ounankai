@@ -6,6 +6,7 @@ import About from './pages/About';
 import Gallery from './pages/Gallery';
 import AlumniProfiles from './pages/AlumniProfiles';
 import AlumniProfile from './pages/AlumniProfile';
+import BusinessDetail from './pages/BusinessDetail';
 import Announcements from './pages/Announcements';
 import Contact from './pages/Contact';
 import Bylaws from './pages/Bylaws';
@@ -23,6 +24,7 @@ function App() {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/alumni-profiles" element={<AlumniProfiles />} />
           <Route path="/alumni-profiles/:id" element={<AlumniProfile />} />
+          <Route path="/business/:id" element={<BusinessDetail />} />
           <Route path="/announcements" element={<Announcements />} />
           <Route path="/advertisement-gallery" element={<AdvertisementGallery />} />
           <Route path="/contact" element={<Contact />} />

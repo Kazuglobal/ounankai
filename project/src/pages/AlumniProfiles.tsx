@@ -226,15 +226,15 @@ const rawAlumniData: Omit<AlumniProfile, 'club'>[] = [
 ];
 
 const alumniClubMap: Record<number, string> = {
-  1: '起業研究会',
-  2: '医学研究会',
-  3: '環境法研究会',
-  4: '投資研究会',
-  5: '国際協力サークル',
-  6: 'エネルギー工学研究部',
-  7: '地域創生プロジェクトチーム',
-  8: 'スポーツ科学部',
-  9: '宇宙工学研究会',
+  1: '野球部',
+  2: 'ラグビー部',
+  3: 'サッカー部',
+  4: 'バスケットボール部',
+  5: 'テニス部',
+  6: 'バレーボール部',
+  7: '卓球部',
+  8: '陸上競技部',
+  9: '水泳部',
 };
 
 const alumniData: AlumniProfile[] = rawAlumniData.map((alumni) => ({
@@ -246,7 +246,497 @@ const alumniData: AlumniProfile[] = rawAlumniData.map((alumni) => ({
   x: 'https://x.com/example',
 }));
 
-const industries = ['all', 'テクノロジー', 'ヘルスケア', '法律', '金融', 'メディア', 'エンジニアリング', '非営利', '航空宇宙', '飲食'];
+const industries = [
+  'all',
+  'IT・ソフトウェア',
+  'テクノロジー',
+  'AI・機械学習',
+  'Web開発',
+  'ゲーム開発',
+  'サイバーセキュリティ',
+  '医療・ヘルスケア',
+  '製薬',
+  'バイオテクノロジー',
+  '医療機器',
+  '金融',
+  '銀行',
+  '保険',
+  '証券',
+  'フィンテック',
+  '法律',
+  '弁護士',
+  '弁理士',
+  'コンサルティング',
+  '経営コンサルタント',
+  '人事コンサルタント',
+  '教育',
+  '学校・教育機関',
+  'Edtech',
+  '製造業',
+  '自動車',
+  '電機・電子',
+  '機械',
+  '化学',
+  '食品製造',
+  '建設・不動産',
+  '建築',
+  '土木',
+  '不動産開発',
+  '小売・流通',
+  'EC・通販',
+  '百貨店',
+  '専門店',
+  '飲食',
+  'レストラン',
+  'カフェ',
+  'ホテル・観光',
+  'メディア',
+  '広告',
+  'マーケティング',
+  'PR',
+  '出版',
+  '放送',
+  'エンターテインメント',
+  '芸能',
+  '音楽',
+  'スポーツ',
+  'デザイン',
+  'グラフィックデザイン',
+  'プロダクトデザイン',
+  'ファッション',
+  '運輸・物流',
+  '航空',
+  '海運',
+  '陸運',
+  'エネルギー',
+  '電力',
+  '石油・ガス',
+  '再生可能エネルギー',
+  '通信',
+  '電気通信',
+  'インターネットサービス',
+  '農業',
+  '林業',
+  '水産業',
+  '環境',
+  'リサイクル',
+  '公共・行政',
+  '公務員',
+  '政治',
+  '非営利',
+  'NPO',
+  'NGO',
+  '社会起業',
+  '研究・開発',
+  '大学研究',
+  '民間研究所',
+  '人材',
+  '人材紹介',
+  '人材派遣',
+  'その他',
+  'フリーランス',
+  '個人事業主',
+  '起業家',
+  '投資家',
+  'ベンチャーキャピタル',
+  '事業承継',
+  'M&A',
+  '海外勤務',
+  '国際機関',
+  '外交官',
+  '翻訳・通訳',
+  '語学教育',
+  '留学支援',
+  '国際協力',
+  '開発援助',
+  '国際NGO',
+  '国連',
+  '世界銀行',
+  'IMF',
+  'アジア開発銀行',
+  'JICA',
+  'JETRO',
+  '特許事務所',
+  '司法書士',
+  '行政書士',
+  '税理士',
+  '公認会計士',
+  '社会保険労務士',
+  '中小企業診断士',
+  'ファイナンシャルプランナー',
+  '不動産鑑定士',
+  '土地家屋調査士',
+  '測量士',
+  '建築士',
+  '技術士',
+  '情報処理技術者',
+  'プロジェクトマネージャー',
+  'ITアーキテクト',
+  'データサイエンティスト',
+  'AIエンジニア',
+  'ブロックチェーン',
+  'IoT',
+  'ロボティクス',
+  'ドローン',
+  'AR・VR',
+  'メタバース',
+  'NFT',
+  '暗号資産',
+  '仮想通貨',
+  'DeFi',
+  'Web3',
+  'クリエイター',
+  'YouTuber',
+  'インフルエンサー',
+  'ブロガー',
+  'ライター',
+  '編集者',
+  'カメラマン',
+  '動画編集者',
+  '音響エンジニア',
+  '照明技術者',
+  '舞台監督',
+  '演出家',
+  '脚本家',
+  '小説家',
+  '漫画家',
+  'イラストレーター',
+  'アニメーター',
+  '声優',
+  'ナレーター',
+  'DJ',
+  '音楽プロデューサー',
+  '作曲家',
+  '作詞家',
+  'ミュージシャン',
+  'バンドマン',
+  'クラシック音楽家',
+  'オーケストラ',
+  '合唱団',
+  'ダンサー',
+  '振付師',
+  'ダンスインストラクター',
+  'フィットネスインストラクター',
+  'ヨガインストラクター',
+  'ピラティスインストラクター',
+  'パーソナルトレーナー',
+  '栄養士',
+  '管理栄養士',
+  '調理師',
+  'パティシエ',
+  'バリスタ',
+  'ソムリエ',
+  'ワインアドバイザー',
+  '日本酒アドバイザー',
+  '茶道',
+  '華道',
+  '書道',
+  '陶芸',
+  'ガラス工芸',
+  '木工',
+  '金属工芸',
+  '彫刻',
+  '絵画',
+  '版画',
+  '写真家',
+  'フォトグラファー',
+  '映像作家',
+  '映画監督',
+  'プロデューサー',
+  '脚本家',
+  '俳優',
+  '女優',
+  'タレント',
+  'コメディアン',
+  'お笑い芸人',
+  '落語家',
+  '漫才師',
+  'コント師',
+  '司会者',
+  'MC',
+  'アナウンサー',
+  'ニュースキャスター',
+  '気象予報士',
+  'レポーター',
+  'ジャーナリスト',
+  '記者',
+  '編集者',
+  'ライター',
+  'コピーライター',
+  'コントンツクリエイター',
+  'SNSマネージャー',
+  'コミュニティマネージャー',
+  'カスタマーサクセス',
+  'カスタマーサポート',
+  'コールセンター',
+  'テレマーケティング',
+  '営業',
+  'セールス',
+  '販売',
+  '接客',
+  'ホテルマン',
+  'フロント',
+  'コンシェルジュ',
+  'ツアーコンダクター',
+  '添乗員',
+  'ガイド',
+  '通訳ガイド',
+  '観光案内',
+  '旅行代理店',
+  '航空会社',
+  '空港',
+  '鉄道',
+  'バス',
+  'タクシー',
+  'トラック',
+  '配送',
+  '倉庫',
+  '物流',
+  '通関',
+  '貿易',
+  '商社',
+  '卸売',
+  '小売',
+  'EC',
+  '通販',
+  'ネットショップ',
+  'マーケットプレイス',
+  'フリマアプリ',
+  'シェアリングエコノミー',
+  'シェアハウス',
+  '民泊',
+  'カーシェア',
+  'バイクシェア',
+  'レンタル',
+  'リース',
+  'ファイナンス',
+  'クレジット',
+  'ローン',
+  '保険',
+  '生命保険',
+  '損害保険',
+  '自動車保険',
+  '火災保険',
+  '地震保険',
+  '医療保険',
+  '介護保険',
+  '年金',
+  '投資信託',
+  '株式',
+  '債券',
+  'FX',
+  '先物',
+  'オプション',
+  'デリバティブ',
+  'ヘッジファンド',
+  'プライベートエクイティ',
+  'ベンチャーキャピタル',
+  'エンジェル投資家',
+  'クラウドファンディング',
+  'ICO',
+  'STO',
+  'IPO',
+  'M&A',
+  '事業承継',
+  '経営支援',
+  '経営コンサルタント',
+  '戦略コンサルタント',
+  'ITコンサルタント',
+  '人事コンサルタント',
+  'マーケティングコンサルタント',
+  'ブランディング',
+  'CI',
+  'VI',
+  'ロゴデザイン',
+  'パッケージデザイン',
+  '空間デザイン',
+  'インテリアデザイン',
+  '建築デザイン',
+  'ランドスケープ',
+  '都市計画',
+  'まちづくり',
+  '地域活性化',
+  '地方創生',
+  '移住支援',
+  '地方移住',
+  '田舎暮らし',
+  '農業体験',
+  'グリーンツーリズム',
+  'エコツーリズム',
+  'サステナビリティ',
+  'ESG',
+  'SDGs',
+  '環境保護',
+  '自然保護',
+  '動物保護',
+  '海洋保護',
+  '森林保護',
+  '生物多様性',
+  '気候変動',
+  '地球温暖化',
+  '再生可能エネルギー',
+  '太陽光発電',
+  '風力発電',
+  '水力発電',
+  '地熱発電',
+  'バイオマス',
+  '水素エネルギー',
+  '原子力',
+  '火力発電',
+  '石炭',
+  '石油',
+  '天然ガス',
+  'LNG',
+  '電力自由化',
+  'スマートグリッド',
+  '蓄電池',
+  'EV',
+  '電気自動車',
+  'ハイブリッド車',
+  '燃料電池車',
+  '自動運転',
+  'コネクテッドカー',
+  'MaaS',
+  'モビリティ',
+  'シェアリング',
+  'カーシェア',
+  'バイクシェア',
+  '自転車シェア',
+  '電動キックボード',
+  '電動自転車',
+  'e-bike',
+  '電動スクーター',
+  '電動バイク',
+  '電動車椅子',
+  '電動アシスト',
+  'パーソナルモビリティ',
+  'ロボット',
+  'サービスロボット',
+  '産業ロボット',
+  '医療ロボット',
+  '介護ロボット',
+  '清掃ロボット',
+  '警備ロボット',
+  '配送ロボット',
+  '農業ロボット',
+  '建設ロボット',
+  '災害対応ロボット',
+  '宇宙ロボット',
+  '水中ロボット',
+  'ドローン',
+  'UAV',
+  '空撮',
+  '測量',
+  '点検',
+  '配送',
+  '農薬散布',
+  '種まき',
+  '監視',
+  '警備',
+  '救助',
+  '捜索',
+  '調査',
+  '研究',
+  '実験',
+  'テスト',
+  '品質管理',
+  '検査',
+  '測定',
+  '分析',
+  'データ収集',
+  'モニタリング',
+  'センサー',
+  'IoT',
+  'スマートシティ',
+  'スマートホーム',
+  'スマートビル',
+  'スマートファクトリー',
+  'インダストリー4.0',
+  'デジタルツイン',
+  'サイバーセキュリティ',
+  '情報セキュリティ',
+  'ネットワークセキュリティ',
+  'クラウドセキュリティ',
+  'モバイルセキュリティ',
+  'アプリケーションセキュリティ',
+  'データセキュリティ',
+  'プライバシー保護',
+  '個人情報保護',
+  'GDPR',
+  '個人情報保護法',
+  'サイバー攻撃',
+  'マルウェア',
+  'ウイルス',
+  'ランサムウェア',
+  'フィッシング',
+  'スパム',
+  'ボット',
+  'DDoS',
+  'ゼロデイ攻撃',
+  'APT',
+  'インサイダー脅威',
+  'ソーシャルエンジニアリング',
+  'ペネトレーションテスト',
+  '脆弱性診断',
+  'セキュリティ監査',
+  'コンプライアンス',
+  'リスク管理',
+  '危機管理',
+  'BCP',
+  '災害対策',
+  '防災',
+  '減災',
+  '復旧',
+  '復興',
+  '支援',
+  'ボランティア',
+  'NPO',
+  'NGO',
+  '社会貢献',
+  '社会起業',
+  'ソーシャルビジネス',
+  'BOP',
+  'ベースオブピラミッド',
+  '途上国',
+  '開発途上国',
+  '新興国',
+  'BRICs',
+  'VISTA',
+  'MINT',
+  'Next11',
+  'アフリカ',
+  'アジア',
+  '中南米',
+  '中東',
+  '東欧',
+  '旧ソ連',
+  'CIS',
+  'ASEAN',
+  'EU',
+  'NATO',
+  'G7',
+  'G20',
+  'OECD',
+  'WTO',
+  'IMF',
+  '世界銀行',
+  '国連',
+  'UNESCO',
+  'UNICEF',
+  'WHO',
+  'ILO',
+  'FAO',
+  'UNDP',
+  'UNHCR',
+  'UNICEF',
+  'UNESCO',
+  'WHO',
+  'ILO',
+  'FAO',
+  'UNDP',
+  'UNHCR',
+  'その他',
+];
 
 const locations = [
   'all',
@@ -404,6 +894,12 @@ const AlumniProfiles: React.FC = () => {
     if (typeof window === 'undefined') return true;
     return !localStorage.getItem('ounankai_swipe_hint_seen');
   });
+  const handleResetSwipeHint = useCallback(() => {
+    setShowSwipeHint(true);
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('ounankai_swipe_hint_seen');
+    }
+  }, []);
 
   const filteredAlumni = useMemo(
     () =>
@@ -668,6 +1164,16 @@ const AlumniProfiles: React.FC = () => {
                 {filteredAlumni.length > 0 ? (
                   <>
                     <div className="lg:hidden">
+                      {!showSwipeHint && (
+                        <button
+                          type="button"
+                          onClick={handleResetSwipeHint}
+                          className="mb-4 inline-flex items-center gap-2 rounded-2xl bg-blue-600/90 px-4 py-2 text-xs font-semibold text-white shadow transition hover:bg-blue-500"
+                        >
+                          <Sparkles className="h-4 w-4" />
+                          スワイプのヒントを表示
+                        </button>
+                      )}
                       {showSwipeHint && (
                         <div
                           onClick={() => setShowSwipeHint(false)}
@@ -1029,6 +1535,16 @@ const AlumniProfiles: React.FC = () => {
             {activeTab === 'business' && (
               <>
                 <div className="lg:hidden">
+                  {!showSwipeHint && (
+                    <button
+                      type="button"
+                      onClick={handleResetSwipeHint}
+                      className="mb-4 inline-flex items-center gap-2 rounded-2xl bg-blue-600/90 px-4 py-2 text-xs font-semibold text-white shadow transition hover:bg-blue-500"
+                    >
+                      <Sparkles className="h-4 w-4" />
+                      スワイプのヒントを表示
+                    </button>
+                  )}
                   {showSwipeHint && (
                     <div
                       onClick={() => setShowSwipeHint(false)}
@@ -1148,40 +1664,45 @@ const AlumniProfiles: React.FC = () => {
                             </div>
                           )}
                           <div className="relative z-10 flex h-full flex-col">
-                            <div className="flex items-start justify-between p-6 text-white">
-                              <span className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-xs font-semibold backdrop-blur-sm">
-                                <Store className="h-3.5 w-3.5" />
+                            <div className="flex flex-col gap-2 px-4 pt-4 text-white">
+                              <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-xs font-semibold backdrop-blur-sm">
+                                <Store className="h-3 w-3" />
                                 {business.category}
                               </span>
-                              <span className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
-                                <MapPin className="h-3.5 w-3.5" />
+                              <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                                <MapPin className="h-3 w-3" />
                                 {business.location}
                               </span>
                             </div>
-                            <div className="mt-auto flex flex-col gap-3 p-5 pt-0 pb-6">
+                            <div className="mt-auto flex flex-col gap-3 p-4 pt-2 pb-6">
                               <div className="rounded-3xl bg-white/85 p-4 text-slate-900 shadow-xl backdrop-blur-md ring-1 ring-white/40">
-                                <div className="text-center">
-                                  <h3 className="text-xl font-bold text-slate-900">{business.name}</h3>
-                                  <p className="mt-1.5 text-xs font-medium text-blue-600">{business.owner}</p>
+                                <div className="flex flex-col items-center gap-4">
+                                  <div className="h-36 w-36 overflow-hidden rounded-3xl border-[6px] border-white shadow-2xl">
+                                    <img 
+                                      src={business.image} 
+                                      alt={business.name} 
+                                      className="h-full w-full object-cover"
+                                      loading="eager"
+                                      onError={(e) => {
+                                        e.currentTarget.src = 'data:image/svg+xml,%3Csvg width="400" height="400" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="400" height="400" fill="%23e5e7eb"/%3E%3Ccircle cx="200" cy="150" r="60" fill="%239ca3af"/%3E%3Cpath d="M 200 220 Q 140 240 100 320 L 300 320 Q 260 240 200 220" fill="%239ca3af"/%3E%3C/svg%3E';
+                                      }}
+                                    />
+                                  </div>
+                                  <div className="text-center">
+                                    <h3 className="text-2xl font-bold text-slate-900">{business.name}</h3>
+                                    <p className="mt-2 text-sm font-medium text-blue-600">{business.owner}</p>
+                                  </div>
                                 </div>
                                 <p className="mt-3 text-xs leading-relaxed text-slate-700">{business.description}</p>
                                 <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                                  {business.url ? (
-                                    <a
-                                      href={business.url}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      data-swipe-ignore="true"
-                                      className="inline-flex items-center justify-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow transition hover:bg-blue-500"
-                                    >
-                                      詳細を見る
-                                      <ExternalLink className="h-4 w-4" />
-                                    </a>
-                                  ) : (
-                                    <span className="inline-flex items-center justify-center rounded-full bg-white/80 px-4 py-2 text-xs font-semibold text-blue-700 shadow">
-                                      詳細情報は準備中
-                                    </span>
-                                  )}
+                                  <Link
+                                    to={`/business/${business.id}`}
+                                    data-swipe-ignore="true"
+                                    className="inline-flex items-center justify-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow transition hover:bg-blue-500"
+                                  >
+                                    詳細を見る
+                                    <ArrowRight className="h-4 w-4" />
+                                  </Link>
                                   <button
                                     type="button"
                                     data-swipe-ignore="true"
@@ -1279,17 +1800,13 @@ const AlumniProfiles: React.FC = () => {
                             <Phone className="h-4 w-4 text-blue-500" />
                             交流会や撮影利用の相談も受付中
                           </span>
-                          {business.url && (
-                            <a
-                              href={business.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
-                            >
-                              サイトで詳しく見る
-                              <ExternalLink className="ml-2 h-4 w-4" />
-                            </a>
-                          )}
+                          <Link
+                            to={`/business/${business.id}`}
+                            className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+                          >
+                            詳細を見る
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                          </Link>
                         </div>
                       </div>
                     </article>
@@ -1301,6 +1818,16 @@ const AlumniProfiles: React.FC = () => {
             {activeTab === 'network' && (
               <>
                 <div className="lg:hidden">
+                  {!showSwipeHint && (
+                    <button
+                      type="button"
+                      onClick={handleResetSwipeHint}
+                      className="mb-4 inline-flex items-center gap-2 rounded-2xl bg-blue-600/90 px-4 py-2 text-xs font-semibold text-white shadow transition hover:bg-blue-500"
+                    >
+                      <Sparkles className="h-4 w-4" />
+                      スワイプのヒントを表示
+                    </button>
+                  )}
                   {showSwipeHint && (
                     <div
                       onClick={() => setShowSwipeHint(false)}
@@ -1432,15 +1959,15 @@ const AlumniProfiles: React.FC = () => {
                               <div className="rounded-2xl bg-white/10 p-3 backdrop-blur-sm">
                                 <p className="text-xs leading-relaxed text-white/90">{program.description}</p>
                               </div>
-                              <div className="flex items-center justify-between gap-2">
+                              <div className="flex flex-nowrap items-center justify-between gap-2">
                                 {program.cta ? (
                                   <Link
                                     to={program.cta.href}
                                     data-swipe-ignore="true"
-                                    className="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-xs font-semibold text-white backdrop-blur-sm transition hover:bg-white/30"
+                                    className="inline-flex flex-shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-white/20 px-3 py-2 text-xs font-semibold text-white backdrop-blur-sm transition hover:bg-white/30"
                                   >
                                     {program.cta.label}
-                                    <ArrowRight className="h-4 w-4" />
+                                    <ArrowRight className="h-3.5 w-3.5" />
                                   </Link>
                                 ) : (
                                   <div />
@@ -1449,7 +1976,7 @@ const AlumniProfiles: React.FC = () => {
                                   type="button"
                                   data-swipe-ignore="true"
                                   onClick={() => networkSwipe.handleManualSwipe('right')}
-                                  className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-blue-600 shadow-lg transition hover:bg-blue-50"
+                                  className="inline-flex flex-shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-white px-3 py-2 text-xs font-semibold text-blue-600 shadow-lg transition hover:bg-blue-50"
                                 >
                                   <Icon className="h-4 w-4" />
                                   参加する
