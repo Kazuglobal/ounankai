@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, MapPin, Calendar, Award, Briefcase, GraduationCap, Mail, Linkedin, ExternalLink } from 'lucide-react';
+import { ArrowLeft, MapPin, Calendar, Award, Briefcase, GraduationCap, Mail, Linkedin, ExternalLink, Users } from 'lucide-react';
 
 const AlumniProfile: React.FC = () => {
   const { id } = useParams();
@@ -16,6 +16,7 @@ const AlumniProfile: React.FC = () => {
       company: 'イノベートテック・ソリューションズ',
       location: 'サンフランシスコ、カリフォルニア州',
       industry: 'テクノロジー',
+            club: '起業研究会',
       image: 'https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop',
       coverImage: 'https://images.pexels.com/photos/1181533/pexels-photo-1181533.jpeg?auto=compress&cs=tinysrgb&w=1200&h=400&fit=crop',
       achievement: '5000万ドルの価値を持つAIスタートアップを創設',
@@ -78,6 +79,7 @@ const AlumniProfile: React.FC = () => {
       company: 'ハーバード医科大学',
       location: 'ボストン、マサチューセッツ州',
       industry: 'ヘルスケア',
+            club: '医学研究会',
       image: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop',
       coverImage: 'https://images.pexels.com/photos/356040/pexels-photo-356040.jpeg?auto=compress&cs=tinysrgb&w=1200&h=400&fit=crop',
       achievement: '画期的ながん研究プロジェクトを主導',
@@ -145,6 +147,7 @@ const AlumniProfile: React.FC = () => {
       company: 'グリーン・ジャスティス連合',
       location: 'ワシントンDC',
       industry: '法律',
+            club: '環境法研究会',
       image: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop',
       coverImage: 'https://images.pexels.com/photos/1209978/pexels-photo-1209978.jpeg?auto=compress&cs=tinysrgb&w=1200&h=400&fit=crop',
       achievement: '連邦レベルでの気候政策改革を推進',
@@ -265,6 +268,10 @@ const AlumniProfile: React.FC = () => {
                 <div className="flex items-center mt-6">
                   <MapPin className="w-5 h-5 mr-2" />
                   <span className="text-lg">{alumni.location}</span>
+                </div>
+                <div className="mt-3 inline-flex items-center rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-blue-100 backdrop-blur">
+                  <Users className="w-4 h-4 mr-2" />
+                  <span>当時の部活: {alumni.club}</span>
                 </div>
               </div>
             </div>
@@ -406,6 +413,10 @@ const AlumniProfile: React.FC = () => {
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-2">出身地</h4>
                     <p className="text-gray-600">{alumni.personalInfo.hometown}</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-2">当時の部活</h4>
+                    <p className="text-gray-600">{alumni.club}</p>
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-2">趣味</h4>

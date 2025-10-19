@@ -42,6 +42,7 @@ type AlumniProfile = {
   image: string;
   achievement: string;
   description: string;
+  club: string;
   highlights: string[];
 };
 
@@ -96,7 +97,7 @@ const tabs: { id: TabId; label: string; description: string }[] = [
   },
 ];
 
-const alumniData: AlumniProfile[] = [
+const rawAlumniData: Omit<AlumniProfile, 'club'>[] = [
   {
     id: 1,
     name: '田中 さくら',
@@ -215,6 +216,23 @@ const alumniData: AlumniProfile[] = [
     highlights: ['火星ミッションチームリーダー', 'NASA共同研究', '航空宇宙イノベーション賞'],
   },
 ];
+
+const alumniClubMap: Record<number, string> = {
+  1: '起業研究会',
+  2: '医学研究会',
+  3: '環境法研究会',
+  4: '投資研究会',
+  5: '国際協力サークル',
+  6: 'エネルギー工学研究部',
+  7: '地域創生プロジェクトチーム',
+  8: 'スポーツ科学部',
+  9: '宇宙工学研究会',
+};
+
+const alumniData: AlumniProfile[] = rawAlumniData.map((alumni) => ({
+  ...alumni,
+  club: alumniClubMap[alumni.id] ?? '部活情報は準備中',
+}));
 
 const industries = ['all', 'テクノロジー', 'ヘルスケア', '法律', '金融', 'メディア', 'エンジニアリング', '非営利', '航空宇宙', '飲食'];
 
@@ -370,7 +388,10 @@ const AlumniProfiles: React.FC = () => {
   const [selectedIndustry, setSelectedIndustry] = useState('all');
   const [selectedLocation, setSelectedLocation] = useState('all');
   const [showConnectionModal, setShowConnectionModal] = useState(false);
-  const [showSwipeHint, setShowSwipeHint] = useState(true);
+  const [showSwipeHint, setShowSwipeHint] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    return !localStorage.getItem('ounankai_swipe_hint_seen');
+  });
 
   const filteredAlumni = useMemo(
     () =>
@@ -390,15 +411,30 @@ const AlumniProfiles: React.FC = () => {
   // Initialize swipe cards for each tab
   const careerSwipe = useSwipeCards({
     items: filteredAlumni,
-    onSwipe: () => setShowSwipeHint(false),
+    onSwipe: () => {
+      setShowSwipeHint(false);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('ounankai_swipe_hint_seen', 'true');
+      }
+    },
   });
   const businessSwipe = useSwipeCards({
     items: businessHighlights,
-    onSwipe: () => setShowSwipeHint(false),
+    onSwipe: () => {
+      setShowSwipeHint(false);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('ounankai_swipe_hint_seen', 'true');
+      }
+    },
   });
   const networkSwipe = useSwipeCards({
     items: networkingPrograms,
-    onSwipe: () => setShowSwipeHint(false),
+    onSwipe: () => {
+      setShowSwipeHint(false);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('ounankai_swipe_hint_seen', 'true');
+      }
+    },
   });
 
   const activeTabMeta = tabs.find((tab) => tab.id === activeTab);
@@ -412,10 +448,19 @@ const AlumniProfiles: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    const hasSeenHint = localStorage.getItem('ounankai_swipe_hint_seen');
+    if (hasSeenHint) {
+      setShowSwipeHint(false);
+      return;
+    }
+
     setShowSwipeHint(true);
     const hintTimer = window.setTimeout(() => {
       setShowSwipeHint(false);
-    }, 4000);
+      localStorage.setItem('ounankai_swipe_hint_seen', 'true');
+    }, 8000);
 
     return () => window.clearTimeout(hintTimer);
   }, [activeTab]);
@@ -440,6 +485,55 @@ const AlumniProfiles: React.FC = () => {
       document.body.style.overflow = originalOverflow;
     };
   }, [showConnectionModal]);
+
+  // キーボード操作のサポート
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // モーダルが開いている場合はスキップ
+      if (showConnectionModal) return;
+
+      if (activeTab === 'career') {
+        if (event.key === 'ArrowLeft') {
+          careerSwipe.handleManualSwipe('left');
+        } else if (event.key === 'ArrowRight') {
+          careerSwipe.handleManualSwipe('right');
+        } else if (event.key === ' ') {
+          event.preventDefault();
+          careerSwipe.handleManualSwipe('right');
+        } else if (event.key === 'Backspace' && careerSwipe.canUndo) {
+          event.preventDefault();
+          careerSwipe.handleUndo();
+        }
+      } else if (activeTab === 'business') {
+        if (event.key === 'ArrowLeft') {
+          businessSwipe.handleManualSwipe('left');
+        } else if (event.key === 'ArrowRight') {
+          businessSwipe.handleManualSwipe('right');
+        } else if (event.key === ' ') {
+          event.preventDefault();
+          businessSwipe.handleManualSwipe('right');
+        } else if (event.key === 'Backspace' && businessSwipe.canUndo) {
+          event.preventDefault();
+          businessSwipe.handleUndo();
+        }
+      } else if (activeTab === 'network') {
+        if (event.key === 'ArrowLeft') {
+          networkSwipe.handleManualSwipe('left');
+        } else if (event.key === 'ArrowRight') {
+          networkSwipe.handleManualSwipe('right');
+        } else if (event.key === ' ') {
+          event.preventDefault();
+          networkSwipe.handleManualSwipe('right');
+        } else if (event.key === 'Backspace' && networkSwipe.canUndo) {
+          event.preventDefault();
+          networkSwipe.handleUndo();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeTab, showConnectionModal, careerSwipe, businessSwipe, networkSwipe]);
 
   return (
     <div className="bg-[#F7F3F0] pb-24 pt-16">
@@ -604,26 +698,28 @@ const AlumniProfiles: React.FC = () => {
                           </div>
                         </div>
                       )}
-                      <div className="relative mx-auto mt-2 h-[460px] max-w-sm">
+                      <div className="relative mx-auto mt-2 h-[540px] max-w-sm" aria-live="polite">
                         {careerSwipe.visibleIndices.map((profileIndex, stackPosition) => {
                           const alumni = filteredAlumni[profileIndex];
                           const isTopCard = stackPosition === 0;
                           const depth = stackPosition;
-                          const scale = 1 - depth * 0.05;
-                          const translateY = depth * 18;
-                          const stackedOpacity = isTopCard ? 1 : 0.9 - depth * 0.12;
+                          const scale = 1 - depth * 0.08;
+                          const translateY = depth * 24;
+                          const stackedOpacity = isTopCard ? 1 : 0.85 - depth * 0.15;
                           const cardStyle: React.CSSProperties = isTopCard
                             ? {
                                 transform: `translateX(${careerSwipe.dragOffset}px) rotate(${careerSwipe.dragOffset * 0.04}deg)`,
                                 transition: careerSwipe.isDragging ? 'none' : 'transform 0.35s ease, opacity 0.25s ease',
                                 opacity: careerSwipe.isAnimating ? 0 : 1,
                                 zIndex: careerSwipe.visibleIndices.length - depth,
+                                willChange: 'transform, opacity',
                               }
                             : {
                                 transform: `scale(${scale}) translateY(${translateY}px)`,
                                 transition: 'transform 0.35s ease, opacity 0.35s ease',
                                 opacity: stackedOpacity,
                                 zIndex: careerSwipe.visibleIndices.length - depth,
+                                willChange: 'auto',
                               };
                           const dragStrength = Math.min(Math.abs(careerSwipe.dragOffset) / 150, 1);
                           const isPositive = careerSwipe.dragOffset > 0;
@@ -639,6 +735,8 @@ const AlumniProfiles: React.FC = () => {
                                     }
                                   : undefined
                               }
+                              role="article"
+                              aria-label={`${alumni.name}、${alumni.profession}、${alumni.company}`}
                               className={`absolute inset-0 flex flex-col overflow-hidden rounded-[32px] shadow-[0_25px_60px_rgba(30,64,175,0.18)] ring-1 ring-black/5 ${
                                 isTopCard ? 'cursor-grab touch-pan-y active:cursor-grabbing' : 'pointer-events-none'
                               }`}
@@ -648,79 +746,111 @@ const AlumniProfiles: React.FC = () => {
                               onPointerUp={isTopCard ? careerSwipe.handlePointerUp : undefined}
                               onPointerCancel={isTopCard ? careerSwipe.handlePointerCancel : undefined}
                             >
-                              <img src={alumni.image} alt={alumni.name} className="absolute inset-0 h-full w-full object-cover" />
-                              <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/35 to-black/80" />
+                              <img
+                                src={alumni.image}
+                                alt=""
+                                aria-hidden="true"
+                                className="absolute inset-0 h-full w-full transform scale-110 object-cover blur-lg"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-slate-950/80 to-slate-950/95" />
                               {isTopCard && (
                                 <div
                                   className="pointer-events-none absolute inset-0 transition-opacity duration-200"
-                                  style={{ opacity: dragStrength }}
+                                  style={{ 
+                                    opacity: dragStrength,
+                                    transform: `scale(${1 + dragStrength * 0.02})`
+                                  }}
                                 >
                                   <div
                                     className={`absolute inset-0 rounded-[32px] bg-gradient-to-br ${
-                                      isPositive ? 'from-emerald-400/40 via-emerald-400/10 to-transparent' : 'from-rose-500/35 via-rose-500/10 to-transparent'
+                                      isPositive ? 'from-emerald-400/50 via-emerald-400/20 to-transparent' : 'from-rose-500/45 via-rose-500/20 to-transparent'
                                     }`}
                                   />
                                   <div
-                                    className={`absolute top-6 ${isPositive ? 'right-6' : 'left-6'} rounded-full bg-white/90 px-4 py-2 text-xs font-semibold text-blue-700 shadow-lg`}
+                                    className={`absolute top-6 ${isPositive ? 'right-6' : 'left-6'} rounded-full bg-white/95 px-5 py-2.5 text-sm font-bold shadow-2xl ${
+                                      isPositive ? 'text-emerald-600' : 'text-rose-600'
+                                    }`}
                                   >
-                                    {isPositive ? 'CONNECT' : 'PASS'}
+                                    {isPositive ? '✓ つながる' : '✕ スキップ'}
                                   </div>
                                 </div>
                               )}
-                              <div className="relative z-10 flex h-full flex-col justify-between p-6">
-                                <div className="flex items-start justify-between">
+                              <div className="relative z-10 flex h-full flex-col">
+                                <div className="flex items-start justify-between p-6 text-white">
                                   <span className="rounded-full bg-white/85 px-4 py-1 text-xs font-semibold text-blue-700 shadow">
                                     {alumni.year}年卒
                                   </span>
-                                  <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                                  <span className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
                                     <MapPin className="h-3.5 w-3.5" />
                                     {alumni.location}
                                   </span>
                                 </div>
-                                <div className="space-y-4 text-white">
-                                  <div>
-                                    <h3 className="text-2xl font-bold">{alumni.name}</h3>
-                                    <p className="mt-1 text-sm font-medium text-blue-100">{alumni.profession}</p>
-                                    <p className="mt-3 flex items-center gap-2 text-xs font-medium text-white/75">
-                                      <Briefcase className="h-4 w-4 text-white/70" />
-                                      {alumni.company}
-                                    </p>
-                                  </div>
-                                  <div className="rounded-2xl bg-white/10 p-4 backdrop-blur-sm">
-                                    <p className="text-xs uppercase tracking-wider text-blue-100">ハイライト</p>
-                                    <p className="mt-2 text-sm text-white/90">{alumni.achievement}</p>
-                                    <ul className="mt-3 space-y-1 text-xs text-white/80">
-                                      {topHighlights.map((highlight) => (
-                                        <li key={highlight} className="flex items-center gap-2">
-                                          <span className="h-1.5 w-1.5 rounded-full bg-blue-200" />
-                                          {highlight}
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  </div>
-                                  <p className="text-sm leading-relaxed text-white/80">{alumni.description}</p>
-                                  <div className="flex items-center justify-between gap-3">
-                                    <Link
-                                      to={`/alumni-profiles/${alumni.id}`}
-                                      data-swipe-ignore="true"
-                                      className="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-xs font-semibold text-white backdrop-blur-sm transition hover:bg-white/30"
-                                    >
-                                      詳細を見る
-                                      <ArrowRight className="h-4 w-4" />
-                                    </Link>
-                                    <button
-                                      type="button"
-                                      data-swipe-ignore="true"
-                                      onClick={() => careerSwipe.handleManualSwipe('right')}
-                                      className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-blue-600 shadow-lg transition hover:bg-blue-50"
-                                    >
-                                      <Handshake className="h-4 w-4" />
-                                      つながる
-                                    </button>
+                                <div className="mt-auto flex flex-col gap-4 p-6 pt-0">
+                                    <div className="rounded-3xl bg-white/85 p-5 text-slate-900 shadow-xl backdrop-blur-md ring-1 ring-white/40">
+                                    <div className="flex flex-col items-center gap-4 text-center">
+                                      <div className="h-36 w-36 overflow-hidden rounded-3xl border-[6px] border-white shadow-2xl">
+                                        <img 
+                                          src={alumni.image} 
+                                          alt={alumni.name} 
+                                          className="h-full w-full object-cover"
+                                          loading="eager"
+                                          onError={(e) => {
+                                            e.currentTarget.src = 'data:image/svg+xml,%3Csvg width="400" height="400" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="400" height="400" fill="%23e5e7eb"/%3E%3Ccircle cx="200" cy="150" r="60" fill="%239ca3af"/%3E%3Cpath d="M 200 220 Q 140 240 100 320 L 300 320 Q 260 240 200 220" fill="%239ca3af"/%3E%3C/svg%3E';
+                                          }}
+                                        />
+                                      </div>
+                                      <div>
+                                        <h3 className="text-2xl font-bold text-slate-900">{alumni.name}</h3>
+                                        <p className="mt-1 text-sm font-medium text-blue-600">{alumni.profession}</p>
+                                      </div>
+                                    </div>
+                                    <div className="mt-4 space-y-3 text-base text-slate-700">
+                                      <p className="flex items-center justify-center gap-2 text-xs font-semibold text-slate-600 sm:text-sm">
+                                        <Briefcase className="h-4 w-4 text-blue-500" />
+                                        {alumni.company}
+                                      </p>
+                                      <p className="flex items-center justify-center gap-2 text-xs font-semibold text-slate-600 sm:text-sm">
+                                        <Sparkles className="h-4 w-4 text-blue-500" />
+                                        {alumni.club}
+                                      </p>
+                                    </div>
+                                    <div className="mt-4 rounded-2xl bg-slate-900/5 p-4 text-left">
+                                      <p className="text-xs font-semibold uppercase tracking-wider text-blue-600">ハイライト</p>
+                                      <p className="mt-2 text-sm text-slate-800">{alumni.achievement}</p>
+                                      <ul className="mt-3 space-y-1 text-sm text-slate-700">
+                                        {topHighlights.map((highlight) => (
+                                          <li key={highlight} className="flex items-center gap-2">
+                                            <span className="h-1.5 w-1.5 rounded-full bg-blue-500/70" />
+                                            {highlight}
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                    <p className="mt-4 text-sm leading-relaxed text-slate-700">{alumni.description}</p>
+                                    <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                                      <Link
+                                        to={`/alumni-profiles/${alumni.id}`}
+                                        data-swipe-ignore="true"
+                                        className="inline-flex items-center justify-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow transition hover:bg-blue-500"
+                                      >
+                                        詳細を見る
+                                        <ArrowRight className="h-4 w-4" />
+                                      </Link>
+                                      <button
+                                        type="button"
+                                        data-swipe-ignore="true"
+                                        onClick={() => careerSwipe.handleManualSwipe('right')}
+                                        className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-blue-700 shadow transition hover:bg-blue-50"
+                                      >
+                                        <Handshake className="h-4 w-4" />
+                                        つながる
+                                      </button>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
                             </article>
+
                           );
                         })}
                       </div>
@@ -728,12 +858,22 @@ const AlumniProfiles: React.FC = () => {
                         <span className="text-xs font-semibold text-blue-600">
                           {careerSwipe.swipeIndex + 1} / {filteredAlumni.length}
                         </span>
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-3">
+                          <button
+                            type="button"
+                            onClick={() => careerSwipe.handleUndo()}
+                            disabled={!careerSwipe.canUndo || careerSwipe.isAnimating}
+                            className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-blue-600 shadow-lg ring-1 ring-blue-100 transition hover:bg-blue-50 disabled:opacity-40"
+                            aria-label="戻る"
+                          >
+                            <ChevronLeft className="h-5 w-5" />
+                          </button>
                           <button
                             type="button"
                             onClick={() => careerSwipe.handleManualSwipe('left')}
                             disabled={careerSwipe.isAnimating || filteredAlumni.length === 0}
                             className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-rose-500 shadow-lg ring-1 ring-rose-100 transition hover:bg-rose-50 disabled:opacity-40"
+                            aria-label="スキップ"
                           >
                             <X className="h-6 w-6" />
                           </button>
@@ -742,6 +882,7 @@ const AlumniProfiles: React.FC = () => {
                             onClick={() => careerSwipe.handleManualSwipe('right')}
                             disabled={careerSwipe.isAnimating || filteredAlumni.length === 0}
                             className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 text-white shadow-xl ring-4 ring-blue-200/60 transition hover:from-blue-600 hover:to-indigo-500 disabled:opacity-40"
+                            aria-label="つながる"
                           >
                             <Heart className="h-7 w-7" />
                           </button>
@@ -779,6 +920,10 @@ const AlumniProfiles: React.FC = () => {
                               <p className="flex items-center gap-3">
                                 <MapPin className="h-4 w-4 text-blue-500" />
                                 {alumni.location}
+                              </p>
+                              <p className="flex items-center gap-3">
+                                <Sparkles className="h-4 w-4 text-blue-500" />
+                                {alumni.club}
                               </p>
                               <p className="flex items-center gap-3">
                                 <Calendar className="h-4 w-4 text-blue-500" />
@@ -875,26 +1020,28 @@ const AlumniProfiles: React.FC = () => {
                       </div>
                     </div>
                   )}
-                  <div className="relative mx-auto mt-2 h-[460px] max-w-sm">
+                  <div className="relative mx-auto mt-2 h-[540px] max-w-sm" aria-live="polite">
                     {businessSwipe.visibleIndices.map((businessIndex, stackPosition) => {
                       const business = businessHighlights[businessIndex];
                       const isTopCard = stackPosition === 0;
                       const depth = stackPosition;
-                      const scale = 1 - depth * 0.05;
-                      const translateY = depth * 18;
-                      const stackedOpacity = isTopCard ? 1 : 0.9 - depth * 0.12;
+                      const scale = 1 - depth * 0.08;
+                      const translateY = depth * 24;
+                      const stackedOpacity = isTopCard ? 1 : 0.85 - depth * 0.15;
                       const cardStyle: React.CSSProperties = isTopCard
                         ? {
                             transform: `translateX(${businessSwipe.dragOffset}px) rotate(${businessSwipe.dragOffset * 0.04}deg)`,
                             transition: businessSwipe.isDragging ? 'none' : 'transform 0.35s ease, opacity 0.25s ease',
                             opacity: businessSwipe.isAnimating ? 0 : 1,
                             zIndex: businessSwipe.visibleIndices.length - depth,
+                            willChange: 'transform, opacity',
                           }
                         : {
                             transform: `scale(${scale}) translateY(${translateY}px)`,
                             transition: 'transform 0.35s ease, opacity 0.35s ease',
                             opacity: stackedOpacity,
                             zIndex: businessSwipe.visibleIndices.length - depth,
+                            willChange: 'auto',
                           };
                       const dragStrength = Math.min(Math.abs(businessSwipe.dragOffset) / 150, 1);
                       const isPositive = businessSwipe.dragOffset > 0;
@@ -909,6 +1056,8 @@ const AlumniProfiles: React.FC = () => {
                                 }
                               : undefined
                           }
+                          role="article"
+                          aria-label={`${business.name}、${business.category}、${business.owner}`}
                           className={`absolute inset-0 flex flex-col overflow-hidden rounded-[32px] shadow-[0_25px_60px_rgba(30,64,175,0.18)] ring-1 ring-black/5 ${
                             isTopCard ? 'cursor-grab touch-pan-y active:cursor-grabbing' : 'pointer-events-none'
                           }`}
@@ -918,82 +1067,80 @@ const AlumniProfiles: React.FC = () => {
                           onPointerUp={isTopCard ? businessSwipe.handlePointerUp : undefined}
                           onPointerCancel={isTopCard ? businessSwipe.handlePointerCancel : undefined}
                         >
-                          <img src={business.image} alt={business.name} className="absolute inset-0 h-full w-full object-cover" />
-                          <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/35 to-black/80" />
+                          <img
+                            src={business.image}
+                            alt=""
+                            aria-hidden="true"
+                            className="absolute inset-0 h-full w-full transform scale-110 object-cover blur-lg"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-b from-slate-950/50 via-slate-950/80 to-slate-950/95" />
                           {isTopCard && (
                             <div
                               className="pointer-events-none absolute inset-0 transition-opacity duration-200"
-                              style={{ opacity: dragStrength }}
+                              style={{ 
+                                opacity: dragStrength,
+                                transform: `scale(${1 + dragStrength * 0.02})`
+                              }}
                             >
                               <div
                                 className={`absolute inset-0 rounded-[32px] bg-gradient-to-br ${
-                                  isPositive ? 'from-emerald-400/40 via-emerald-400/10 to-transparent' : 'from-rose-500/35 via-rose-500/10 to-transparent'
+                                  isPositive ? 'from-emerald-400/50 via-emerald-400/20 to-transparent' : 'from-rose-500/45 via-rose-500/20 to-transparent'
                                 }`}
                               />
                               <div
-                                className={`absolute top-6 ${isPositive ? 'right-6' : 'left-6'} rounded-full bg-white/90 px-4 py-2 text-xs font-semibold text-blue-700 shadow-lg`}
+                                className={`absolute top-6 ${isPositive ? 'right-6' : 'left-6'} rounded-full bg-white/95 px-5 py-2.5 text-sm font-bold shadow-2xl ${
+                                  isPositive ? 'text-emerald-600' : 'text-rose-600'
+                                }`}
                               >
-                                {isPositive ? 'SUPPORT' : 'PASS'}
+                                {isPositive ? '✓ 応援する' : '✕ スキップ'}
                               </div>
                             </div>
                           )}
-                          <div className="relative z-10 flex h-full flex-col justify-between p-6">
-                            <div className="flex items-start justify-between">
-                              <span className="inline-flex items-center gap-2 rounded-full bg-white/85 px-4 py-1 text-xs font-semibold text-blue-700 shadow">
-                                <Store className="h-4 w-4" />
-                                卒業生の事業
+                          <div className="relative z-10 flex h-full flex-col">
+                            <div className="flex items-start justify-between p-6 text-white">
+                              <span className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-xs font-semibold backdrop-blur-sm">
+                                <Store className="h-3.5 w-3.5" />
+                                {business.category}
                               </span>
-                              <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                              <span className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
                                 <MapPin className="h-3.5 w-3.5" />
                                 {business.location}
                               </span>
                             </div>
-                            <div className="space-y-4 text-white">
-                              <div>
-                                <h3 className="text-2xl font-bold">{business.name}</h3>
-                                <p className="mt-1 text-sm font-medium text-blue-100">{business.owner}</p>
-                                <p className="mt-3 flex items-center gap-2 text-xs font-medium text-white/75">
-                                  <Building2 className="h-4 w-4 text-white/70" />
-                                  {business.category}
-                                </p>
-                              </div>
-                              <div className="rounded-2xl bg-white/10 p-4 backdrop-blur-sm">
-                                <p className="text-sm leading-relaxed text-white/90">{business.description}</p>
-                              </div>
-                              <div className="flex flex-wrap gap-2">
-                                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
-                                  <UtensilsCrossed className="h-3.5 w-3.5" />
-                                  卒業生特典あり
-                                </span>
-                                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
-                                  <Sprout className="h-3.5 w-3.5" />
-                                  地域活性
-                                </span>
-                              </div>
-                              <div className="flex items-center justify-between gap-3">
-                                {business.url ? (
-                                  <a
-                                    href={business.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                            <div className="mt-auto flex flex-col gap-4 p-6 pt-0">
+                              <div className="rounded-3xl bg-white/85 p-5 text-slate-900 shadow-xl backdrop-blur-md ring-1 ring-white/40">
+                                <div className="text-center">
+                                  <h3 className="text-2xl font-bold text-slate-900">{business.name}</h3>
+                                  <p className="mt-2 text-sm font-medium text-blue-600">{business.owner}</p>
+                                </div>
+                                <p className="mt-4 text-sm leading-relaxed text-slate-700">{business.description}</p>
+                                <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                                  {business.url ? (
+                                    <a
+                                      href={business.url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      data-swipe-ignore="true"
+                                      className="inline-flex items-center justify-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow transition hover:bg-blue-500"
+                                    >
+                                      詳細を見る
+                                      <ExternalLink className="h-4 w-4" />
+                                    </a>
+                                  ) : (
+                                    <span className="inline-flex items-center justify-center rounded-full bg-white/80 px-4 py-2 text-xs font-semibold text-blue-700 shadow">
+                                      詳細情報は準備中
+                                    </span>
+                                  )}
+                                  <button
+                                    type="button"
                                     data-swipe-ignore="true"
-                                    className="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-xs font-semibold text-white backdrop-blur-sm transition hover:bg-white/30"
+                                    onClick={() => businessSwipe.handleManualSwipe('right')}
+                                    className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-blue-700 shadow transition hover:bg-blue-50"
                                   >
-                                    詳細を見る
-                                    <ExternalLink className="h-4 w-4" />
-                                  </a>
-                                ) : (
-                                  <div />
-                                )}
-                                <button
-                                  type="button"
-                                  data-swipe-ignore="true"
-                                  onClick={() => businessSwipe.handleManualSwipe('right')}
-                                  className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-blue-600 shadow-lg transition hover:bg-blue-50"
-                                >
-                                  <Store className="h-4 w-4" />
-                                  応援する
-                                </button>
+                                    <Handshake className="h-4 w-4" />
+                                    応援する
+                                  </button>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -1005,12 +1152,22 @@ const AlumniProfiles: React.FC = () => {
                     <span className="text-xs font-semibold text-blue-600">
                       {businessSwipe.swipeIndex + 1} / {businessHighlights.length}
                     </span>
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3">
+                      <button
+                        type="button"
+                        onClick={() => businessSwipe.handleUndo()}
+                        disabled={!businessSwipe.canUndo || businessSwipe.isAnimating}
+                        className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-blue-600 shadow-lg ring-1 ring-blue-100 transition hover:bg-blue-50 disabled:opacity-40"
+                        aria-label="戻る"
+                      >
+                        <ChevronLeft className="h-5 w-5" />
+                      </button>
                       <button
                         type="button"
                         onClick={() => businessSwipe.handleManualSwipe('left')}
                         disabled={businessSwipe.isAnimating || businessHighlights.length === 0}
                         className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-rose-500 shadow-lg ring-1 ring-rose-100 transition hover:bg-rose-50 disabled:opacity-40"
+                        aria-label="スキップ"
                       >
                         <X className="h-6 w-6" />
                       </button>
@@ -1019,6 +1176,7 @@ const AlumniProfiles: React.FC = () => {
                         onClick={() => businessSwipe.handleManualSwipe('right')}
                         disabled={businessSwipe.isAnimating || businessHighlights.length === 0}
                         className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 text-white shadow-xl ring-4 ring-blue-200/60 transition hover:from-blue-600 hover:to-indigo-500 disabled:opacity-40"
+                        aria-label="応援する"
                       >
                         <Heart className="h-7 w-7" />
                       </button>
@@ -1134,27 +1292,29 @@ const AlumniProfiles: React.FC = () => {
                       </div>
                     </div>
                   )}
-                  <div className="relative mx-auto mt-2 h-[460px] max-w-sm">
+                  <div className="relative mx-auto mt-2 h-[540px] max-w-sm" aria-live="polite">
                     {networkSwipe.visibleIndices.map((programIndex, stackPosition) => {
                       const program = networkingPrograms[programIndex];
                       const Icon = program.icon;
                       const isTopCard = stackPosition === 0;
                       const depth = stackPosition;
-                      const scale = 1 - depth * 0.05;
-                      const translateY = depth * 18;
-                      const stackedOpacity = isTopCard ? 1 : 0.9 - depth * 0.12;
+                      const scale = 1 - depth * 0.08;
+                      const translateY = depth * 24;
+                      const stackedOpacity = isTopCard ? 1 : 0.85 - depth * 0.15;
                       const cardStyle: React.CSSProperties = isTopCard
                         ? {
                             transform: `translateX(${networkSwipe.dragOffset}px) rotate(${networkSwipe.dragOffset * 0.04}deg)`,
                             transition: networkSwipe.isDragging ? 'none' : 'transform 0.35s ease, opacity 0.25s ease',
                             opacity: networkSwipe.isAnimating ? 0 : 1,
                             zIndex: networkSwipe.visibleIndices.length - depth,
+                            willChange: 'transform, opacity',
                           }
                         : {
                             transform: `scale(${scale}) translateY(${translateY}px)`,
                             transition: 'transform 0.35s ease, opacity 0.35s ease',
                             opacity: stackedOpacity,
                             zIndex: networkSwipe.visibleIndices.length - depth,
+                            willChange: 'auto',
                           };
                       const dragStrength = Math.min(Math.abs(networkSwipe.dragOffset) / 150, 1);
                       const isPositive = networkSwipe.dragOffset > 0;
@@ -1169,6 +1329,8 @@ const AlumniProfiles: React.FC = () => {
                                 }
                               : undefined
                           }
+                          role="article"
+                          aria-label={`${program.title}、交流・ネットワークプログラム`}
                           className={`absolute inset-0 flex flex-col overflow-hidden rounded-[32px] shadow-[0_25px_60px_rgba(30,64,175,0.18)] ring-1 ring-black/5 ${
                             isTopCard ? 'cursor-grab touch-pan-y active:cursor-grabbing' : 'pointer-events-none'
                           }`}
@@ -1179,21 +1341,26 @@ const AlumniProfiles: React.FC = () => {
                           onPointerCancel={isTopCard ? networkSwipe.handlePointerCancel : undefined}
                         >
                           <img src={program.image} alt={program.title} className="absolute inset-0 h-full w-full object-cover" />
-                          <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/35 to-black/80" />
+                          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/50 to-black/85" />
                           {isTopCard && (
                             <div
                               className="pointer-events-none absolute inset-0 transition-opacity duration-200"
-                              style={{ opacity: dragStrength }}
+                              style={{ 
+                                opacity: dragStrength,
+                                transform: `scale(${1 + dragStrength * 0.02})`
+                              }}
                             >
                               <div
                                 className={`absolute inset-0 rounded-[32px] bg-gradient-to-br ${
-                                  isPositive ? 'from-emerald-400/40 via-emerald-400/10 to-transparent' : 'from-rose-500/35 via-rose-500/10 to-transparent'
+                                  isPositive ? 'from-emerald-400/50 via-emerald-400/20 to-transparent' : 'from-rose-500/45 via-rose-500/20 to-transparent'
                                 }`}
                               />
                               <div
-                                className={`absolute top-6 ${isPositive ? 'right-6' : 'left-6'} rounded-full bg-white/90 px-4 py-2 text-xs font-semibold text-blue-700 shadow-lg`}
+                                className={`absolute top-6 ${isPositive ? 'right-6' : 'left-6'} rounded-full bg-white/95 px-5 py-2.5 text-sm font-bold shadow-2xl ${
+                                  isPositive ? 'text-emerald-600' : 'text-rose-600'
+                                }`}
                               >
-                                {isPositive ? 'INTERESTED' : 'PASS'}
+                                {isPositive ? '✓ 参加する' : '✕ スキップ'}
                               </div>
                             </div>
                           )}
@@ -1247,12 +1414,22 @@ const AlumniProfiles: React.FC = () => {
                     <span className="text-xs font-semibold text-blue-600">
                       {networkSwipe.swipeIndex + 1} / {networkingPrograms.length}
                     </span>
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3">
+                      <button
+                        type="button"
+                        onClick={() => networkSwipe.handleUndo()}
+                        disabled={!networkSwipe.canUndo || networkSwipe.isAnimating}
+                        className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-blue-600 shadow-lg ring-1 ring-blue-100 transition hover:bg-blue-50 disabled:opacity-40"
+                        aria-label="戻る"
+                      >
+                        <ChevronLeft className="h-5 w-5" />
+                      </button>
                       <button
                         type="button"
                         onClick={() => networkSwipe.handleManualSwipe('left')}
                         disabled={networkSwipe.isAnimating || networkingPrograms.length === 0}
                         className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-rose-500 shadow-lg ring-1 ring-rose-100 transition hover:bg-rose-50 disabled:opacity-40"
+                        aria-label="スキップ"
                       >
                         <X className="h-6 w-6" />
                       </button>
@@ -1261,6 +1438,7 @@ const AlumniProfiles: React.FC = () => {
                         onClick={() => networkSwipe.handleManualSwipe('right')}
                         disabled={networkSwipe.isAnimating || networkingPrograms.length === 0}
                         className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 text-white shadow-xl ring-4 ring-blue-200/60 transition hover:from-blue-600 hover:to-indigo-500 disabled:opacity-40"
+                        aria-label="参加する"
                       >
                         <Heart className="h-7 w-7" />
                       </button>

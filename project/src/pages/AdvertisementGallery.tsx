@@ -15,8 +15,16 @@ import {
   Building2,
   Mail,
   Phone,
+  Check,
+  CreditCard,
+  Sparkles,
 } from 'lucide-react';
 import { useSwipeCards } from '../hooks/useSwipeCards';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+
+// Stripeの公開可能キーを設定（本番環境では環境変数から取得してください）
+const stripePromise = loadStripe('pk_test_YOUR_PUBLISHABLE_KEY');
 
 type Advertisement = {
   id: string;
@@ -29,6 +37,16 @@ type Advertisement = {
   contact?: string;
   image: string;
   url?: string;
+};
+
+type AdvertisingPlan = {
+  id: string;
+  name: string;
+  price: number;
+  duration: string;
+  features: string[];
+  recommended?: boolean;
+  stripe_price_id: string;
 };
 
 const advertisements: Advertisement[] = [
@@ -127,9 +145,194 @@ const advertisements: Advertisement[] = [
 
 const categories = ['all', 'イベント協賛', '地域振興', 'サービス', 'リクルート', 'ショップ', '寄付・支援'];
 
+const advertisingPlans: AdvertisingPlan[] = [
+  {
+    id: 'basic',
+    name: 'ベーシックプラン',
+    price: 30000,
+    duration: '1ヶ月',
+    features: [
+      'トップページバナー掲載',
+      '広告ギャラリーへの掲載',
+      '月間表示回数: 約5,000回',
+      'クリック数レポート提供',
+    ],
+    stripe_price_id: 'price_basic_monthly',
+  },
+  {
+    id: 'standard',
+    name: 'スタンダードプラン',
+    price: 80000,
+    duration: '3ヶ月',
+    features: [
+      'トップページバナー掲載',
+      '広告ギャラリーへの掲載',
+      'メールマガジン掲載（月1回）',
+      '月間表示回数: 約5,000回',
+      'クリック数レポート提供',
+      '専用お問い合わせフォーム設置',
+    ],
+    recommended: true,
+    stripe_price_id: 'price_standard_quarterly',
+  },
+  {
+    id: 'premium',
+    name: 'プレミアムプラン',
+    price: 150000,
+    duration: '6ヶ月',
+    features: [
+      'トップページバナー掲載',
+      '広告ギャラリーへの掲載',
+      'メールマガジン掲載（月2回）',
+      '月間表示回数: 約5,000回',
+      '詳細なアクセス解析レポート',
+      '専用お問い合わせフォーム設置',
+      'イベント協賛特典',
+      '優先的な掲載位置',
+    ],
+    stripe_price_id: 'price_premium_biannual',
+  },
+];
+
+// 決済フォームコンポーネント
+const CheckoutForm: React.FC<{ plan: AdvertisingPlan; onClose: () => void }> = ({ plan, onClose }) => {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [processing, setProcessing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!stripe || !elements) {
+      return;
+    }
+
+    setProcessing(true);
+    setError(null);
+
+    try {
+      // 本番環境では、バックエンドAPIを呼び出してPaymentIntentを作成します
+      // const response = await fetch('/api/create-payment-intent', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ planId: plan.id, amount: plan.price }),
+      // });
+      // const { clientSecret } = await response.json();
+
+      // デモ用のダミー処理
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      // 実際のStripe決済処理（本番環境で使用）
+      // const cardElement = elements.getElement(CardElement);
+      // if (!cardElement) return;
+      //
+      // const { error: stripeError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+      //   payment_method: { card: cardElement },
+      // });
+      //
+      // if (stripeError) {
+      //   throw new Error(stripeError.message);
+      // }
+
+      setSuccess(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : '決済に失敗しました');
+    } finally {
+      setProcessing(false);
+    }
+  };
+
+  if (success) {
+    return (
+      <div className="text-center">
+        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+          <Check className="h-8 w-8 text-green-600" />
+        </div>
+        <h3 className="mb-2 text-xl font-bold text-gray-900">決済が完了しました</h3>
+        <p className="mb-6 text-sm text-gray-600">
+          ご登録のメールアドレスに確認メールをお送りしました。
+        </p>
+        <button
+          type="button"
+          onClick={onClose}
+          className="rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
+        >
+          閉じる
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div>
+        <h3 className="mb-4 text-xl font-bold text-gray-900">{plan.name}</h3>
+        <div className="mb-4 rounded-xl bg-blue-50 p-4">
+          <div className="flex items-baseline justify-between">
+            <span className="text-sm text-gray-600">お支払い金額</span>
+            <div>
+              <span className="text-3xl font-bold text-gray-900">¥{plan.price.toLocaleString()}</span>
+              <span className="ml-2 text-sm text-gray-600">/ {plan.duration}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label className="mb-2 block text-sm font-semibold text-gray-700">カード情報</label>
+        <div className="rounded-xl border border-gray-300 bg-white p-4">
+          <CardElement
+            options={{
+              style: {
+                base: {
+                  fontSize: '16px',
+                  color: '#424770',
+                  '::placeholder': {
+                    color: '#aab7c4',
+                  },
+                },
+                invalid: {
+                  color: '#9e2146',
+                },
+              },
+            }}
+          />
+        </div>
+      </div>
+
+      {error && (
+        <div className="rounded-xl bg-red-50 p-4 text-sm text-red-600">
+          {error}
+        </div>
+      )}
+
+      <div className="flex gap-3">
+        <button
+          type="button"
+          onClick={onClose}
+          className="flex-1 rounded-xl border border-gray-300 bg-white px-6 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+        >
+          キャンセル
+        </button>
+        <button
+          type="submit"
+          disabled={!stripe || processing}
+          className="flex-1 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-3 text-sm font-semibold text-white transition hover:from-blue-700 hover:to-indigo-700 disabled:opacity-50"
+        >
+          {processing ? '処理中...' : `¥${plan.price.toLocaleString()} 支払う`}
+        </button>
+      </div>
+    </form>
+  );
+};
+
 const AdvertisementGallery: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [showSwipeHint, setShowSwipeHint] = useState(true);
+  const [selectedPlan, setSelectedPlan] = useState<AdvertisingPlan | null>(null);
+  const [showCheckout, setShowCheckout] = useState(false);
 
   const filteredAds = advertisements.filter(
     (ad) => selectedCategory === 'all' || ad.category === selectedCategory
@@ -519,24 +722,106 @@ const AdvertisementGallery: React.FC = () => {
           </div>
         )}
 
-        {/* Contact CTA */}
-        <section className="mt-12 rounded-3xl bg-gradient-to-br from-blue-600 to-indigo-700 p-8 text-white shadow-2xl">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <h2 className="text-2xl font-bold">広告掲載をご希望の方へ</h2>
-              <p className="mt-2 text-sm text-blue-100">
-                同窓会の皆さまに向けた広告掲載にご興味のある企業・個人の方は、お気軽にお問い合わせください。
-              </p>
-            </div>
-            <Link
-              to="/contact"
-              className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-blue-600 shadow-lg transition hover:bg-blue-50"
-            >
-              お問い合わせ
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
+        {/* Advertising Plans Section */}
+        <section className="mt-12">
+          <div className="mb-8 text-center">
+            <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 px-4 py-2 text-xs font-semibold text-white shadow-lg">
+              <Sparkles className="h-4 w-4" />
+              広告掲載プラン
+            </span>
+            <h2 className="mt-4 text-3xl font-bold text-gray-900">広告掲載をご希望の方へ</h2>
+            <p className="mt-3 text-gray-600">
+              同窓会の皆さまに向けた広告掲載プランをご用意しています。オンラインで簡単にお申し込みいただけます。
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            {advertisingPlans.map((plan) => (
+              <div
+                key={plan.id}
+                className={`relative flex flex-col overflow-hidden rounded-3xl bg-white shadow-xl transition duration-300 hover:-translate-y-2 hover:shadow-2xl ${
+                  plan.recommended ? 'ring-4 ring-blue-500' : 'border border-gray-100'
+                }`}
+              >
+                {plan.recommended && (
+                  <div className="absolute right-4 top-4 z-10">
+                    <span className="rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 px-3 py-1 text-xs font-bold text-white shadow-lg">
+                      おすすめ
+                    </span>
+                  </div>
+                )}
+
+                <div className={`p-8 ${plan.recommended ? 'bg-gradient-to-br from-blue-50 to-indigo-50' : ''}`}>
+                  <h3 className="text-2xl font-bold text-gray-900">{plan.name}</h3>
+                  <div className="mt-4 flex items-baseline">
+                    <span className="text-5xl font-bold text-gray-900">
+                      ¥{(plan.price / 1000).toLocaleString()}K
+                    </span>
+                    <span className="ml-2 text-gray-600">/ {plan.duration}</span>
+                  </div>
+                </div>
+
+                <div className="flex-1 space-y-4 p-8 pt-6">
+                  <ul className="space-y-3">
+                    {plan.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-start gap-3">
+                        <div className="mt-1 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-blue-100">
+                          <Check className="h-3 w-3 text-blue-600" />
+                        </div>
+                        <span className="text-sm text-gray-700">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="p-8 pt-0">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedPlan(plan);
+                      setShowCheckout(true);
+                    }}
+                    className={`flex w-full items-center justify-center gap-2 rounded-xl px-6 py-4 text-sm font-semibold shadow-lg transition ${
+                      plan.recommended
+                        ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700'
+                        : 'bg-gray-900 text-white hover:bg-gray-800'
+                    }`}
+                  >
+                    <CreditCard className="h-4 w-4" />
+                    このプランを選択
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 rounded-2xl bg-blue-50 p-6 text-center">
+            <p className="text-sm text-gray-700">
+              カスタムプランや詳細なご相談は
+              <Link to="/contact" className="ml-1 font-semibold text-blue-600 hover:text-blue-700">
+                お問い合わせ
+              </Link>
+              からご連絡ください。
+            </p>
           </div>
         </section>
+
+        {/* Checkout Modal */}
+        {showCheckout && selectedPlan && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+            <div className="w-full max-w-md rounded-3xl bg-white p-8 shadow-2xl">
+              <Elements stripe={stripePromise}>
+                <CheckoutForm
+                  plan={selectedPlan}
+                  onClose={() => {
+                    setShowCheckout(false);
+                    setSelectedPlan(null);
+                  }}
+                />
+              </Elements>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

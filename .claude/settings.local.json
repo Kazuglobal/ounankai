@@ -9,7 +9,11 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push:*)",
-      "Read(//c/Users/s1598/Pictures/Screenshots/**)"
+      "Read(//c/Users/s1598/Pictures/Screenshots/**)",
+      "Bash(npm run build)",
+      "Bash(npm run:*)",
+      "Bash(git log:*)",
+      "Bash(gh pr list:*)"
     ],
     "deny": []
   }

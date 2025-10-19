@@ -10,6 +10,7 @@ export function useSwipeCards<T>({ items, onSwipe }: SwipeCardsConfig<T>) {
   const [dragOffsetState, setDragOffsetState] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [previousIndex, setPreviousIndex] = useState<number | null>(null);
 
   const dragOffsetRef = useRef(0);
   const startXRef = useRef<number | null>(null);
@@ -17,7 +18,8 @@ export function useSwipeCards<T>({ items, onSwipe }: SwipeCardsConfig<T>) {
   const animationTimeoutRef = useRef<number | undefined>();
   const topCardRef = useRef<HTMLDivElement | null>(null);
 
-  const SWIPE_THRESHOLD = 100;
+  // 動的スワイプ閾値（画面幅の30%、最小80px、最大120px）
+  const SWIPE_THRESHOLD = Math.max(80, Math.min(120, typeof window !== 'undefined' ? window.innerWidth * 0.3 : 100));
 
   const setDragOffset = useCallback((value: number) => {
     dragOffsetRef.current = value;
@@ -62,6 +64,14 @@ export function useSwipeCards<T>({ items, onSwipe }: SwipeCardsConfig<T>) {
       if (currentItem && onSwipe) {
         onSwipe(currentItem, direction);
       }
+
+      // 触覚フィードバック（対応ブラウザのみ）
+      if (typeof navigator !== 'undefined' && navigator.vibrate) {
+        navigator.vibrate(50);
+      }
+
+      // 現在のインデックスを履歴に保存
+      setPreviousIndex(swipeIndex);
 
       setIsAnimating(true);
       setIsDragging(false);
@@ -177,6 +187,34 @@ export function useSwipeCards<T>({ items, onSwipe }: SwipeCardsConfig<T>) {
     [finalizeSwipe, isAnimating, items.length],
   );
 
+  const handleUndo = useCallback(() => {
+    if (isAnimating || previousIndex === null || items.length === 0) {
+      return;
+    }
+
+    setIsAnimating(true);
+    setIsDragging(false);
+
+    // 触覚フィードバック
+    if (typeof navigator !== 'undefined' && navigator.vibrate) {
+      navigator.vibrate(30);
+    }
+
+    if (animationTimeoutRef.current !== undefined) {
+      window.clearTimeout(animationTimeoutRef.current);
+    }
+
+    animationTimeoutRef.current = window.setTimeout(() => {
+      setSwipeIndex(previousIndex);
+      setPreviousIndex(null);
+      setDragOffset(0);
+      setIsAnimating(false);
+      animationTimeoutRef.current = undefined;
+    }, 200);
+  }, [isAnimating, previousIndex, items.length, setDragOffset]);
+
+  const canUndo = previousIndex !== null && !isAnimating;
+
   const visibleIndices = useMemo(() => {
     if (items.length === 0) {
       return [] as number[];
@@ -204,5 +242,7 @@ export function useSwipeCards<T>({ items, onSwipe }: SwipeCardsConfig<T>) {
     handlePointerUp,
     handlePointerCancel,
     handleManualSwipe,
+    handleUndo,
+    canUndo,
   };
 }
