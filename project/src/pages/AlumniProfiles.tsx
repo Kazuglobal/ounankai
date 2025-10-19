@@ -6,7 +6,7 @@ import {
   Heart,
   MessageCircle,
   ExternalLink,
-  X as CloseIcon,
+  X as XIcon,
   Search,
   Briefcase,
   MapPin,
@@ -28,7 +28,7 @@ import {
   Linkedin,
   Facebook,
   Instagram,
-  Twitter as XIcon,
+  Twitter as TwitterIcon,
 } from 'lucide-react';
 import { useSwipeCards } from '../hooks/useSwipeCards';
 import { alumniTopics } from '../data/alumniTopics';
@@ -891,7 +891,7 @@ const AlumniProfiles: React.FC = () => {
                                             data-swipe-ignore="true"
                                             className="inline-flex items-center justify-center gap-1 rounded-full bg-black px-2.5 py-1.5 text-xs font-semibold text-white shadow transition hover:bg-gray-800"
                                           >
-                                            <XIcon className="h-3 w-3" />
+                                            <TwitterIcon className="h-3 w-3" />
                                             X
                                           </a>
                                         )}
@@ -926,7 +926,7 @@ const AlumniProfiles: React.FC = () => {
                             className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-rose-500 shadow-lg ring-1 ring-rose-100 transition hover:bg-rose-50 disabled:opacity-40"
                             aria-label="スキップ"
                           >
-                            <CloseIcon className="h-6 w-6" />
+                            <XIcon className="h-6 w-6" />
                           </button>
                           <button
                             type="button"
@@ -1018,7 +1018,7 @@ const AlumniProfiles: React.FC = () => {
                       }}
                       className="mt-6 inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-blue-500"
                     >
-                      <CloseIcon className="h-4 w-4" />
+                      <XIcon className="h-4 w-4" />
                       フィルタをクリア
                     </button>
                   </div>
@@ -1220,7 +1220,7 @@ const AlumniProfiles: React.FC = () => {
                         className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-rose-500 shadow-lg ring-1 ring-rose-100 transition hover:bg-rose-50 disabled:opacity-40"
                         aria-label="スキップ"
                       >
-                        <X className="h-6 w-6" />
+                        <XIcon className="h-6 w-6" />
                       </button>
                       <button
                         type="button"
@@ -1482,7 +1482,7 @@ const AlumniProfiles: React.FC = () => {
                         className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-rose-500 shadow-lg ring-1 ring-rose-100 transition hover:bg-rose-50 disabled:opacity-40"
                         aria-label="スキップ"
                       >
-                        <X className="h-6 w-6" />
+                        <XIcon className="h-6 w-6" />
                       </button>
                       <button
                         type="button"
@@ -1663,7 +1663,7 @@ const AlumniProfiles: React.FC = () => {
               aria-label="閉じる"
               className="absolute right-4 top-4 rounded-full bg-gray-100 p-2 text-gray-500 transition hover:bg-gray-200 hover:text-gray-700"
             >
-              <CloseIcon className="h-4 w-4" />
+              <XIcon className="h-4 w-4" />
             </button>
             <div className="text-center">
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-lg">
@@ -1707,4 +1707,3 @@ const AlumniProfiles: React.FC = () => {
 };
 
 export default AlumniProfiles;
-
