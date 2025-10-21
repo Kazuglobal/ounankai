@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, MapPin, Users, ChevronRight, Tag } from 'lucide-react';
+import { Calendar, ChevronRight } from 'lucide-react';
 
 const Announcements: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState('all');
@@ -7,318 +7,207 @@ const Announcements: React.FC = () => {
   const announcements = [
     {
       id: 1,
-      title: '2024年度ホームカミングウィークエンド',
-      category: 'events',
-      date: '2024-10-15',
-      time: '9:00 AM - 6:00 PM',
-      location: 'Main Campus',
-      type: 'イベント',
-      featured: true,
-      image: 'https://images.pexels.com/photos/1205651/pexels-photo-1205651.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop',
-      summary: '同窓生最大の年次イベントに参加しましょう！ クラスメートとの再会、キャンパスの最新情報、家族向けアクティビティをお楽しみください。',
-      description: 'Our Annual Homecoming Weekend is back with exciting activities for all ages and graduation years. The weekend kicks off Friday evening with a welcome reception, followed by Saturday\'s main events including campus tours, class reunions, the traditional football game, and evening gala dinner. Sunday features a family picnic and farewell brunch.',
-      highlights: [
-        '節目卒業年の同窓会',
-        '新施設を紹介するキャンパスツアー',
-        '同窓生功績表彰式',
-        'ライブ音楽とエンターテイメント',
-        '子ども向けアクティビティとファミリーゾーン'
-      ],
-      registrationInfo: '早期登録は9月1日まで。 同窓会会員は20%割引。',
-      contact: 'homecoming@hachinohe-nishi.ed.jp'
+      title: '2024年度同窓会総会合唱隊のお知らせ',
+      category: 'イベント',
+      categoryColor: 'bg-red-500',
+      date: '2024年3月15日',
+      image: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=640',
+      summary: '今年度の同窓会総会を下記の通り開催いたします。多くの皆様のご参加をお待ちしております。'
     },
     {
       id: 2,
-      title: '新役員就任のお知らせ',
-      category: 'news',
-      date: '2024-08-20',
-      type: 'お知らせ',
-      featured: false,
-      summary: '同窓会の未来を担う3名の新しい役員が選出されました。',
-      description: '厳正なる選考の結果、パトリシア・ウィリアムズ博士（1995年卒）、マーカス・ジョンソン氏（2010年卒）、リサ・チェン博士（2008年卒）の3名が取締役会に加わりました。 それぞれが持つ専門知識と情熱が同窓生の絆をさらに強めます。',
-      newMembers: [
-        {
-          name: 'Dr. Patricia Williams',
-          class: '1995',
-          profession: 'Healthcare Executive',
-          expertise: 'Strategic planning and healthcare innovation'
-        },
-        {
-          name: 'Marcus Johnson',
-          class: '2010',
-          profession: 'Tech Entrepreneur',
-          expertise: 'Digital engagement and young alumni outreach'
-        },
-        {
-          name: 'Dr. Lisa Chen',
-          class: '2008',
-          profession: 'Education Policy Expert',
-          expertise: 'Educational partnerships and program development'
-        }
-      ]
+      title: '園園祭2024のボランティア募集について',
+      category: 'イベント',
+      categoryColor: 'bg-cyan-500',
+      date: '2024年3月12日',
+      image: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=640',
+      summary: '今年の園園祭開催にあたり、当日のボランティアスタッフを募集いたします。'
     },
     {
       id: 3,
-      title: '地域別同窓会ミートアップ ― 2024年秋',
-      category: 'events',
-      date: '2024-09-01',
-      type: 'イベントシリーズ',
-      featured: true,
-      summary: 'お住まいの地域で同窓生とつながりましょう！ この秋は15都市でミートアップを開催します。',
-      description: 'Our regional meetup series continues with exciting gatherings planned across the country. Each event features networking opportunities, guest speakers, and updates from campus.',
-      cities: [
-        { city: 'New York', date: 'September 12', venue: 'Rooftop Bar Manhattan' },
-        { city: 'Los Angeles', date: 'September 19', venue: 'Beverly Hills Hotel' },
-        { city: 'Chicago', date: 'September 26', venue: 'Art Institute of Chicago' },
-        { city: 'San Francisco', date: 'October 3', venue: 'Ferry Building' },
-        { city: 'Boston', date: 'October 10', venue: 'Faneuil Hall' }
-      ],
-      registrationRequired: true
+      title: '新校舎建設計画に関するご報告',
+      category: '寄付支援',
+      categoryColor: 'bg-emerald-500',
+      date: '2024年3月10日',
+      image: 'https://images.pexels.com/photos/267885/pexels-photo-267885.jpeg?auto=compress&cs=tinysrgb&w=640',
+      summary: '学校の新校舎建設計画について、詳細が決定いたしましたのでご報告いたします。'
     },
     {
       id: 4,
-      title: '同窓生奨学基金が100万ドルの節目を達成',
-      category: 'news',
-      date: '2024-07-30',
-      type: '功績',
-      featured: false,
-      summary: '同窓生の寛大なご支援により、奨学基金が100万ドルの節目を迎えました。',
-      description: '過去5年間で2,500名を超える同窓生が学生奨学金に寄付を行い、この大きな成果を達成しました。 すでに150名の学生が支援を受けています。',
-      impact: {
-        totalRaised: '$1,000,000',
-        studentsHelped: 150,
-        donors: 2500,
-        averageScholarship: '$5,000'
-      }
+      title: '奨学金制度の変更について',
+      category: '制度変更',
+      categoryColor: 'bg-amber-500',
+      date: '2024年3月8日',
+      image: 'https://images.pexels.com/photos/289737/pexels-photo-289737.jpeg?auto=compress&cs=tinysrgb&w=640',
+      summary: '2024年度より奨学金制度の一部が変更となります。詳細をご確認ください。'
     },
     {
       id: 5,
-      title: '若手同窓生向けキャリア開発ワークショップ',
-      category: 'workshops',
-      date: '2024-11-15',
-      time: '6:00 PM - 9:00 PM',
-      location: 'Alumni Center',
-      type: 'ワークショップ',
-      featured: false,
-      summary: '卒業後1〜10年の同窓生を対象としたキャリアアップワークショップ。',
-      description: 'キャリアアップ、ネットワーキング戦略、業界洞察に関する専門家パネルを含むプロフェッショナル開発の夕べにご参加ください。 夕食と交流会付き。',
-      topics: [
-        'キャリア転換戦略',
-        'プロフェッショナルネットワーキングのベストプラクティス',
-        'リーダーシップ開発',
-        '業界別ブレークアウトセッション',
-        'メンタープログラム紹介'
-      ],
-      speakers: [
-        'サラ・ジョンソン（2018年卒） - テック起業家',
-        'マイケル・ロドリゲス（2015年卒） - 投資銀行副社長',
-        'アマンダ・リー博士（2012年卒） - 医学ディレクター'
-      ]
+      title: '卒業生講演会「グローバル社会での活躍」',
+      category: '講演会',
+      categoryColor: 'bg-purple-500',
+      date: '2024年3月5日',
+      image: 'https://images.pexels.com/photos/2228585/pexels-photo-2228585.jpeg?auto=compress&cs=tinysrgb&w=640',
+      summary: '国際的に活躍する卒業生による講演会を開催いたします。多数のご参加をお待ちしています。'
     },
     {
       id: 6,
-      title: '同窓生表彰候補者の募集',
-      category: 'news',
-      date: '2024-09-15',
-      type: '呼びかけ',
-      featured: false,
-      summary: '年間同窓生功績表彰の候補者受付を開始しました。 あなたの分野で優れた同窓生を推薦してください。',
-      description: '同窓会では、専門的功績、社会奉仕、若手リーダーシップを顕彰する栄誉ある年次表彰の候補者を募集しています。',
-      categories: [
-        'プロフェッショナル功績賞',
-        '社会奉仕賞',
-        '若手同窓生リーダーシップ賞',
-        'ボランティアサービス賞',
-        '生涯功労賞'
-      ],
-      deadline: '2024年11月30日',
-      submissionInfo: '同窓生ポータルよりオンラインで推薦を受け付けています'
+      title: '図書館システム更新のお知らせ',
+      category: 'システム',
+      categoryColor: 'bg-teal-500',
+      date: '2024年3月1日',
+      image: 'https://images.pexels.com/photos/2228585/pexels-photo-2228585.jpeg?auto=compress&cs=tinysrgb&w=640',
+      summary: '図書館の検索システムが新しくなりました。使用方法については図書館で案内しております。'
     }
   ];
 
   const categories = [
-    { id: 'all', name: 'すべて', count: announcements.length },
-    { id: 'events', name: 'イベント', count: announcements.filter(a => a.category === 'events').length },
-    { id: 'news', name: 'ニュース', count: announcements.filter(a => a.category === 'news').length },
-    { id: 'workshops', name: 'ワークショップ', count: announcements.filter(a => a.category === 'workshops').length }
+    { id: 'all', name: 'すべて' },
+    { id: 'イベント', name: 'イベント' },
+    { id: '募集', name: '募集' },
+    { id: 'お知らせ', name: 'お知らせ' },
+    { id: '寄付支援', name: '寄付支援' }
   ];
 
-  const filteredAnnouncements = activeCategory === 'all' 
-    ? announcements 
+  const filteredAnnouncements = activeCategory === 'all'
+    ? announcements
     : announcements.filter(a => a.category === activeCategory);
 
-  const featuredAnnouncements = announcements.filter(a => a.featured);
-  const regularAnnouncements = filteredAnnouncements.filter(a => !a.featured);
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('ja-JP', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    });
-  };
-
   return (
-    <div className="py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-            お知らせ・ニュース
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            同窓生コミュニティの最新情報、イベント、ニュースをお届けします
-          </p>
-        </div>
+    <div className="min-h-screen bg-gray-50">
+      {/* Mobile Layout */}
+      <div className="lg:hidden">
+        <div className="px-4 py-6">
+          {/* Header */}
+          <div className="mb-6 text-center">
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">お知らせ</h1>
+          </div>
 
-        {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => setActiveCategory(category.id)}
-              className={`px-6 py-3 rounded-full font-medium transition-all duration-200 ${
-                activeCategory === category.id
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 shadow-md'
-              }`}
-            >
-              {category.name} ({category.count})
-            </button>
-          ))}
-        </div>
-
-        {/* Featured Announcements */}
-        {(activeCategory === 'all' || featuredAnnouncements.some(a => a.category === activeCategory)) && (
-          <div className="mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8">注目</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {featuredAnnouncements
-                .filter(announcement => activeCategory === 'all' || announcement.category === activeCategory)
-                .map((announcement) => (
-                <div
-                  key={announcement.id}
-                  className="bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+          {/* Category Tabs */}
+          <div className="mb-6 -mx-4 overflow-x-auto px-4">
+            <div className="flex gap-2 pb-2">
+              {categories.map((category) => (
+                <button
+                  key={category.id}
+                  onClick={() => setActiveCategory(category.id)}
+                  className={`px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-all ${
+                    activeCategory === category.id
+                      ? 'bg-gray-900 text-white'
+                      : 'bg-white text-gray-700 hover:bg-gray-100'
+                  }`}
                 >
-                  {announcement.image && (
-                    <div className="aspect-[16/9]">
-                      <img
-                        src={announcement.image}
-                        alt={announcement.title}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  )}
-                  <div className="p-8">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center space-x-2">
-                        <Tag className="w-4 h-4 text-blue-600" />
-                        <span className="text-blue-600 font-semibold capitalize">{announcement.type}</span>
-                      </div>
-                      <span className="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
-                        注目
-                      </span>
-                    </div>
+                  {category.name}
+                </button>
+              ))}
+            </div>
+          </div>
 
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4 leading-tight">
+          {/* Announcements List */}
+          <div className="space-y-4">
+            {filteredAnnouncements.map((announcement) => (
+              <div
+                key={announcement.id}
+                className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+              >
+                <div className="flex gap-3 p-3">
+                  <div className="w-16 h-16 flex-shrink-0 rounded-xl overflow-hidden">
+                    <img
+                      src={announcement.image}
+                      alt={announcement.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start gap-2 mb-1">
+                      <span className={`${announcement.categoryColor} text-white text-xs font-bold px-2 py-0.5 rounded`}>
+                        {announcement.category}
+                      </span>
+                      <ChevronRight className="h-4 w-4 text-gray-400 flex-shrink-0 ml-auto mt-0.5" />
+                    </div>
+                    <h3 className="font-bold text-gray-900 text-sm mb-1 line-clamp-2">
                       {announcement.title}
                     </h3>
-
-                    <div className="flex items-center text-gray-500 mb-4 space-x-4">
-                      <div className="flex items-center">
-                        <Calendar className="w-4 h-4 mr-2" />
-                        <span className="text-sm">{formatDate(announcement.date)}</span>
-                      </div>
-                      {announcement.time && (
-                        <div className="flex items-center">
-                          <Clock className="w-4 h-4 mr-2" />
-                          <span className="text-sm">{announcement.time}</span>
-                        </div>
-                      )}
-                      {announcement.location && (
-                        <div className="flex items-center">
-                          <MapPin className="w-4 h-4 mr-2" />
-                          <span className="text-sm">{announcement.location}</span>
-                        </div>
-                      )}
-                    </div>
-
-                    <p className="text-gray-600 mb-6 leading-relaxed">
-                      {announcement.summary}
-                    </p>
-
-                    <button className="inline-flex items-center text-blue-600 font-semibold hover:text-blue-700 transition-colors duration-200">
-                      詳細を読む
-                      <ChevronRight className="w-4 h-4 ml-1" />
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Regular Announcements */}
-        {regularAnnouncements.length > 0 && (
-          <div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-8">最新更新</h2>
-            <div className="space-y-6">
-              {regularAnnouncements.map((announcement) => (
-                <div
-                  key={announcement.id}
-                  className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300"
-                >
-                  <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-                    <div className="flex-grow">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center space-x-2">
-                          <Tag className="w-4 h-4 text-blue-600" />
-                          <span className="text-blue-600 font-semibold capitalize">{announcement.type}</span>
-                        </div>
-                      </div>
-
-                      <h3 className="text-2xl font-bold text-gray-900 mb-4 leading-tight">
-                        {announcement.title}
-                      </h3>
-
-                      <div className="flex items-center text-gray-500 mb-4 space-x-4">
-                        <div className="flex items-center">
-                          <Calendar className="w-4 h-4 mr-2" />
-                          <span className="text-sm">{formatDate(announcement.date)}</span>
-                        </div>
-                        {announcement.time && (
-                          <div className="flex items-center">
-                            <Clock className="w-4 h-4 mr-2" />
-                            <span className="text-sm">{announcement.time}</span>
-                          </div>
-                        )}
-                        {announcement.location && (
-                          <div className="flex items-center">
-                            <MapPin className="w-4 h-4 mr-2" />
-                            <span className="text-sm">{announcement.location}</span>
-                          </div>
-                        )}
-                      </div>
-
-                      <p className="text-gray-600 leading-relaxed">
-                        {announcement.summary}
-                      </p>
-                    </div>
-
-                    <div className="lg:flex-shrink-0">
-                      <button className="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-2xl font-semibold hover:bg-blue-700 transition-colors duration-200 whitespace-nowrap">
-                        詳細を見る
-                        <ChevronRight className="w-4 h-4 ml-2" />
-                      </button>
+                    <div className="flex items-center gap-1 text-xs text-gray-500">
+                      <Calendar className="h-3 w-3" />
+                      <span>{announcement.date}</span>
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
+                <div className="px-3 pb-3">
+                  <p className="text-xs text-gray-600 leading-relaxed line-clamp-2">
+                    {announcement.summary}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
-        )}
+        </div>
+      </div>
 
+      {/* Desktop Layout */}
+      <div className="hidden lg:block">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">お知らせ</h1>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              同窓生コミュニティの最新情報、イベント、ニュースをお届けします
+            </p>
+          </div>
+
+          {/* Category Tabs */}
+          <div className="flex justify-center gap-3 mb-12">
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setActiveCategory(category.id)}
+                className={`px-6 py-3 rounded-full font-semibold transition-all ${
+                  activeCategory === category.id
+                    ? 'bg-gray-900 text-white shadow-lg'
+                    : 'bg-white text-gray-700 hover:bg-gray-100 shadow-md'
+                }`}
+              >
+                {category.name}
+              </button>
+            ))}
+          </div>
+
+          {/* Announcements Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredAnnouncements.map((announcement) => (
+              <div
+                key={announcement.id}
+                className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+              >
+                <div className="h-48 overflow-hidden">
+                  <img
+                    src={announcement.image}
+                    alt={announcement.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className={`${announcement.categoryColor} text-white text-xs font-bold px-3 py-1 rounded-full`}>
+                      {announcement.category}
+                    </span>
+                    <ChevronRight className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <h3 className="font-bold text-gray-900 text-lg mb-2 line-clamp-2">
+                    {announcement.title}
+                  </h3>
+                  <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
+                    <Calendar className="h-4 w-4" />
+                    <span>{announcement.date}</span>
+                  </div>
+                  <p className="text-sm text-gray-600 leading-relaxed line-clamp-3">
+                    {announcement.summary}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
