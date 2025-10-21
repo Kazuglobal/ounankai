@@ -107,7 +107,7 @@ const Home: React.FC = () => {
     },
     {
       title: '同窓会活動',
-      href: '/announcements',
+      href: '/alumni-activities',
       icon: Users,
       bubbleGradient: 'from-sky-300 via-sky-200 to-sky-200',
       iconColor: 'text-blue-700',

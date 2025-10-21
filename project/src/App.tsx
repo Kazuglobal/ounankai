@@ -13,6 +13,7 @@ import Bylaws from './pages/Bylaws';
 import BoardOfDirectors from './pages/BoardOfDirectors';
 import MemberRegistration from './pages/MemberRegistration';
 import AdvertisementGallery from './pages/AdvertisementGallery';
+import AlumniActivities from './pages/AlumniActivities';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/business/:id" element={<BusinessDetail />} />
           <Route path="/announcements" element={<Announcements />} />
           <Route path="/advertisement-gallery" element={<AdvertisementGallery />} />
+          <Route path="/alumni-activities" element={<AlumniActivities />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/bylaws" element={<Bylaws />} />
           <Route path="/board-of-directors" element={<BoardOfDirectors />} />
