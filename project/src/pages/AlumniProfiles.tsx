@@ -85,6 +85,7 @@ type JobOpportunity = {
   description: string;
   postedBy: string;
   salary?: string;
+  image: string;
 };
 
 const tabs: { id: TabId; label: string; description: string }[] = [
@@ -728,13 +729,6 @@ const industries = [
   'FAO',
   'UNDP',
   'UNHCR',
-  'UNICEF',
-  'UNESCO',
-  'WHO',
-  'ILO',
-  'FAO',
-  'UNDP',
-  'UNHCR',
   'その他',
 ];
 
@@ -861,6 +855,7 @@ const jobOpportunities: JobOpportunity[] = [
     description: 'UI/UXデザインの経験者歓迎。同窓生が経営するスタートアップで、地方創生プロジェクトに携われます。',
     postedBy: '小林 彩乃（2012年卒）',
     salary: '年収400〜600万円',
+    image: 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
   },
   {
     id: 'job2',
@@ -871,6 +866,7 @@ const jobOpportunities: JobOpportunity[] = [
     description: 'AIプロダクト開発に興味のある方を募集。同窓生チームと一緒に最先端技術に挑戦できます。',
     postedBy: '田中 さくら（2018年卒）',
     salary: '年収500〜800万円',
+    image: 'https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
   },
   {
     id: 'job3',
@@ -881,6 +877,7 @@ const jobOpportunities: JobOpportunity[] = [
     description: 'スマート農業に興味のある方歓迎。未経験でも丁寧に指導します。地域おこし協力隊との連携も可能。',
     postedBy: '田村 亮（2005年卒）',
     salary: '月給20万円〜（経験による）',
+    image: 'https://images.pexels.com/photos/974314/pexels-photo-974314.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
   },
 ];
 
@@ -1908,7 +1905,7 @@ const AlumniProfiles: React.FC = () => {
 
                       return (
                         <article
-                          key={`${item.id}-${itemIndex}`}
+                          key={`${item.type}-${item.id}-${itemIndex}`}
                           ref={
                             isTopCard
                               ? (node) => {
