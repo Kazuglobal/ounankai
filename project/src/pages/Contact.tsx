@@ -74,36 +74,15 @@ const Contact: React.FC = () => {
       iconBg: 'bg-blue-100',
       iconColor: 'text-blue-600',
       label: '住所',
-      value: '〒028-0525\n岩手県遠野市中央通り3-17'
-    },
-    {
-      icon: Phone,
-      iconBg: 'bg-blue-100',
-      iconColor: 'text-blue-600',
-      label: '電話番号',
-      value: '0198-62-2823'
-    },
-    {
-      icon: Phone,
-      iconBg: 'bg-blue-100',
-      iconColor: 'text-blue-600',
-      label: 'FAX',
-      value: '0198-62-2805'
+      value: '〒039-1101\n青森県八戸市大字尻内町字中根市14'
     },
     {
       icon: Mail,
       iconBg: 'bg-blue-100',
       iconColor: 'text-blue-600',
       label: 'メールアドレス',
-      value: 'info@tono-hs-alumni.jp',
-      link: 'mailto:info@tono-hs-alumni.jp'
-    },
-    {
-      icon: Clock,
-      iconBg: 'bg-blue-100',
-      iconColor: 'text-blue-600',
-      label: '受付時間',
-      value: '平日 9:00〜17:00\n(土日祝日除く)'
+      value: 'ounankai@gmail.com',
+      link: 'mailto:ounankai@gmail.com'
     }
   ];
 
