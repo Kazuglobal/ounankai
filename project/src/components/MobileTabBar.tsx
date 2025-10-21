@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import type { LucideIcon } from 'lucide-react';
-import { Home, Users, Bell, Image, Mail } from 'lucide-react';
+import { Home, Users, Bell, Heart, Mail } from 'lucide-react';
 
 type TabItem = {
   id: string;
@@ -34,11 +34,11 @@ const tabs: TabItem[] = [
     isActive: (pathname) => pathname.startsWith('/announcements'),
   },
   {
-    id: 'gallery',
-    label: 'ギャラリー',
-    icon: Image,
-    href: '/gallery',
-    isActive: (pathname) => pathname.startsWith('/gallery'),
+    id: 'donations',
+    label: '寄付',
+    icon: Heart,
+    href: '/donations',
+    isActive: (pathname) => pathname.startsWith('/donations'),
   },
   {
     id: 'contact',

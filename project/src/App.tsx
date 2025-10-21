@@ -15,6 +15,7 @@ import MemberRegistration from './pages/MemberRegistration';
 import AdvertisementGallery from './pages/AdvertisementGallery';
 import AlumniActivities from './pages/AlumniActivities';
 import ClubActivities from './pages/ClubActivities';
+import Donations from './pages/Donations';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/advertisement-gallery" element={<AdvertisementGallery />} />
           <Route path="/alumni-activities" element={<AlumniActivities />} />
           <Route path="/club-activities" element={<ClubActivities />} />
+          <Route path="/donations" element={<Donations />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/bylaws" element={<Bylaws />} />
           <Route path="/board-of-directors" element={<BoardOfDirectors />} />
