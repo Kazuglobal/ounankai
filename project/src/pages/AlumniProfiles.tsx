@@ -935,8 +935,16 @@ const AlumniProfiles: React.FC = () => {
       }
     },
   });
+  // Combine networking programs and job opportunities into one array
+  const networkAndJobs = useMemo(() => {
+    return [
+      ...networkingPrograms.map(item => ({ ...item, type: 'network' as const })),
+      ...jobOpportunities.map(item => ({ ...item, type: 'job' as const }))
+    ];
+  }, []);
+
   const networkSwipe = useSwipeCards({
-    items: networkingPrograms,
+    items: networkAndJobs,
     onSwipe: () => {
       setShowSwipeHint(false);
       if (typeof window !== 'undefined') {
@@ -1871,9 +1879,10 @@ const AlumniProfiles: React.FC = () => {
                     </div>
                   )}
                   <div className="relative mx-auto mt-2 h-[520px] max-w-sm" aria-live="polite">
-                    {networkSwipe.visibleIndices.map((programIndex, stackPosition) => {
-                      const program = networkingPrograms[programIndex];
-                      const Icon = program.icon;
+                    {networkSwipe.visibleIndices.map((itemIndex, stackPosition) => {
+                      const item = networkAndJobs[itemIndex];
+                      const isJob = item.type === 'job';
+                      const Icon = isJob ? Briefcase : item.icon;
                       const isTopCard = stackPosition === 0;
                       const depth = stackPosition;
                       const scale = 1 - depth * 0.08;
@@ -1899,7 +1908,7 @@ const AlumniProfiles: React.FC = () => {
 
                       return (
                         <article
-                          key={`${program.id}-${programIndex}`}
+                          key={`${item.id}-${itemIndex}`}
                           ref={
                             isTopCard
                               ? (node) => {
@@ -1908,7 +1917,7 @@ const AlumniProfiles: React.FC = () => {
                               : undefined
                           }
                           role="article"
-                          aria-label={`${program.title}、交流・ネットワークプログラム`}
+                          aria-label={isJob ? `${item.title}、求人情報` : `${item.title}、交流・ネットワークプログラム`}
                           className={`absolute inset-0 flex flex-col overflow-hidden rounded-[32px] shadow-[0_25px_60px_rgba(30,64,175,0.18)] ring-1 ring-black/5 ${
                             isTopCard ? 'cursor-grab touch-pan-y active:cursor-grabbing' : 'pointer-events-none'
                           }`}
@@ -1918,12 +1927,12 @@ const AlumniProfiles: React.FC = () => {
                           onPointerUp={isTopCard ? networkSwipe.handlePointerUp : undefined}
                           onPointerCancel={isTopCard ? networkSwipe.handlePointerCancel : undefined}
                         >
-                          <img src={program.image} alt={program.title} className="absolute inset-0 h-full w-full object-cover" />
+                          <img src={item.image} alt={item.title} className="absolute inset-0 h-full w-full object-cover" />
                           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/50 to-black/85" />
                           {isTopCard && (
                             <div
                               className="pointer-events-none absolute inset-0 transition-opacity duration-200"
-                              style={{ 
+                              style={{
                                 opacity: dragStrength,
                                 transform: `scale(${1 + dragStrength * 0.02})`
                               }}
@@ -1938,50 +1947,81 @@ const AlumniProfiles: React.FC = () => {
                                   isPositive ? 'text-emerald-600' : 'text-rose-600'
                                 }`}
                               >
-                                {isPositive ? '✓ 参加する' : '✕ スキップ'}
+                                {isPositive ? (isJob ? '✓ 応募する' : '✓ 参加する') : '✕ スキップ'}
                               </div>
                             </div>
                           )}
                           <div className="relative z-10 flex h-full flex-col justify-between p-5 pb-6">
                             <div className="flex items-start justify-between">
-                              <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/85 text-blue-600 shadow">
+                              <span className={`flex h-10 w-10 items-center justify-center rounded-2xl bg-white/85 shadow ${isJob ? 'text-amber-600' : 'text-blue-600'}`}>
                                 <Icon className="h-5 w-5" />
                               </span>
                               <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-medium uppercase tracking-wider text-white backdrop-blur-sm">
-                                Network
+                                {isJob ? '求人情報' : 'Network'}
                               </span>
                             </div>
                             <div className="space-y-3 text-white">
-                              <div>
-                                <h3 className="text-xl font-bold">{program.title}</h3>
-                                <p className="mt-1 text-xs font-medium uppercase tracking-wider text-blue-100">Ounan Alumni Network</p>
-                              </div>
-                              <div className="rounded-2xl bg-white/10 p-3 backdrop-blur-sm">
-                                <p className="text-xs leading-relaxed text-white/90">{program.description}</p>
-                              </div>
-                              <div className="flex flex-nowrap items-center justify-between gap-2">
-                                {program.cta ? (
-                                  <Link
-                                    to={program.cta.href}
-                                    data-swipe-ignore="true"
-                                    className="inline-flex flex-shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-white/20 px-3 py-2 text-xs font-semibold text-white backdrop-blur-sm transition hover:bg-white/30"
-                                  >
-                                    {program.cta.label}
-                                    <ArrowRight className="h-3.5 w-3.5" />
-                                  </Link>
-                                ) : (
-                                  <div />
-                                )}
-                                <button
-                                  type="button"
-                                  data-swipe-ignore="true"
-                                  onClick={() => networkSwipe.handleManualSwipe('right')}
-                                  className="inline-flex flex-shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-white px-3 py-2 text-xs font-semibold text-blue-600 shadow-lg transition hover:bg-blue-50"
-                                >
-                                  <Icon className="h-4 w-4" />
-                                  参加する
-                                </button>
-                              </div>
+                              {isJob ? (
+                                <>
+                                  <div>
+                                    <h3 className="text-xl font-bold">{item.title}</h3>
+                                    <p className="mt-1 text-sm font-medium text-amber-100">{item.company}</p>
+                                    <div className="mt-1.5 flex flex-wrap gap-2 text-xs">
+                                      <span className="rounded-full bg-white/20 px-2 py-0.5 backdrop-blur-sm">{item.location}</span>
+                                      <span className="rounded-full bg-white/20 px-2 py-0.5 backdrop-blur-sm">{item.type}</span>
+                                      {item.salary && <span className="rounded-full bg-amber-400/30 px-2 py-0.5 backdrop-blur-sm">{item.salary}</span>}
+                                    </div>
+                                  </div>
+                                  <div className="rounded-2xl bg-white/10 p-3 backdrop-blur-sm">
+                                    <p className="text-xs leading-relaxed text-white/90">{item.description}</p>
+                                  </div>
+                                  <div className="flex flex-nowrap items-center justify-between gap-2">
+                                    <div className="text-xs text-white/70">同窓生からの求人</div>
+                                    <button
+                                      type="button"
+                                      data-swipe-ignore="true"
+                                      onClick={() => networkSwipe.handleManualSwipe('right')}
+                                      className="inline-flex flex-shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-white px-3 py-2 text-xs font-semibold text-amber-600 shadow-lg transition hover:bg-amber-50"
+                                    >
+                                      <Briefcase className="h-4 w-4" />
+                                      応募する
+                                    </button>
+                                  </div>
+                                </>
+                              ) : (
+                                <>
+                                  <div>
+                                    <h3 className="text-xl font-bold">{item.title}</h3>
+                                    <p className="mt-1 text-xs font-medium uppercase tracking-wider text-blue-100">Ounan Alumni Network</p>
+                                  </div>
+                                  <div className="rounded-2xl bg-white/10 p-3 backdrop-blur-sm">
+                                    <p className="text-xs leading-relaxed text-white/90">{item.description}</p>
+                                  </div>
+                                  <div className="flex flex-nowrap items-center justify-between gap-2">
+                                    {item.cta ? (
+                                      <Link
+                                        to={item.cta.href}
+                                        data-swipe-ignore="true"
+                                        className="inline-flex flex-shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-white/20 px-3 py-2 text-xs font-semibold text-white backdrop-blur-sm transition hover:bg-white/30"
+                                      >
+                                        {item.cta.label}
+                                        <ArrowRight className="h-3.5 w-3.5" />
+                                      </Link>
+                                    ) : (
+                                      <div />
+                                    )}
+                                    <button
+                                      type="button"
+                                      data-swipe-ignore="true"
+                                      onClick={() => networkSwipe.handleManualSwipe('right')}
+                                      className="inline-flex flex-shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-white px-3 py-2 text-xs font-semibold text-blue-600 shadow-lg transition hover:bg-blue-50"
+                                    >
+                                      <Icon className="h-4 w-4" />
+                                      参加する
+                                    </button>
+                                  </div>
+                                </>
+                              )}
                             </div>
                           </div>
                         </article>
@@ -1990,7 +2030,7 @@ const AlumniProfiles: React.FC = () => {
                   </div>
                   <div className="mt-6 flex items-center justify-between px-2">
                     <span className="text-xs font-semibold text-blue-600">
-                      {networkSwipe.swipeIndex + 1} / {networkingPrograms.length}
+                      {networkSwipe.swipeIndex + 1} / {networkAndJobs.length}
                     </span>
                     <div className="flex items-center gap-3">
                       <button
@@ -2005,7 +2045,7 @@ const AlumniProfiles: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => networkSwipe.handleManualSwipe('left')}
-                        disabled={networkSwipe.isAnimating || networkingPrograms.length === 0}
+                        disabled={networkSwipe.isAnimating || networkAndJobs.length === 0}
                         className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-rose-500 shadow-lg ring-1 ring-rose-100 transition hover:bg-rose-50 disabled:opacity-40"
                         aria-label="スキップ"
                       >
@@ -2014,13 +2054,180 @@ const AlumniProfiles: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => networkSwipe.handleManualSwipe('right')}
-                        disabled={networkSwipe.isAnimating || networkingPrograms.length === 0}
+                        disabled={networkSwipe.isAnimating || networkAndJobs.length === 0}
                         className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 text-white shadow-xl ring-4 ring-blue-200/60 transition hover:from-blue-600 hover:to-indigo-500 disabled:opacity-40"
                         aria-label="参加する"
                       >
                         <Heart className="h-7 w-7" />
                       </button>
                     </div>
+                  </div>
+
+                  {/* Mobile Job Opportunities Section */}
+                  <div className="mt-8">
+                    <div className="mb-4 flex items-center gap-3">
+                      <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-lg">
+                        <Sparkles className="h-5 w-5" />
+                      </span>
+                      <div>
+                        <h3 className="text-base font-semibold text-gray-900">同窓生からの求人情報</h3>
+                        <p className="text-xs font-medium uppercase tracking-wider text-amber-600">Job Opportunities</p>
+                      </div>
+                    </div>
+
+                    <div className="relative mx-auto h-[480px] max-w-sm" aria-live="polite">
+                      {jobSwipe.visibleIndices.map((jobIndex, stackPosition) => {
+                        const job = jobOpportunities[jobIndex];
+                        const isTopCard = stackPosition === 0;
+                        const depth = stackPosition;
+                        const scale = 1 - depth * 0.08;
+                        const translateY = depth * 24;
+                        const stackedOpacity = isTopCard ? 1 : 0.85 - depth * 0.15;
+                        const cardStyle: React.CSSProperties = isTopCard
+                          ? {
+                              transform: `translateX(${jobSwipe.dragOffset}px) rotate(${jobSwipe.dragOffset * 0.04}deg)`,
+                              transition: jobSwipe.isDragging ? 'none' : 'transform 0.35s ease, opacity 0.25s ease',
+                              opacity: jobSwipe.isAnimating ? 0 : 1,
+                              zIndex: jobSwipe.visibleIndices.length - depth,
+                              willChange: 'transform, opacity',
+                            }
+                          : {
+                              transform: `scale(${scale}) translateY(${translateY}px)`,
+                              transition: 'transform 0.35s ease, opacity 0.35s ease',
+                              opacity: stackedOpacity,
+                              zIndex: jobSwipe.visibleIndices.length - depth,
+                              willChange: 'auto',
+                            };
+                        const dragStrength = Math.min(Math.abs(jobSwipe.dragOffset) / 150, 1);
+                        const isPositive = jobSwipe.dragOffset > 0;
+
+                        return (
+                          <article
+                            key={`${job.id}-${jobIndex}`}
+                            ref={
+                              isTopCard
+                                ? (node) => {
+                                    jobSwipe.topCardRef.current = node;
+                                  }
+                                : undefined
+                            }
+                            role="article"
+                            aria-label={`${job.title}、求人情報`}
+                            className={`absolute inset-0 flex flex-col overflow-hidden rounded-[32px] bg-gradient-to-br from-amber-50 to-orange-50 shadow-[0_25px_60px_rgba(245,158,11,0.18)] ring-1 ring-amber-200/50 ${
+                              isTopCard ? 'cursor-grab touch-pan-y active:cursor-grabbing' : 'pointer-events-none'
+                            }`}
+                            style={cardStyle}
+                            onPointerDown={isTopCard ? jobSwipe.handlePointerDown : undefined}
+                            onPointerMove={isTopCard ? jobSwipe.handlePointerMove : undefined}
+                            onPointerUp={isTopCard ? jobSwipe.handlePointerUp : undefined}
+                            onPointerCancel={isTopCard ? jobSwipe.handlePointerCancel : undefined}
+                          >
+                            {isTopCard && (
+                              <div
+                                className="pointer-events-none absolute inset-0 transition-opacity duration-200"
+                                style={{
+                                  opacity: dragStrength,
+                                  transform: `scale(${1 + dragStrength * 0.02})`
+                                }}
+                              >
+                                <div
+                                  className={`absolute inset-0 rounded-[32px] bg-gradient-to-br ${
+                                    isPositive ? 'from-emerald-400/50 via-emerald-400/20 to-transparent' : 'from-rose-500/45 via-rose-500/20 to-transparent'
+                                  }`}
+                                />
+                                <div
+                                  className={`absolute top-6 ${isPositive ? 'right-6' : 'left-6'} rounded-full bg-white/95 px-5 py-2.5 text-sm font-bold shadow-2xl ${
+                                    isPositive ? 'text-emerald-600' : 'text-rose-600'
+                                  }`}
+                                >
+                                  {isPositive ? '✓ 応募する' : '✕ スキップ'}
+                                </div>
+                              </div>
+                            )}
+                            <div className="relative z-10 flex h-full flex-col p-6">
+                              <div className="mb-4">
+                                <span className="inline-flex items-center rounded-full bg-gradient-to-r from-amber-500 to-orange-500 px-3 py-1 text-xs font-semibold text-white shadow">
+                                  Job Opportunity
+                                </span>
+                              </div>
+                              <div className="flex-1 space-y-4">
+                                <div>
+                                  <h3 className="text-xl font-bold text-gray-900">{job.title}</h3>
+                                  <p className="mt-1 text-sm font-semibold text-amber-600">{job.company}</p>
+                                </div>
+                                <div className="space-y-2 text-sm text-gray-700">
+                                  <p className="flex items-center gap-2">
+                                    <MapPin className="h-4 w-4 text-amber-500" />
+                                    {job.location}
+                                  </p>
+                                  <p className="flex items-center gap-2">
+                                    <Briefcase className="h-4 w-4 text-amber-500" />
+                                    {job.type}
+                                  </p>
+                                  {job.salary && (
+                                    <p className="font-semibold text-amber-700">{job.salary}</p>
+                                  )}
+                                </div>
+                                <div className="rounded-2xl bg-white/60 p-4">
+                                  <p className="text-sm leading-relaxed text-gray-700">{job.description}</p>
+                                </div>
+                                <p className="text-xs text-gray-600">掲載: {job.postedBy}</p>
+                              </div>
+                              <div className="mt-4 flex gap-2">
+                                <Link
+                                  to="/contact"
+                                  data-swipe-ignore="true"
+                                  className="flex-1 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 px-4 py-3 text-sm font-semibold text-white shadow-lg transition hover:from-amber-600 hover:to-orange-600"
+                                >
+                                  応募・問い合わせ
+                                  <ArrowRight className="ml-2 h-4 w-4" />
+                                </Link>
+                              </div>
+                            </div>
+                          </article>
+                        );
+                      })}
+                    </div>
+                    <div className="mt-6 flex items-center justify-between px-2">
+                      <span className="text-xs font-semibold text-amber-600">
+                        {jobSwipe.swipeIndex + 1} / {jobOpportunities.length}
+                      </span>
+                      <div className="flex items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={() => jobSwipe.handleUndo()}
+                          disabled={!jobSwipe.canUndo || jobSwipe.isAnimating}
+                          className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-amber-600 shadow-lg ring-1 ring-amber-100 transition hover:bg-amber-50 disabled:opacity-40"
+                          aria-label="戻る"
+                        >
+                          <ChevronLeft className="h-5 w-5" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => jobSwipe.handleManualSwipe('left')}
+                          disabled={jobSwipe.isAnimating || jobOpportunities.length === 0}
+                          className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-rose-500 shadow-lg ring-1 ring-rose-100 transition hover:bg-rose-50 disabled:opacity-40"
+                          aria-label="スキップ"
+                        >
+                          <XIcon className="h-6 w-6" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => jobSwipe.handleManualSwipe('right')}
+                          disabled={jobSwipe.isAnimating || jobOpportunities.length === 0}
+                          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-xl ring-4 ring-amber-200/60 transition hover:from-amber-600 hover:to-orange-600 disabled:opacity-40"
+                          aria-label="応募する"
+                        >
+                          <Heart className="h-7 w-7" />
+                        </button>
+                      </div>
+                    </div>
+                    <p className="mt-4 text-center text-xs text-amber-700">
+                      求人情報の掲載をご希望の同窓生の方は
+                      <Link to="/contact" className="ml-1 font-semibold underline">
+                        こちらからお問い合わせください
+                      </Link>
+                    </p>
                   </div>
                 </div>
 
