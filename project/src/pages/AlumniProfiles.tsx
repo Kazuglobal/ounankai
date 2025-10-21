@@ -444,7 +444,6 @@ const industries = [
   '映像作家',
   '映画監督',
   'プロデューサー',
-  '脚本家',
   '俳優',
   '女優',
   'タレント',
@@ -461,8 +460,6 @@ const industries = [
   'レポーター',
   'ジャーナリスト',
   '記者',
-  '編集者',
-  'ライター',
   'コピーライター',
   'コントンツクリエイター',
   'SNSマネージャー',
@@ -2058,173 +2055,6 @@ const AlumniProfiles: React.FC = () => {
                         <Heart className="h-7 w-7" />
                       </button>
                     </div>
-                  </div>
-
-                  {/* Mobile Job Opportunities Section */}
-                  <div className="mt-8">
-                    <div className="mb-4 flex items-center gap-3">
-                      <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-lg">
-                        <Sparkles className="h-5 w-5" />
-                      </span>
-                      <div>
-                        <h3 className="text-base font-semibold text-gray-900">同窓生からの求人情報</h3>
-                        <p className="text-xs font-medium uppercase tracking-wider text-amber-600">Job Opportunities</p>
-                      </div>
-                    </div>
-
-                    <div className="relative mx-auto h-[480px] max-w-sm" aria-live="polite">
-                      {jobSwipe.visibleIndices.map((jobIndex, stackPosition) => {
-                        const job = jobOpportunities[jobIndex];
-                        const isTopCard = stackPosition === 0;
-                        const depth = stackPosition;
-                        const scale = 1 - depth * 0.08;
-                        const translateY = depth * 24;
-                        const stackedOpacity = isTopCard ? 1 : 0.85 - depth * 0.15;
-                        const cardStyle: React.CSSProperties = isTopCard
-                          ? {
-                              transform: `translateX(${jobSwipe.dragOffset}px) rotate(${jobSwipe.dragOffset * 0.04}deg)`,
-                              transition: jobSwipe.isDragging ? 'none' : 'transform 0.35s ease, opacity 0.25s ease',
-                              opacity: jobSwipe.isAnimating ? 0 : 1,
-                              zIndex: jobSwipe.visibleIndices.length - depth,
-                              willChange: 'transform, opacity',
-                            }
-                          : {
-                              transform: `scale(${scale}) translateY(${translateY}px)`,
-                              transition: 'transform 0.35s ease, opacity 0.35s ease',
-                              opacity: stackedOpacity,
-                              zIndex: jobSwipe.visibleIndices.length - depth,
-                              willChange: 'auto',
-                            };
-                        const dragStrength = Math.min(Math.abs(jobSwipe.dragOffset) / 150, 1);
-                        const isPositive = jobSwipe.dragOffset > 0;
-
-                        return (
-                          <article
-                            key={`${job.id}-${jobIndex}`}
-                            ref={
-                              isTopCard
-                                ? (node) => {
-                                    jobSwipe.topCardRef.current = node;
-                                  }
-                                : undefined
-                            }
-                            role="article"
-                            aria-label={`${job.title}、求人情報`}
-                            className={`absolute inset-0 flex flex-col overflow-hidden rounded-[32px] bg-gradient-to-br from-amber-50 to-orange-50 shadow-[0_25px_60px_rgba(245,158,11,0.18)] ring-1 ring-amber-200/50 ${
-                              isTopCard ? 'cursor-grab touch-pan-y active:cursor-grabbing' : 'pointer-events-none'
-                            }`}
-                            style={cardStyle}
-                            onPointerDown={isTopCard ? jobSwipe.handlePointerDown : undefined}
-                            onPointerMove={isTopCard ? jobSwipe.handlePointerMove : undefined}
-                            onPointerUp={isTopCard ? jobSwipe.handlePointerUp : undefined}
-                            onPointerCancel={isTopCard ? jobSwipe.handlePointerCancel : undefined}
-                          >
-                            {isTopCard && (
-                              <div
-                                className="pointer-events-none absolute inset-0 transition-opacity duration-200"
-                                style={{
-                                  opacity: dragStrength,
-                                  transform: `scale(${1 + dragStrength * 0.02})`
-                                }}
-                              >
-                                <div
-                                  className={`absolute inset-0 rounded-[32px] bg-gradient-to-br ${
-                                    isPositive ? 'from-emerald-400/50 via-emerald-400/20 to-transparent' : 'from-rose-500/45 via-rose-500/20 to-transparent'
-                                  }`}
-                                />
-                                <div
-                                  className={`absolute top-6 ${isPositive ? 'right-6' : 'left-6'} rounded-full bg-white/95 px-5 py-2.5 text-sm font-bold shadow-2xl ${
-                                    isPositive ? 'text-emerald-600' : 'text-rose-600'
-                                  }`}
-                                >
-                                  {isPositive ? '✓ 応募する' : '✕ スキップ'}
-                                </div>
-                              </div>
-                            )}
-                            <div className="relative z-10 flex h-full flex-col p-6">
-                              <div className="mb-4">
-                                <span className="inline-flex items-center rounded-full bg-gradient-to-r from-amber-500 to-orange-500 px-3 py-1 text-xs font-semibold text-white shadow">
-                                  Job Opportunity
-                                </span>
-                              </div>
-                              <div className="flex-1 space-y-4">
-                                <div>
-                                  <h3 className="text-xl font-bold text-gray-900">{job.title}</h3>
-                                  <p className="mt-1 text-sm font-semibold text-amber-600">{job.company}</p>
-                                </div>
-                                <div className="space-y-2 text-sm text-gray-700">
-                                  <p className="flex items-center gap-2">
-                                    <MapPin className="h-4 w-4 text-amber-500" />
-                                    {job.location}
-                                  </p>
-                                  <p className="flex items-center gap-2">
-                                    <Briefcase className="h-4 w-4 text-amber-500" />
-                                    {job.type}
-                                  </p>
-                                  {job.salary && (
-                                    <p className="font-semibold text-amber-700">{job.salary}</p>
-                                  )}
-                                </div>
-                                <div className="rounded-2xl bg-white/60 p-4">
-                                  <p className="text-sm leading-relaxed text-gray-700">{job.description}</p>
-                                </div>
-                                <p className="text-xs text-gray-600">掲載: {job.postedBy}</p>
-                              </div>
-                              <div className="mt-4 flex gap-2">
-                                <Link
-                                  to="/contact"
-                                  data-swipe-ignore="true"
-                                  className="flex-1 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 px-4 py-3 text-sm font-semibold text-white shadow-lg transition hover:from-amber-600 hover:to-orange-600"
-                                >
-                                  応募・問い合わせ
-                                  <ArrowRight className="ml-2 h-4 w-4" />
-                                </Link>
-                              </div>
-                            </div>
-                          </article>
-                        );
-                      })}
-                    </div>
-                    <div className="mt-6 flex items-center justify-between px-2">
-                      <span className="text-xs font-semibold text-amber-600">
-                        {jobSwipe.swipeIndex + 1} / {jobOpportunities.length}
-                      </span>
-                      <div className="flex items-center gap-3">
-                        <button
-                          type="button"
-                          onClick={() => jobSwipe.handleUndo()}
-                          disabled={!jobSwipe.canUndo || jobSwipe.isAnimating}
-                          className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-amber-600 shadow-lg ring-1 ring-amber-100 transition hover:bg-amber-50 disabled:opacity-40"
-                          aria-label="戻る"
-                        >
-                          <ChevronLeft className="h-5 w-5" />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => jobSwipe.handleManualSwipe('left')}
-                          disabled={jobSwipe.isAnimating || jobOpportunities.length === 0}
-                          className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-rose-500 shadow-lg ring-1 ring-rose-100 transition hover:bg-rose-50 disabled:opacity-40"
-                          aria-label="スキップ"
-                        >
-                          <XIcon className="h-6 w-6" />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => jobSwipe.handleManualSwipe('right')}
-                          disabled={jobSwipe.isAnimating || jobOpportunities.length === 0}
-                          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-xl ring-4 ring-amber-200/60 transition hover:from-amber-600 hover:to-orange-600 disabled:opacity-40"
-                          aria-label="応募する"
-                        >
-                          <Heart className="h-7 w-7" />
-                        </button>
-                      </div>
-                    </div>
-                    <p className="mt-4 text-center text-xs text-amber-700">
-                      求人情報の掲載をご希望の同窓生の方は
-                      <Link to="/contact" className="ml-1 font-semibold underline">
-                        こちらからお問い合わせください
-                      </Link>
-                    </p>
                   </div>
                 </div>
 
