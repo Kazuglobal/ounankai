@@ -17,7 +17,7 @@ const Announcements: React.FC = () => {
     {
       id: 2,
       title: '園園祭2024のボランティア募集について',
-      category: 'イベント',
+      category: '募集',
       categoryColor: 'bg-cyan-500',
       date: '2024年3月12日',
       image: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=640',
@@ -35,7 +35,7 @@ const Announcements: React.FC = () => {
     {
       id: 4,
       title: '奨学金制度の変更について',
-      category: '制度変更',
+      category: 'お知らせ',
       categoryColor: 'bg-amber-500',
       date: '2024年3月8日',
       image: 'https://images.pexels.com/photos/289737/pexels-photo-289737.jpeg?auto=compress&cs=tinysrgb&w=640',
@@ -44,7 +44,7 @@ const Announcements: React.FC = () => {
     {
       id: 5,
       title: '卒業生講演会「グローバル社会での活躍」',
-      category: '講演会',
+      category: 'イベント',
       categoryColor: 'bg-purple-500',
       date: '2024年3月5日',
       image: 'https://images.pexels.com/photos/2228585/pexels-photo-2228585.jpeg?auto=compress&cs=tinysrgb&w=640',
@@ -53,7 +53,7 @@ const Announcements: React.FC = () => {
     {
       id: 6,
       title: '図書館システム更新のお知らせ',
-      category: 'システム',
+      category: 'お知らせ',
       categoryColor: 'bg-teal-500',
       date: '2024年3月1日',
       image: 'https://images.pexels.com/photos/2228585/pexels-photo-2228585.jpeg?auto=compress&cs=tinysrgb&w=640',
@@ -105,9 +105,13 @@ const Announcements: React.FC = () => {
           {/* Announcements List */}
           <div className="space-y-4">
             {filteredAnnouncements.map((announcement) => (
-              <div
+              <button
                 key={announcement.id}
-                className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                className="w-full bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all active:scale-98 text-left"
+                onClick={() => {
+                  // TODO: Navigate to announcement detail page
+                  console.log('Clicked announcement:', announcement.id);
+                }}
               >
                 <div className="flex gap-3 p-3">
                   <div className="w-16 h-16 flex-shrink-0 rounded-xl overflow-hidden">
@@ -138,7 +142,7 @@ const Announcements: React.FC = () => {
                     {announcement.summary}
                   </p>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
         </div>
@@ -175,9 +179,13 @@ const Announcements: React.FC = () => {
           {/* Announcements Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredAnnouncements.map((announcement) => (
-              <div
+              <button
                 key={announcement.id}
-                className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+                className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 text-left"
+                onClick={() => {
+                  // TODO: Navigate to announcement detail page
+                  console.log('Clicked announcement:', announcement.id);
+                }}
               >
                 <div className="h-48 overflow-hidden">
                   <img
@@ -204,7 +212,7 @@ const Announcements: React.FC = () => {
                     {announcement.summary}
                   </p>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
         </div>
