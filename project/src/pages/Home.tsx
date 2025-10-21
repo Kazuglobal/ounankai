@@ -115,7 +115,7 @@ const Home: React.FC = () => {
     },
     {
       title: '部活動報告',
-      href: '/announcements',
+      href: '/club-activities',
       icon: Trophy,
       bubbleGradient: 'from-pink-300 via-pink-200 to-rose-200',
       iconColor: 'text-blue-700',
