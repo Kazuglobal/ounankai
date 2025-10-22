@@ -1450,67 +1450,144 @@ const AlumniProfiles: React.FC = () => {
                     </div>
 
                     <div className="hidden gap-6 lg:grid lg:grid-cols-2 xl:grid-cols-3">
-                      {filteredAlumni.map((alumni) => (
-                        <article
-                          key={alumni.id}
-                          className="flex h-full flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-md transition duration-300 hover:-translate-y-1 hover:shadow-2xl"
-                        >
-                          <div className="relative h-56 w-full overflow-hidden">
-                            <img src={alumni.image} alt={alumni.name} className="h-full w-full object-cover transition duration-500 hover:scale-105" />
-                            <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-blue-600 shadow">
-                              {alumni.year}年卒
-                            </span>
-                          </div>
-                          <div className="flex flex-1 flex-col gap-4 p-6">
-                            <div className="flex items-center justify-between">
-                              <div>
-                                <h3 className="text-xl font-bold text-gray-900">{alumni.name}</h3>
-                                <p className="text-sm font-medium text-blue-600">{alumni.profession}</p>
+                      {filteredAlumni.map((alumni) => {
+                        const topHighlights = alumni.highlights.slice(0, 2);
+
+                        return (
+                          <article
+                            key={alumni.id}
+                            className="relative flex h-full flex-col overflow-hidden rounded-[32px] shadow-[0_25px_60px_rgba(30,64,175,0.18)] ring-1 ring-black/5"
+                          >
+                            <img
+                              src={alumni.image}
+                              alt={alumni.name}
+                              className="absolute inset-0 h-full w-full transform scale-110 object-cover blur-lg"
+                              loading="lazy"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/45 via-slate-950/75 to-slate-950/90" />
+                            <div className="relative z-10 flex h-full flex-col gap-5 p-6 text-white">
+                              <div className="flex items-center justify-between">
+                                <span className="rounded-full bg-white/85 px-3 py-1 text-xs font-semibold text-blue-700 shadow">
+                                  {alumni.year}年卒
+                                </span>
+                                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-xs font-medium backdrop-blur-sm">
+                                  <MapPin className="h-3 w-3" />
+                                  {alumni.location}
+                                </span>
                               </div>
-                              <div className="rounded-2xl bg-blue-50 p-3">
-                                <Users className="h-5 w-5 text-blue-600" />
+                              <div className="rounded-xl bg-gradient-to-r from-blue-500/80 to-indigo-500/80 px-3 py-1.5 text-center text-xs font-bold text-white backdrop-blur-sm">
+                                <span className="inline-flex items-center gap-1.5">
+                                  <Sparkles className="h-3 w-3" />
+                                  {alumni.club}
+                                </span>
+                              </div>
+
+                              <div className="rounded-3xl bg-white/85 p-5 text-slate-900 shadow-xl backdrop-blur-md ring-1 ring-white/40">
+                                <div className="flex items-start gap-4">
+                                  <div className="h-24 w-24 overflow-hidden rounded-2xl border-4 border-white shadow-xl">
+                                    <img
+                                      src={alumni.image}
+                                      alt={alumni.name}
+                                      className="h-full w-full object-cover"
+                                      loading="lazy"
+                                      onError={(event) => {
+                                        event.currentTarget.src =
+                                          'data:image/svg+xml,%3Csvg width="400" height="400" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="400" height="400" fill="%23e5e7eb\"/%3E%3Ccircle cx=\"200\" cy=\"150\" r=\"60\" fill=\"%239ca3af\"/%3E%3Cpath d=\"M 200 220 Q 140 240 100 320 L 300 320 Q 260 240 200 220\" fill=\"%239ca3af\"/%3E%3C/svg%3E';
+                                      }}
+                                    />
+                                  </div>
+                                  <div className="flex-1 space-y-2">
+                                    <div>
+                                      <h3 className="text-xl font-bold text-slate-900">{alumni.name}</h3>
+                                      <p className="text-sm font-semibold text-blue-600">{alumni.profession}</p>
+                                    </div>
+                                    <div className="flex flex-wrap gap-2">
+                                      {topHighlights.map((highlight) => (
+                                        <span
+                                          key={highlight}
+                                          className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700 ring-1 ring-blue-100"
+                                        >
+                                          <Sparkles className="h-3 w-3" />
+                                          {highlight}
+                                        </span>
+                                      ))}
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div className="mt-4 space-y-2 text-sm text-slate-700">
+                                  <p className="flex items-center gap-2">
+                                    <Briefcase className="h-4 w-4 text-blue-500" />
+                                    {alumni.company}
+                                  </p>
+                                  <p className="flex items-center gap-2">
+                                    <Calendar className="h-4 w-4 text-blue-500" />
+                                    {alumni.achievement}
+                                  </p>
+                                </div>
+
+                                {alumni.description && (
+                                  <p className="mt-3 text-sm leading-relaxed text-slate-600">{alumni.description}</p>
+                                )}
+
+                                <div className="mt-4 flex flex-wrap items-center gap-2">
+                                  <Link
+                                    to={`/alumni-profiles/${alumni.id}`}
+                                    className="inline-flex items-center gap-1.5 rounded-full bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow transition hover:bg-blue-500"
+                                  >
+                                    詳細を見る
+                                    <ArrowRight className="h-3.5 w-3.5" />
+                                  </Link>
+                                  {alumni.linkedin && (
+                                    <a
+                                      href={alumni.linkedin}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="inline-flex items-center gap-1 rounded-full bg-[#0A66C2] px-3 py-1.5 text-xs font-semibold text-white shadow transition hover:bg-[#004182]"
+                                    >
+                                      <Linkedin className="h-3 w-3" />
+                                      LinkedIn
+                                    </a>
+                                  )}
+                                  {alumni.facebook && (
+                                    <a
+                                      href={alumni.facebook}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="inline-flex items-center gap-1 rounded-full bg-[#1877F2] px-3 py-1.5 text-xs font-semibold text-white shadow transition hover:bg-[#0C63D4]"
+                                    >
+                                      <Facebook className="h-3 w-3" />
+                                      Facebook
+                                    </a>
+                                  )}
+                                  {alumni.instagram && (
+                                    <a
+                                      href={alumni.instagram}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-[#833AB4] via-[#E1306C] to-[#F77737] px-3 py-1.5 text-xs font-semibold text-white shadow transition hover:opacity-90"
+                                    >
+                                      <Instagram className="h-3 w-3" />
+                                      Instagram
+                                    </a>
+                                  )}
+                                  {alumni.x && (
+                                    <a
+                                      href={alumni.x}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="inline-flex items-center gap-1 rounded-full bg-black px-3 py-1.5 text-xs font-semibold text-white shadow transition hover:bg-gray-800"
+                                    >
+                                      <TwitterIcon className="h-3 w-3" />
+                                      X
+                                    </a>
+                                  )}
+                                </div>
                               </div>
                             </div>
-                            <div className="space-y-3 text-sm text-gray-600">
-                              <p className="flex items-center gap-3">
-                                <Briefcase className="h-4 w-4 text-blue-500" />
-                                {alumni.company}
-                              </p>
-                              <p className="flex items-center gap-3">
-                                <MapPin className="h-4 w-4 text-blue-500" />
-                                {alumni.location}
-                              </p>
-                              <p className="flex items-center gap-3">
-                                <Sparkles className="h-4 w-4 text-blue-500" />
-                                {alumni.club}
-                              </p>
-                              <p className="flex items-center gap-3">
-                                <Calendar className="h-4 w-4 text-blue-500" />
-                                {alumni.achievement}
-                              </p>
-                            </div>
-                            <p className="text-sm leading-relaxed text-gray-600">{alumni.description}</p>
-                            <div className="mt-auto space-y-2">
-                              <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-500">ハイライト</h4>
-                              <ul className="space-y-1 text-sm text-gray-600">
-                                {alumni.highlights.map((highlight) => (
-                                  <li key={highlight} className="flex items-center gap-2">
-                                    <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
-                                    {highlight}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                            <Link
-                              to={`/alumni-profiles/${alumni.id}`}
-                              className="inline-flex items-center justify-center rounded-xl bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-600 transition hover:bg-blue-100"
-                            >
-                              詳細プロフィールを見る
-                              <ArrowRight className="ml-2 h-4 w-4" />
-                            </Link>
-                          </div>
-                        </article>
-                      ))}
+                          </article>
+                        );
+                      })}
                     </div>
                   </>
                 ) : (
