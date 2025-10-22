@@ -130,15 +130,15 @@ const Home: React.FC = () => {
       iconBg: 'bg-white'
     },
     {
-      title: '過去の会報バックナンバー',
-      href: '/announcements',
+      title: '役員名簿',
+      href: '/board-of-directors',
       icon: BookOpen,
       bubbleGradient: 'from-emerald-300 via-teal-200 to-green-200',
       iconColor: 'text-blue-700',
       iconBg: 'bg-white'
     },
     {
-      title: '思い出コーナー',
+      title: 'ギャラリー',
       href: '/gallery',
       icon: ImageIcon,
       bubbleGradient: 'from-indigo-300 via-violet-200 to-purple-200',
