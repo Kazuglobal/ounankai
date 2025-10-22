@@ -124,135 +124,215 @@ const Gallery: React.FC = () => {
   };
 
   return (
-    <div className="py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-            同窓生ギャラリー
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            活気ある同窓生コミュニティの思い出や特別な瞬間をお届けします
-          </p>
-        </div>
-
-        {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => setActiveCategory(category.id)}
-              className={`px-6 py-3 rounded-full font-medium transition-all duration-200 ${
-                activeCategory === category.id
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 shadow-md'
-              }`}
-            >
-              {category.name} ({category.count})
-            </button>
-          ))}
-        </div>
-
-        {/* Gallery Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredImages.map((image) => (
-            <div
-              key={image.id}
-              onClick={() => openLightbox(image)}
-              className="group cursor-pointer bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
-            >
-              <div className="aspect-[4/3] overflow-hidden">
-                <img
-                  src={image.src}
-                  alt={image.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-200">
-                  {image.title}
-                </h3>
-                <div className="flex items-center text-gray-500 text-sm mb-2">
-                  <Calendar className="w-4 h-4 mr-2" />
-                  <span>{image.date}</span>
-                </div>
-                <div className="flex items-center text-gray-500 text-sm">
-                  <MapPin className="w-4 h-4 mr-2" />
-                  <span>{image.location}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Lightbox */}
-        {selectedImage && (
-          <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
-            <div className="relative max-w-5xl max-h-full">
-              {/* Close Button */}
-              <button
-                onClick={closeLightbox}
-                className="absolute top-4 right-4 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors duration-200 z-10"
-              >
-                <X className="w-6 h-6" />
-              </button>
-
-              {/* Navigation Buttons */}
-              <button
-                onClick={() => navigateImage('prev')}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors duration-200"
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-              <button
-                onClick={() => navigateImage('next')}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors duration-200"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-
-              {/* Image */}
-              <img
-                src={selectedImage.src}
-                alt={selectedImage.title}
-                className="max-w-full max-h-[70vh] object-contain rounded-2xl"
-              />
-
-              {/* Image Info */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-8 rounded-b-2xl">
-                <h3 className="text-2xl font-bold text-white mb-2">{selectedImage.title}</h3>
-                <p className="text-gray-200 mb-4">{selectedImage.description}</p>
-                <div className="flex items-center justify-between text-gray-300 text-sm">
-                  <div className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-2" />
-                    <span>{selectedImage.date}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <MapPin className="w-4 h-4 mr-2" />
-                    <span>{selectedImage.location}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Call to Action */}
-        <div className="mt-20 text-center">
-          <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-3xl p-12 text-white">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              思い出をシェア
-            </h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto">
-              同窓生イベントやキャンパスの思い出の写真をお持ちですか？
-              ギャラリーでご紹介させていただきたいと思います。
+    <div className="min-h-screen bg-gray-50">
+      {/* Mobile Layout */}
+      <div className="lg:hidden">
+        <div className="px-4 py-6">
+          {/* Header */}
+          <div className="mb-6 text-center">
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">
+              同窓生ギャラリー
+            </h1>
+            <p className="text-sm text-gray-600">
+              思い出や特別な瞬間
             </p>
-            <button className="bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-50 transition-colors duration-200 shadow-xl">
-              写真を送信
-            </button>
+          </div>
+
+          {/* Category Filter */}
+          <div className="flex overflow-x-auto gap-2 mb-6 pb-2 scrollbar-hide">
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setActiveCategory(category.id)}
+                className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
+                  activeCategory === category.id
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-white text-gray-700'
+                }`}
+              >
+                {category.name} ({category.count})
+              </button>
+            ))}
+          </div>
+
+          {/* Gallery Grid */}
+          <div className="grid grid-cols-2 gap-3">
+            {filteredImages.map((image) => (
+              <div
+                key={image.id}
+                onClick={() => openLightbox(image)}
+                className="cursor-pointer bg-white rounded-xl overflow-hidden shadow-sm"
+              >
+                <div className="aspect-square overflow-hidden">
+                  <img
+                    src={image.src}
+                    alt={image.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="p-2">
+                  <h3 className="text-xs font-bold text-gray-900 mb-1 line-clamp-1">
+                    {image.title}
+                  </h3>
+                  <div className="flex items-center text-gray-500 text-xs">
+                    <Calendar className="w-3 h-3 mr-1" />
+                    <span className="truncate">{image.date}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Call to Action */}
+          <div className="mt-8">
+            <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl p-6 text-white text-center">
+              <h2 className="text-lg font-bold mb-2">
+                思い出をシェア
+              </h2>
+              <p className="text-sm mb-4">
+                写真をお持ちですか？<br/>ギャラリーでご紹介します。
+              </p>
+              <button className="bg-white text-blue-600 px-6 py-2 rounded-full text-sm font-semibold">
+                写真を送信
+              </button>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Desktop Layout */}
+      <div className="hidden lg:block">
+        <div className="py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Header */}
+            <div className="text-center mb-16">
+              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                同窓生ギャラリー
+              </h1>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                活気ある同窓生コミュニティの思い出や特別な瞬間をお届けします
+              </p>
+            </div>
+
+            {/* Category Filter */}
+            <div className="flex flex-wrap justify-center gap-4 mb-12">
+              {categories.map((category) => (
+                <button
+                  key={category.id}
+                  onClick={() => setActiveCategory(category.id)}
+                  className={`px-6 py-3 rounded-full font-medium transition-all duration-200 ${
+                    activeCategory === category.id
+                      ? 'bg-blue-600 text-white shadow-lg'
+                      : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 shadow-md'
+                  }`}
+                >
+                  {category.name} ({category.count})
+                </button>
+              ))}
+            </div>
+
+            {/* Gallery Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredImages.map((image) => (
+                <div
+                  key={image.id}
+                  onClick={() => openLightbox(image)}
+                  className="group cursor-pointer bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+                >
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img
+                      src={image.src}
+                      alt={image.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-200">
+                      {image.title}
+                    </h3>
+                    <div className="flex items-center text-gray-500 text-sm mb-2">
+                      <Calendar className="w-4 h-4 mr-2" />
+                      <span>{image.date}</span>
+                    </div>
+                    <div className="flex items-center text-gray-500 text-sm">
+                      <MapPin className="w-4 h-4 mr-2" />
+                      <span>{image.location}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Call to Action */}
+            <div className="mt-20 text-center">
+              <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-3xl p-12 text-white">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                  思い出をシェア
+                </h2>
+                <p className="text-xl mb-8 max-w-2xl mx-auto">
+                  同窓生イベントやキャンパスの思い出の写真をお持ちですか？
+                  ギャラリーでご紹介させていただきたいと思います。
+                </p>
+                <button className="bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-50 transition-colors duration-200 shadow-xl">
+                  写真を送信
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Lightbox (共通) */}
+      {selectedImage && (
+        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
+          <div className="relative max-w-5xl max-h-full">
+            {/* Close Button */}
+            <button
+              onClick={closeLightbox}
+              className="absolute top-4 right-4 w-10 h-10 lg:w-12 lg:h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors duration-200 z-10"
+            >
+              <X className="w-5 h-5 lg:w-6 lg:h-6" />
+            </button>
+
+            {/* Navigation Buttons */}
+            <button
+              onClick={() => navigateImage('prev')}
+              className="absolute left-2 lg:left-4 top-1/2 transform -translate-y-1/2 w-10 h-10 lg:w-12 lg:h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors duration-200"
+            >
+              <ChevronLeft className="w-5 h-5 lg:w-6 lg:h-6" />
+            </button>
+            <button
+              onClick={() => navigateImage('next')}
+              className="absolute right-2 lg:right-4 top-1/2 transform -translate-y-1/2 w-10 h-10 lg:w-12 lg:h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors duration-200"
+            >
+              <ChevronRight className="w-5 h-5 lg:w-6 lg:h-6" />
+            </button>
+
+            {/* Image */}
+            <img
+              src={selectedImage.src}
+              alt={selectedImage.title}
+              className="max-w-full max-h-[70vh] object-contain rounded-2xl"
+            />
+
+            {/* Image Info */}
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 lg:p-8 rounded-b-2xl">
+              <h3 className="text-lg lg:text-2xl font-bold text-white mb-1 lg:mb-2">{selectedImage.title}</h3>
+              <p className="text-sm lg:text-base text-gray-200 mb-2 lg:mb-4">{selectedImage.description}</p>
+              <div className="flex items-center justify-between text-gray-300 text-xs lg:text-sm">
+                <div className="flex items-center">
+                  <Calendar className="w-3 h-3 lg:w-4 lg:h-4 mr-1 lg:mr-2" />
+                  <span>{selectedImage.date}</span>
+                </div>
+                <div className="flex items-center">
+                  <MapPin className="w-3 h-3 lg:w-4 lg:h-4 mr-1 lg:mr-2" />
+                  <span>{selectedImage.location}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

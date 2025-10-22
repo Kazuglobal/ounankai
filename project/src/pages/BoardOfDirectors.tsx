@@ -148,92 +148,188 @@ const BoardOfDirectors: React.FC = () => {
   }, {} as Record<string, typeof boardMembers>);
 
   return (
-    <div className="py-20">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-            役員名簿
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            青森県立八戸西高等学校同窓会奧南会の役員・代表幹事名簿
-          </p>
-        </div>
-
-        {/* Update Info */}
-        <div className="bg-white rounded-3xl p-6 shadow-xl mb-12 text-center">
-          <div className="flex items-center justify-center">
-            <Calendar className="w-5 h-5 text-blue-600 mr-2" />
-            <span className="text-gray-600">令和6年度役員名簿</span>
-          </div>
-        </div>
-
-        {/* Board Members */}
-        <div className="space-y-12">
-          <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
-            <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-6">
-              <h2 className="text-2xl font-bold text-white flex items-center">
-                <Users className="w-6 h-6 mr-3" />
-                役員
-              </h2>
-            </div>
-            
-            <div className="p-8">
-              {Object.entries(groupedMembers).map(([position, members]) => (
-                <div key={position} className="mb-8 last:mb-0">
-                  <h3 className="text-lg font-bold text-gray-900 mb-4 pb-2 border-b-2 border-blue-200">
-                    {position}
-                  </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {members.map((member, index) => (
-                      <div key={index} className="bg-gray-50 rounded-xl p-4">
-                        <div className="text-sm text-blue-600 font-medium mb-1">
-                          {member.graduationYear}
-                        </div>
-                        <div className="text-lg font-bold text-gray-900">
-                          {member.name}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
+    <div className="min-h-screen bg-gray-50">
+      {/* Mobile Layout */}
+      <div className="lg:hidden">
+        <div className="px-4 py-6">
+          {/* Header */}
+          <div className="mb-6 text-center">
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">
+              役員名簿
+            </h1>
+            <p className="text-sm text-gray-600 mb-3">
+              青森県立八戸西高等学校同窓会奧南会
+            </p>
+            <div className="inline-flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
+              <Calendar className="w-4 h-4 text-blue-600 mr-2" />
+              <span className="text-sm text-gray-600">令和6年度</span>
             </div>
           </div>
 
-          {/* Representatives */}
-          <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
-            <div className="bg-gradient-to-r from-green-600 to-green-700 px-8 py-6">
-              <h2 className="text-2xl font-bold text-white flex items-center">
-                <Users className="w-6 h-6 mr-3" />
-                代表幹事
-              </h2>
-            </div>
-            
-            <div className="p-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {representatives.map((rep, index) => (
-                  <div key={index} className="bg-gray-50 rounded-xl p-4">
-                    <div className="text-sm text-green-600 font-medium mb-1">
-                      {rep.graduationYear}
-                    </div>
-                    <div className="text-base font-bold text-gray-900">
-                      {rep.name}
+          {/* Board Members */}
+          <div className="mb-6">
+            <div className="bg-white rounded-2xl shadow-md overflow-hidden">
+              <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-4 py-3">
+                <h2 className="text-lg font-bold text-white flex items-center">
+                  <Users className="w-5 h-5 mr-2" />
+                  役員
+                </h2>
+              </div>
+              
+              <div className="p-4">
+                {Object.entries(groupedMembers).map(([position, members]) => (
+                  <div key={position} className="mb-6 last:mb-0">
+                    <h3 className="text-base font-bold text-gray-900 mb-3 pb-2 border-b border-blue-200">
+                      {position}
+                    </h3>
+                    <div className="space-y-2">
+                      {members.map((member, index) => (
+                        <div key={index} className="bg-gray-50 rounded-lg p-3 flex items-center justify-between">
+                          <div className="flex-1">
+                            <div className="text-xs text-blue-600 font-medium mb-0.5">
+                              {member.graduationYear}
+                            </div>
+                            <div className="text-base font-bold text-gray-900">
+                              {member.name}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 ))}
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Footer Note */}
-        <div className="mt-16 text-center">
-          <div className="bg-gray-50 rounded-2xl p-8">
-            <p className="text-gray-600 leading-relaxed">
-              この名簿は、青森県立八戸西高等学校同窓会奧南会の令和6年度役員・代表幹事名簿です。
-              ご質問やご不明な点がございましたら、事務局までお問い合わせください。
+          {/* Representatives */}
+          <div className="mb-6">
+            <div className="bg-white rounded-2xl shadow-md overflow-hidden">
+              <div className="bg-gradient-to-r from-green-600 to-green-700 px-4 py-3">
+                <h2 className="text-lg font-bold text-white flex items-center">
+                  <Users className="w-5 h-5 mr-2" />
+                  代表幹事
+                </h2>
+              </div>
+              
+              <div className="p-4">
+                <div className="space-y-2">
+                  {representatives.map((rep, index) => (
+                    <div key={index} className="bg-gray-50 rounded-lg p-3 flex items-center justify-between">
+                      <div className="flex-1">
+                        <div className="text-xs text-green-600 font-medium mb-0.5">
+                          {rep.graduationYear}
+                        </div>
+                        <div className="text-sm font-bold text-gray-900">
+                          {rep.name}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer Note */}
+          <div className="bg-gray-100 rounded-xl p-4">
+            <p className="text-xs text-gray-600 leading-relaxed text-center">
+              令和6年度役員・代表幹事名簿。ご質問は事務局までお問い合わせください。
             </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop Layout */}
+      <div className="hidden lg:block">
+        <div className="py-20">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Header */}
+            <div className="text-center mb-16">
+              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                役員名簿
+              </h1>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                青森県立八戸西高等学校同窓会奧南会の役員・代表幹事名簿
+              </p>
+            </div>
+
+            {/* Update Info */}
+            <div className="bg-white rounded-3xl p-6 shadow-xl mb-12 text-center">
+              <div className="flex items-center justify-center">
+                <Calendar className="w-5 h-5 text-blue-600 mr-2" />
+                <span className="text-gray-600">令和6年度役員名簿</span>
+              </div>
+            </div>
+
+            {/* Board Members */}
+            <div className="space-y-12">
+              <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
+                <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-6">
+                  <h2 className="text-2xl font-bold text-white flex items-center">
+                    <Users className="w-6 h-6 mr-3" />
+                    役員
+                  </h2>
+                </div>
+                
+                <div className="p-8">
+                  {Object.entries(groupedMembers).map(([position, members]) => (
+                    <div key={position} className="mb-8 last:mb-0">
+                      <h3 className="text-lg font-bold text-gray-900 mb-4 pb-2 border-b-2 border-blue-200">
+                        {position}
+                      </h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {members.map((member, index) => (
+                          <div key={index} className="bg-gray-50 rounded-xl p-4">
+                            <div className="text-sm text-blue-600 font-medium mb-1">
+                              {member.graduationYear}
+                            </div>
+                            <div className="text-lg font-bold text-gray-900">
+                              {member.name}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Representatives */}
+              <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
+                <div className="bg-gradient-to-r from-green-600 to-green-700 px-8 py-6">
+                  <h2 className="text-2xl font-bold text-white flex items-center">
+                    <Users className="w-6 h-6 mr-3" />
+                    代表幹事
+                  </h2>
+                </div>
+                
+                <div className="p-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    {representatives.map((rep, index) => (
+                      <div key={index} className="bg-gray-50 rounded-xl p-4">
+                        <div className="text-sm text-green-600 font-medium mb-1">
+                          {rep.graduationYear}
+                        </div>
+                        <div className="text-base font-bold text-gray-900">
+                          {rep.name}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer Note */}
+            <div className="mt-16 text-center">
+              <div className="bg-gray-50 rounded-2xl p-8">
+                <p className="text-gray-600 leading-relaxed">
+                  この名簿は、青森県立八戸西高等学校同窓会奧南会の令和6年度役員・代表幹事名簿です。
+                  ご質問やご不明な点がございましたら、事務局までお問い合わせください。
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

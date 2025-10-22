@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stripe API テスト</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        button {
+            background: #635BFF;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background: #5144D3;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #635BFF;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Stripe API エンドポイントテスト</h1>
+        <p class="subtitle">決済機能の動作を確認します</p>
+        
+        <div>
+            <button onclick="testAPI()">APIエンドポイントをテスト</button>
+            <button onclick="checkEnv()">環境変数を確認</button>
+            <button onclick="clearResults()">クリア</button>
+        </div>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const resultDiv = document.getElementById('result');
+
+        function showResult(message, type = 'info') {
+            resultDiv.className = `result ${type}`;
+            resultDiv.textContent = message;
+        }
+
+        function showLoading(message) {
+            resultDiv.className = 'result info';
+            resultDiv.innerHTML = message + '<span class="loading"></span>';
+        }
+
+        function clearResults() {
+            resultDiv.className = '';
+            resultDiv.textContent = '';
+        }
+
+        function checkEnv() {
+            const envVars = {
+                'VITE_STRIPE_PUBLISHABLE_KEY': import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY,
+                'VITE_STRIPE_PRICE_SCHOLARSHIP': import.meta.env.VITE_STRIPE_PRICE_SCHOLARSHIP,
+                'VITE_STRIPE_PRICE_FACILITY': import.meta.env.VITE_STRIPE_PRICE_FACILITY,
+                'VITE_STRIPE_PRICE_CLUB': import.meta.env.VITE_STRIPE_PRICE_CLUB,
+                'VITE_STRIPE_PRICE_GLOBAL': import.meta.env.VITE_STRIPE_PRICE_GLOBAL,
+                'VITE_STRIPE_PRICE_HERO': import.meta.env.VITE_STRIPE_PRICE_HERO,
+            };
+
+            let result = '環境変数の状態:\n\n';
+            let allGood = true;
+
+            for (const [key, value] of Object.entries(envVars)) {
+                if (value) {
+                    const preview = value.length > 30 ? value.substring(0, 30) + '...' : value;
+                    result += `✅ ${key}: ${preview}\n`;
+                } else {
+                    result += `❌ ${key}: 未設定\n`;
+                    allGood = false;
+                }
+            }
+
+            showResult(result, allGood ? 'success' : 'error');
+        }
+
+        async function testAPI() {
+            showLoading('APIエンドポイントをテスト中');
+
+            const priceId = import.meta.env.VITE_STRIPE_PRICE_SCHOLARSHIP || 'price_1SL1EKC4XG5f5gwPgClswr7s';
+            const endpoint = '/api/create-checkout-session';
+
+            try {
+                console.log('🔄 リクエスト送信:', endpoint);
+
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        priceId: priceId,
+                        successUrl: window.location.origin + '/donations?success=true',
+                        cancelUrl: window.location.origin + '/donations?cancelled=true',
+                    }),
+                });
+
+                console.log('📡 レスポンス受信:', response.status, response.statusText);
+
+                const data = await response.json();
+                console.log('📦 データ:', data);
+
+                if (response.ok) {
+                    let result = '✅ テスト成功！\n\n';
+                    result += `ステータス: ${response.status} ${response.statusText}\n\n`;
+                    result += `レスポンス:\n${JSON.stringify(data, null, 2)}\n\n`;
+                    
+                    if (data.url) {
+                        result += `✅ Checkout URL取得成功\n`;
+                        result += `URL: ${data.url}\n\n`;
+                        result += '🎉 決済機能は正常に動作しています！';
+                    }
+                    
+                    showResult(result, 'success');
+                } else {
+                    let result = '❌ APIエラー\n\n';
+                    result += `ステータス: ${response.status} ${response.statusText}\n\n`;
+                    result += `エラー詳細:\n${JSON.stringify(data, null, 2)}\n\n`;
+                    
+                    if (response.status === 500) {
+                        result += '💡 考えられる原因:\n';
+                        result += '  - STRIPE_SECRET_KEYが未設定または誤っている\n';
+                        result += '  - Stripe価格IDが無効\n';
+                        result += '  - Stripeアカウントの問題\n\n';
+                        result += 'サーバーのコンソールログを確認してください。';
+                    } else if (response.status === 404) {
+                        result += '💡 APIエンドポイントが見つかりません\n';
+                        result += '  - Vercel Dev Serverが起動していますか？\n';
+                        result += '  - npm run dev:vercel を実行してください';
+                    }
+                    
+                    showResult(result, 'error');
+                }
+
+            } catch (error) {
+                console.error('❌ エラー:', error);
+
+                let result = '❌ リクエスト失敗\n\n';
+                result += `エラー: ${error.message}\n\n`;
+                result += '💡 考えられる原因:\n';
+                result += '  - Vercel Dev Serverが起動していない\n';
+                result += '  - ネットワークエラー\n';
+                result += '  - CORSエラー\n\n';
+                result += 'npm run dev:vercel を実行してください';
+                
+                showResult(result, 'error');
+            }
+        }
+
+        // ページロード時に環境変数を自動確認
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('🔍 Stripe API テストページ読み込み完了');
+            checkEnv();
+        });
+    </script>
+</body>
+</html>
+

@@ -13,7 +13,10 @@
       "Bash(npm run build)",
       "Bash(npm run:*)",
       "Bash(git log:*)",
-      "Bash(gh pr list:*)"
+      "Bash(gh pr list:*)",
+      "Bash(git restore:*)",
+      "Bash(git clean:*)",
+      "Bash(git rm:*)"
     ],
     "deny": []
   }

@@ -135,51 +135,105 @@ const Bylaws: React.FC = () => {
   ];
 
   return (
-    <div className="py-20">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-            奧南会会則
-          </h1>
-        </div>
+    <div className="min-h-screen bg-gray-50">
+      {/* Mobile Layout */}
+      <div className="lg:hidden">
+        <div className="px-4 py-6">
+          {/* Header */}
+          <div className="mb-6 text-center">
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">
+              奧南会会則
+            </h1>
+            <p className="text-xs text-gray-600">
+              青森県立八戸西高等学校同窓会
+            </p>
+          </div>
 
-
-        {/* Bylaws Content */}
-        <div className="space-y-12">
-          {bylawsSections.map((section) => (
-            <div key={section.id} className="bg-white rounded-3xl shadow-xl overflow-hidden">
-              <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-6">
-                <h2 className="text-2xl font-bold text-white">
-                  {section.title}
-                </h2>
-              </div>
-              
-              <div className="p-8">
-                <div className="space-y-8">
-                  {section.content.map((item, index) => (
-                    <div key={index} className="border-l-4 border-blue-200 pl-6">
-                      <h4 className="text-xl font-bold text-gray-900 mb-4">
-                        {item.section}
-                      </h4>
-                      <div className="text-gray-700 leading-relaxed whitespace-pre-line">
-                        {item.text}
+          {/* Bylaws Content */}
+          <div className="space-y-4">
+            {bylawsSections.map((section) => (
+              <div key={section.id} className="bg-white rounded-2xl shadow-md overflow-hidden">
+                <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-4 py-3">
+                  <h2 className="text-base font-bold text-white">
+                    {section.title}
+                  </h2>
+                </div>
+                
+                <div className="p-4">
+                  <div className="space-y-4">
+                    {section.content.map((item, index) => (
+                      <div key={index} className="border-l-2 border-blue-200 pl-3">
+                        <h4 className="text-sm font-bold text-gray-900 mb-2">
+                          {item.section}
+                        </h4>
+                        <div className="text-xs text-gray-700 leading-relaxed whitespace-pre-line">
+                          {item.text}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        {/* Footer Note */}
-        <div className="mt-16 text-center">
-          <div className="bg-gray-50 rounded-2xl p-8">
-            <p className="text-gray-600 leading-relaxed">
-              この会則は、青森県立八戸西高等学校同窓会奧南会の組織運営に関する基本的な事項を定めたものです。
-              ご質問やご不明な点がございましたら、事務局までお問い合わせください。
+          {/* Footer Note */}
+          <div className="mt-6 bg-gray-100 rounded-xl p-4">
+            <p className="text-xs text-gray-600 leading-relaxed text-center">
+              組織運営に関する基本的な事項を定めたものです。ご質問は事務局まで。
             </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop Layout */}
+      <div className="hidden lg:block">
+        <div className="py-20">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Header */}
+            <div className="text-center mb-16">
+              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                奧南会会則
+              </h1>
+            </div>
+
+            {/* Bylaws Content */}
+            <div className="space-y-12">
+              {bylawsSections.map((section) => (
+                <div key={section.id} className="bg-white rounded-3xl shadow-xl overflow-hidden">
+                  <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-6">
+                    <h2 className="text-2xl font-bold text-white">
+                      {section.title}
+                    </h2>
+                  </div>
+                  
+                  <div className="p-8">
+                    <div className="space-y-8">
+                      {section.content.map((item, index) => (
+                        <div key={index} className="border-l-4 border-blue-200 pl-6">
+                          <h4 className="text-xl font-bold text-gray-900 mb-4">
+                            {item.section}
+                          </h4>
+                          <div className="text-gray-700 leading-relaxed whitespace-pre-line">
+                            {item.text}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Footer Note */}
+            <div className="mt-16 text-center">
+              <div className="bg-gray-50 rounded-2xl p-8">
+                <p className="text-gray-600 leading-relaxed">
+                  この会則は、青森県立八戸西高等学校同窓会奧南会の組織運営に関する基本的な事項を定めたものです。
+                  ご質問やご不明な点がございましたら、事務局までお問い合わせください。
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
