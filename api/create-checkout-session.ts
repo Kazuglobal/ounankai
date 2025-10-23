@@ -20,11 +20,19 @@ type SupportedMethod = 'card' | 'paypay' | 'konbini' | 'bank_transfer';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Set secure CORS headers - only allow whitelisted origins
-  setCorsHeaders(req, res, 'POST, OPTIONS');
+  const isCorsValid = setCorsHeaders(req, res, 'POST, OPTIONS');
 
   // Handle preflight requests
   if (handlePreflight(req, res)) {
     return;
+  }
+
+  // Reject requests from unauthorized origins
+  if (!isCorsValid) {
+    return res.status(403).json({
+      error: 'Forbidden',
+      message: 'Origin not allowed'
+    });
   }
 
   if (req.method !== 'POST') {

@@ -24,24 +24,29 @@ export function setCorsHeaders(
 ): boolean {
   const origin = req.headers.origin;
 
+  // Reject requests without an Origin header
+  if (!origin) {
+    console.warn('Blocked request with missing Origin header');
+    return false;
+  }
+
   // Check if origin is in whitelist
-  if (origin && ALLOWED_ORIGINS.includes(origin)) {
+  if (ALLOWED_ORIGINS.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Access-Control-Allow-Credentials', 'true');
-  } else if (origin) {
+    res.setHeader('Access-Control-Allow-Methods', allowedMethods);
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    return true;
+  } else {
     // Origin not allowed - log for monitoring
     console.warn(`Blocked request from unauthorized origin: ${origin}`);
     return false;
   }
-
-  res.setHeader('Access-Control-Allow-Methods', allowedMethods);
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
-  return true;
 }
 
 /**
- * Handles OPTIONS preflight requests
+ * Handles OPTIONS preflight requests with proper CORS headers
+ * Must be called AFTER setCorsHeaders to ensure CORS headers are set
  *
  * @param req - Vercel request object
  * @param res - Vercel response object
