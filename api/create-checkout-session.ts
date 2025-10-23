@@ -1,5 +1,6 @@
 import Stripe from 'stripe';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { setCorsHeaders, handlePreflight } from './utils/cors';
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 
@@ -18,12 +19,12 @@ const stripe = new Stripe(stripeSecretKey, {
 type SupportedMethod = 'card' | 'paypay' | 'konbini' | 'bank_transfer';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  // Set secure CORS headers - only allow whitelisted origins
+  setCorsHeaders(req, res, 'POST, OPTIONS');
 
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+  // Handle preflight requests
+  if (handlePreflight(req, res)) {
+    return;
   }
 
   if (req.method !== 'POST') {
