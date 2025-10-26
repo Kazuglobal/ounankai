@@ -5,6 +5,7 @@ const AlumniActivities: React.FC = () => {
   const activityReports = [
     {
       id: 1,
+      type: 'general',
       title: '令和6年度盛工同窓会・体育後援会総会',
       date: '令和6年7月6日（土）',
       location: 'ホテルメトロポリタン盛岡本館',
@@ -22,7 +23,44 @@ const AlumniActivities: React.FC = () => {
 5年ぶりとなった懇親会については、叙勲受章者への記念品の贈呈や、多年にわたり同窓会副会長として歴任されました金谷栄治様・体育後援会副会長渡邊力様のご退任に伴い感謝状が贈呈されました。また、来年の冬季オリンピックに向けて励んでいる吉田雪乃様にも参加いただき経過・展望等お話しいただき会の中でも激励を行ったところです。ご参加いただきました皆様ありがとうございました。
 
 次回開催予定は、令和7年7月5日（土）※7月第1土曜日 ホテルメトロポリタン盛岡となっております。たくさんの方々のご参加お待ちしております。`
+    },
+    {
+      id: 2,
+      type: 'financial',
+      title: '令和5年度 同窓会会計決算書',
+      subtitle: '議題(2) 令和5年度会計決算承認について',
+      date: '令和5年4月1日～令和6年3月31日',
+      fiscalNote: '△は予算より決算が少ないことを示す'
     }
+  ];
+
+  // 会計データ
+  const incomeData = [
+    { item: '繰 越 金', budget: '2,791,583', actual: '2,791,583', diff: '0', note: '' },
+    { item: '年 会 費', budget: '1,500,000', actual: '1,596,993', diff: '96,993', note: '年会費 3,000円' },
+    { item: '同窓会基金', budget: '10,137,000', actual: '9,857,700', diff: '△ 279,300', note: '在校生より' },
+    { item: '雑 収 入', budget: '17', actual: '70,735', diff: '70,718', note: '利息・寄付金他' }
+  ];
+
+  const expenseData = [
+    { category: '事業費', item: '会報発行費', budget: '2,450,000', actual: '2,337,777', diff: '△ 112,223', note: '令和5年12月発行' },
+    { category: '', item: '広報活動費', budget: '300,000', actual: '247,060', diff: '△ 52,940', note: '卒業記念品ほか' },
+    { category: '体育後援費', item: '強化費', budget: '4,200,000', actual: '3,814,503', diff: '△ 385,497', note: '春夏強化費配分' },
+    { category: '', item: '備品購入費', budget: '500,000', actual: '499,136', diff: '△ 864', note: '部活動備品購入' },
+    { category: '', item: '特別強化補助費', budget: '700,000', actual: '663,773', diff: '△ 36,227', note: 'アーチェリー・スケート・ウエイトリフティング・レスリング' },
+    { category: '', item: '部活動奨励費', budget: '500,000', actual: '325,000', diff: '△ 175,000', note: '全国大会・インターハイ・選抜等' },
+    { category: '会議費', item: '役員会費', budget: '250,000', actual: '192,271', diff: '△ 57,729', note: '常任理事会・役員会経費' },
+    { category: '', item: '総会費', budget: '550,000', actual: '346,875', diff: '△ 203,125', note: '総会資料等経費' },
+    { category: '', item: '各科総会支援費', budget: '180,000', actual: '180,000', diff: '0', note: '各科支援費' },
+    { category: '事務局費', item: '人件費', budget: '1,300,000', actual: '1,271,387', diff: '△ 28,613', note: '事務職員給与' },
+    { category: '', item: '旅費', budget: '200,000', actual: '21,000', diff: '△ 179,000', note: '市内交通費' },
+    { category: '', item: '印刷費', budget: '20,000', actual: '18,700', diff: '△ 1,300', note: '角2封筒印刷' },
+    { category: '', item: '庶務費', budget: '50,000', actual: '50,276', diff: '276', note: '事務用品等' },
+    { category: '', item: '通信費', budget: '500,000', actual: '389,764', diff: '△ 110,236', note: '会員情報管理費・切手・電話料金・コピー機リース代' },
+    { category: '', item: '雑費', budget: '150,000', actual: '69,280', diff: '△ 80,720', note: '振込手数料・学事職員懇親・アルバムほか' },
+    { category: '慶弔費', item: '', budget: '300,000', actual: '212,000', diff: '△ 88,000', note: '香典・御祝' },
+    { category: '予備費', item: '', budget: '278,600', actual: '0', diff: '△ 278,600', note: '' },
+    { category: '基金積立金', item: '', budget: '2,000,000', actual: '2,000,000', diff: '0', note: '同窓会基金会計への繰出' }
   ];
 
   const upcomingEvents = [
@@ -123,46 +161,156 @@ const AlumniActivities: React.FC = () => {
           <section className="mb-8">
             <h2 className="text-lg font-bold text-gray-900 mb-4">活動報告</h2>
             <div className="space-y-4">
-              {activityReports.map((report) => (
+              {activityReports.map((report: any) => (
                 <div
                   key={report.id}
                   className="bg-white rounded-2xl overflow-hidden shadow-md"
                 >
-                  {/* 画像ギャラリー */}
-                  <div className="-mx-4 overflow-x-auto px-4 pb-2 pt-3">
-                    <div className="flex snap-x snap-mandatory gap-2">
-                      {report.images.map((image, index) => (
-                        <div
-                          key={index}
-                          className="w-[80vw] max-w-[300px] h-48 shrink-0 snap-center rounded-xl overflow-hidden"
-                        >
-                          <img
-                            src={image}
-                            alt={`${report.title} - 写真${index + 1}`}
-                            className="w-full h-full object-cover"
-                          />
+                  {report.type === 'general' && (
+                    <>
+                      {/* 画像ギャラリー */}
+                      <div className="-mx-4 overflow-x-auto px-4 pb-2 pt-3">
+                        <div className="flex snap-x snap-mandatory gap-2">
+                          {report.images?.map((image: string, index: number) => (
+                            <div
+                              key={index}
+                              className="w-[80vw] max-w-[300px] h-48 shrink-0 snap-center rounded-xl overflow-hidden"
+                            >
+                              <img
+                                src={image}
+                                alt={`${report.title} - 写真${index + 1}`}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          ))}
                         </div>
-                      ))}
-                    </div>
-                  </div>
+                      </div>
 
-                  {/* コンテンツ */}
-                  <div className="p-4">
-                    <h3 className="font-bold text-gray-900 mb-3 text-base">{report.title}</h3>
-                    <div className="space-y-1 mb-3">
-                      <div className="flex items-center gap-2 text-xs text-gray-600">
-                        <Calendar className="h-3.5 w-3.5 text-blue-600" />
-                        <span>{report.date}</span>
+                      {/* コンテンツ */}
+                      <div className="p-4">
+                        <h3 className="font-bold text-gray-900 mb-3 text-base">{report.title}</h3>
+                        <div className="space-y-1 mb-3">
+                          <div className="flex items-center gap-2 text-xs text-gray-600">
+                            <Calendar className="h-3.5 w-3.5 text-blue-600" />
+                            <span>{report.date}</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-xs text-gray-600">
+                            <MapPin className="h-3.5 w-3.5 text-blue-600" />
+                            <span>{report.location}</span>
+                          </div>
+                        </div>
+                        <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+                          {report.content}
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2 text-xs text-gray-600">
-                        <MapPin className="h-3.5 w-3.5 text-blue-600" />
-                        <span>{report.location}</span>
+                    </>
+                  )}
+
+                  {report.type === 'financial' && (
+                    <div className="p-4">
+                      <h3 className="font-bold text-gray-900 mb-2 text-base">{report.title}</h3>
+                      {report.subtitle && (
+                        <p className="text-sm font-semibold text-blue-600 mb-3">{report.subtitle}</p>
+                      )}
+                      <div className="space-y-1 mb-4">
+                        <div className="flex items-center gap-2 text-xs text-gray-600">
+                          <Calendar className="h-3.5 w-3.5 text-blue-600" />
+                          <span>{report.date}</span>
+                        </div>
+                      </div>
+
+                      {/* 一般会計 - 収入の部 */}
+                      <div className="mb-6">
+                        <h4 className="font-bold text-gray-900 mb-2 text-sm">一般会計 - 収入の部</h4>
+                        <p className="text-xs text-gray-500 mb-2">{report.fiscalNote} (単位：円)</p>
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-xs border-collapse">
+                            <thead>
+                              <tr className="bg-blue-50">
+                                <th className="border border-gray-300 px-2 py-1 text-left">項目</th>
+                                <th className="border border-gray-300 px-2 py-1 text-right">予算額</th>
+                                <th className="border border-gray-300 px-2 py-1 text-right">決算額</th>
+                                <th className="border border-gray-300 px-2 py-1 text-right">増減</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {incomeData.map((row, index) => (
+                                <tr key={index}>
+                                  <td className="border border-gray-300 px-2 py-1">{row.item}</td>
+                                  <td className="border border-gray-300 px-2 py-1 text-right">{row.budget}</td>
+                                  <td className="border border-gray-300 px-2 py-1 text-right">{row.actual}</td>
+                                  <td className="border border-gray-300 px-2 py-1 text-right">{row.diff}</td>
+                                </tr>
+                              ))}
+                              <tr className="bg-gray-100 font-bold">
+                                <td className="border border-gray-300 px-2 py-1">合計</td>
+                                <td className="border border-gray-300 px-2 py-1 text-right">14,428,600</td>
+                                <td className="border border-gray-300 px-2 py-1 text-right">14,317,011</td>
+                                <td className="border border-gray-300 px-2 py-1 text-right">△ 111,589</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      {/* 一般会計 - 支出の部 */}
+                      <div className="mb-6">
+                        <h4 className="font-bold text-gray-900 mb-2 text-sm">一般会計 - 支出の部</h4>
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-xs border-collapse">
+                            <thead>
+                              <tr className="bg-blue-50">
+                                <th className="border border-gray-300 px-2 py-1 text-left">項目</th>
+                                <th className="border border-gray-300 px-2 py-1 text-right">予算額</th>
+                                <th className="border border-gray-300 px-2 py-1 text-right">決算額</th>
+                                <th className="border border-gray-300 px-2 py-1 text-right">増減</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {expenseData.map((row, index) => (
+                                <tr key={index} className={row.category ? 'bg-gray-50 font-semibold' : ''}>
+                                  <td className="border border-gray-300 px-2 py-1">
+                                    {row.category && <span className="font-bold">{row.category}</span>}
+                                    {row.item && <span className={row.category ? 'ml-2' : ''}>{row.item}</span>}
+                                  </td>
+                                  <td className="border border-gray-300 px-2 py-1 text-right">{row.budget}</td>
+                                  <td className="border border-gray-300 px-2 py-1 text-right">{row.actual}</td>
+                                  <td className="border border-gray-300 px-2 py-1 text-right">{row.diff}</td>
+                                </tr>
+                              ))}
+                              <tr className="bg-gray-100 font-bold">
+                                <td className="border border-gray-300 px-2 py-1">合計</td>
+                                <td className="border border-gray-300 px-2 py-1 text-right">14,428,600</td>
+                                <td className="border border-gray-300 px-2 py-1 text-right">12,638,802</td>
+                                <td className="border border-gray-300 px-2 py-1 text-right">△ 1,789,798</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      {/* 差引残高 */}
+                      <div className="bg-blue-50 rounded-lg p-3 mb-4">
+                        <p className="text-sm font-semibold text-gray-900">
+                          (収入総額) 14,317,011円 - (支出総額) 12,638,802円 = (差引残高) 1,678,209円 (次年度繰越金)
+                        </p>
+                      </div>
+
+                      {/* 監査報告 */}
+                      <div className="border-t border-gray-200 pt-3">
+                        <p className="text-xs text-gray-700 mb-3">
+                          通帳、諸帳簿等を照合した結果、以上の会計に相違ないことを認めます。
+                        </p>
+                        <p className="text-xs text-gray-600">令和6年4月9日</p>
+                        <div className="mt-2 space-y-1 text-xs text-gray-700">
+                          <p>監事　玉井 康隆</p>
+                          <p>　　　小山田 正敏</p>
+                          <p>　　　滝澤 輝雄</p>
+                          <p>PTA会長　及川 大造</p>
+                        </div>
                       </div>
                     </div>
-                    <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
-                      {report.content}
-                    </div>
-                  </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -295,41 +443,158 @@ const AlumniActivities: React.FC = () => {
           <section className="mb-16">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">活動報告</h2>
             <div className="space-y-8">
-              {activityReports.map((report) => (
+              {activityReports.map((report: any) => (
                 <div
                   key={report.id}
                   className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
                 >
-                  {/* 画像ギャラリー */}
-                  <div className="grid grid-cols-3 gap-0 h-80">
-                    {report.images.map((image, index) => (
-                      <div key={index} className="relative h-full overflow-hidden">
-                        <img
-                          src={image}
-                          alt={`${report.title} - 写真${index + 1}`}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                        />
+                  {report.type === 'general' && (
+                    <>
+                      {/* 画像ギャラリー */}
+                      <div className="grid grid-cols-3 gap-0 h-80">
+                        {report.images?.map((image: string, index: number) => (
+                          <div key={index} className="relative h-full overflow-hidden">
+                            <img
+                              src={image}
+                              alt={`${report.title} - 写真${index + 1}`}
+                              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                            />
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
 
-                  {/* コンテンツ */}
-                  <div className="p-8">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">{report.title}</h3>
-                    <div className="flex items-center gap-6 mb-6">
-                      <div className="flex items-center gap-3 text-gray-600">
+                      {/* コンテンツ */}
+                      <div className="p-8">
+                        <h3 className="text-2xl font-bold text-gray-900 mb-4">{report.title}</h3>
+                        <div className="flex items-center gap-6 mb-6">
+                          <div className="flex items-center gap-3 text-gray-600">
+                            <Calendar className="h-5 w-5 text-blue-600" />
+                            <span>{report.date}</span>
+                          </div>
+                          <div className="flex items-center gap-3 text-gray-600">
+                            <MapPin className="h-5 w-5 text-blue-600" />
+                            <span>{report.location}</span>
+                          </div>
+                        </div>
+                        <div className="text-gray-700 leading-relaxed whitespace-pre-line">
+                          {report.content}
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  {report.type === 'financial' && (
+                    <div className="p-8">
+                      <h3 className="text-2xl font-bold text-gray-900 mb-3">{report.title}</h3>
+                      {report.subtitle && (
+                        <p className="text-lg font-semibold text-blue-600 mb-4">{report.subtitle}</p>
+                      )}
+                      <div className="flex items-center gap-3 text-gray-600 mb-6">
                         <Calendar className="h-5 w-5 text-blue-600" />
                         <span>{report.date}</span>
                       </div>
-                      <div className="flex items-center gap-3 text-gray-600">
-                        <MapPin className="h-5 w-5 text-blue-600" />
-                        <span>{report.location}</span>
+
+                      {/* 一般会計 - 収入の部 */}
+                      <div className="mb-8">
+                        <h4 className="text-xl font-bold text-gray-900 mb-3">一般会計 - 収入の部</h4>
+                        <p className="text-sm text-gray-500 mb-3">{report.fiscalNote} (単位：円)</p>
+                        <div className="overflow-x-auto">
+                          <table className="w-full border-collapse">
+                            <thead>
+                              <tr className="bg-blue-50">
+                                <th className="border border-gray-300 px-4 py-3 text-left font-semibold">項目</th>
+                                <th className="border border-gray-300 px-4 py-3 text-right font-semibold">予算額 (A)</th>
+                                <th className="border border-gray-300 px-4 py-3 text-right font-semibold">決算額 (B)</th>
+                                <th className="border border-gray-300 px-4 py-3 text-right font-semibold">比較増減 (B-A)</th>
+                                <th className="border border-gray-300 px-4 py-3 text-left font-semibold">摘要</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {incomeData.map((row, index) => (
+                                <tr key={index} className="hover:bg-gray-50">
+                                  <td className="border border-gray-300 px-4 py-2">{row.item}</td>
+                                  <td className="border border-gray-300 px-4 py-2 text-right">{row.budget}</td>
+                                  <td className="border border-gray-300 px-4 py-2 text-right">{row.actual}</td>
+                                  <td className="border border-gray-300 px-4 py-2 text-right">{row.diff}</td>
+                                  <td className="border border-gray-300 px-4 py-2 text-sm">{row.note}</td>
+                                </tr>
+                              ))}
+                              <tr className="bg-gray-100 font-bold">
+                                <td className="border border-gray-300 px-4 py-2">合 計</td>
+                                <td className="border border-gray-300 px-4 py-2 text-right">14,428,600</td>
+                                <td className="border border-gray-300 px-4 py-2 text-right">14,317,011</td>
+                                <td className="border border-gray-300 px-4 py-2 text-right">△ 111,589</td>
+                                <td className="border border-gray-300 px-4 py-2"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      {/* 一般会計 - 支出の部 */}
+                      <div className="mb-8">
+                        <h4 className="text-xl font-bold text-gray-900 mb-3">一般会計 - 支出の部</h4>
+                        <div className="overflow-x-auto">
+                          <table className="w-full border-collapse">
+                            <thead>
+                              <tr className="bg-blue-50">
+                                <th className="border border-gray-300 px-4 py-3 text-left font-semibold">大項目</th>
+                                <th className="border border-gray-300 px-4 py-3 text-left font-semibold">項目</th>
+                                <th className="border border-gray-300 px-4 py-3 text-right font-semibold">予算額 (A)</th>
+                                <th className="border border-gray-300 px-4 py-3 text-right font-semibold">決算額 (B)</th>
+                                <th className="border border-gray-300 px-4 py-3 text-right font-semibold">比較増減 (B-A)</th>
+                                <th className="border border-gray-300 px-4 py-3 text-left font-semibold">摘要</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {expenseData.map((row, index) => (
+                                <tr key={index} className={row.category ? 'bg-gray-50' : 'hover:bg-gray-50'}>
+                                  <td className="border border-gray-300 px-4 py-2 font-semibold">{row.category}</td>
+                                  <td className="border border-gray-300 px-4 py-2">{row.item}</td>
+                                  <td className="border border-gray-300 px-4 py-2 text-right">{row.budget}</td>
+                                  <td className="border border-gray-300 px-4 py-2 text-right">{row.actual}</td>
+                                  <td className="border border-gray-300 px-4 py-2 text-right">{row.diff}</td>
+                                  <td className="border border-gray-300 px-4 py-2 text-sm">{row.note}</td>
+                                </tr>
+                              ))}
+                              <tr className="bg-gray-100 font-bold">
+                                <td className="border border-gray-300 px-4 py-2" colSpan={2}>合 計</td>
+                                <td className="border border-gray-300 px-4 py-2 text-right">14,428,600</td>
+                                <td className="border border-gray-300 px-4 py-2 text-right">12,638,802</td>
+                                <td className="border border-gray-300 px-4 py-2 text-right">△ 1,789,798</td>
+                                <td className="border border-gray-300 px-4 py-2"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      {/* 差引残高 */}
+                      <div className="bg-blue-50 rounded-2xl p-6 mb-6">
+                        <p className="text-lg font-semibold text-gray-900">
+                          (収入総額) 14,317,011円 - (支出総額) 12,638,802円 = (差引残高) 1,678,209円 (次年度繰越金)
+                        </p>
+                      </div>
+
+                      {/* 監査報告 */}
+                      <div className="border-t border-gray-200 pt-6">
+                        <p className="text-gray-700 mb-4">
+                          通帳、諸帳簿等を照合した結果、以上の会計に相違ないことを認めます。
+                        </p>
+                        <p className="text-gray-600 mb-3">令和6年4月9日</p>
+                        <div className="grid grid-cols-2 gap-4 text-gray-700">
+                          <div className="space-y-2">
+                            <p>監事　玉井 康隆</p>
+                            <p>　　　小山田 正敏</p>
+                          </div>
+                          <div className="space-y-2">
+                            <p>　　　滝澤 輝雄</p>
+                            <p>PTA会長　及川 大造</p>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div className="text-gray-700 leading-relaxed whitespace-pre-line">
-                      {report.content}
-                    </div>
-                  </div>
+                  )}
                 </div>
               ))}
             </div>
