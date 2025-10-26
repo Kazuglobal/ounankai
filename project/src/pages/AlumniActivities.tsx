@@ -26,6 +26,29 @@ const AlumniActivities: React.FC = () => {
     },
     {
       id: 2,
+      type: 'honors',
+      title: '栄えある受章',
+      subtitle: 'おめでとうございます',
+      honorType: '令和6年 春の叙勲',
+      recipients: [
+        {
+          name: '佐々木 章氏',
+          medal: '旭日双光章',
+          achievement: '建築設計監理業振興功労',
+          current: '現（一社）岩手県建築士事務所協会会長',
+          graduation: '建築 S40年卒'
+        },
+        {
+          name: '藤原 由巳氏',
+          medal: '瑞宝双光章',
+          achievement: '消防功労',
+          current: '元 岩手県矢巾町消防団団長',
+          graduation: '工業化学 S42年卒'
+        }
+      ]
+    },
+    {
+      id: 3,
       type: 'financial',
       title: '令和5年度 同窓会会計決算書',
       subtitle: '議題(2) 令和5年度会計決算承認について',
@@ -204,6 +227,38 @@ const AlumniActivities: React.FC = () => {
                         </div>
                       </div>
                     </>
+                  )}
+
+                  {report.type === 'honors' && (
+                    <div className="p-4">
+                      <div className="text-center mb-4">
+                        <h3 className="text-xl font-bold text-gray-900 mb-1">{report.title}</h3>
+                        <p className="text-base font-semibold text-red-600">{report.subtitle}</p>
+                      </div>
+
+                      <div className="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-xl p-3 mb-4 border-2 border-yellow-300">
+                        <p className="text-center font-bold text-gray-900">{report.honorType}</p>
+                      </div>
+
+                      <div className="space-y-4">
+                        {report.recipients?.map((recipient: any, index: number) => (
+                          <div key={index} className="bg-white rounded-xl border-2 border-blue-200 p-4 shadow-md">
+                            <div className="text-center mb-3">
+                              <div className="inline-block bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400 rounded-full px-4 py-2 mb-2">
+                                <p className="text-sm font-bold text-gray-900">{recipient.medal}</p>
+                              </div>
+                              <p className="text-xs text-gray-600 mb-2">{recipient.achievement}</p>
+                            </div>
+
+                            <div className="text-center space-y-1">
+                              <p className="text-lg font-bold text-gray-900">{recipient.name}</p>
+                              <p className="text-xs text-gray-700">{recipient.current}</p>
+                              <p className="text-xs font-semibold text-blue-600">（{recipient.graduation}）</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   )}
 
                   {report.type === 'financial' && (
@@ -481,6 +536,38 @@ const AlumniActivities: React.FC = () => {
                         </div>
                       </div>
                     </>
+                  )}
+
+                  {report.type === 'honors' && (
+                    <div className="p-8">
+                      <div className="text-center mb-8">
+                        <h3 className="text-3xl font-bold text-gray-900 mb-2">{report.title}</h3>
+                        <p className="text-2xl font-semibold text-red-600">{report.subtitle}</p>
+                      </div>
+
+                      <div className="bg-gradient-to-r from-yellow-50 via-amber-50 to-yellow-50 rounded-2xl p-6 mb-8 border-4 border-yellow-300 shadow-lg">
+                        <p className="text-center text-2xl font-bold text-gray-900">{report.honorType}</p>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {report.recipients?.map((recipient: any, index: number) => (
+                          <div key={index} className="bg-gradient-to-br from-white to-blue-50 rounded-2xl border-4 border-blue-300 p-8 shadow-xl hover:shadow-2xl transition-shadow">
+                            <div className="text-center mb-6">
+                              <div className="inline-block bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400 rounded-full px-8 py-3 mb-4 shadow-lg">
+                                <p className="text-xl font-bold text-gray-900">{recipient.medal}</p>
+                              </div>
+                              <p className="text-sm text-gray-700 mb-4">{recipient.achievement}</p>
+                            </div>
+
+                            <div className="text-center space-y-3">
+                              <p className="text-2xl font-bold text-gray-900">{recipient.name}</p>
+                              <p className="text-base text-gray-700">{recipient.current}</p>
+                              <p className="text-base font-semibold text-blue-600">（{recipient.graduation}）</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   )}
 
                   {report.type === 'financial' && (
