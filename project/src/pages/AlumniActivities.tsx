@@ -89,10 +89,15 @@ const AlumniActivities: React.FC = () => {
   const upcomingEvents = [
     {
       id: 1,
-      title: '2024年度同窓会総会',
-      date: '2024年4月15日 14:00-17:00',
-      location: 'カートメルホール',
-      image: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=640'
+      title: '令和7年度 盛工同窓会・体育後援会総会',
+      subtitle: '次期総会のお知らせ',
+      date: '令和7年7月5日（土）',
+      time: '午後6時より',
+      location: 'ホテルメトロポリタン盛岡・本館',
+      note: '是非ご参加下さい',
+      recurring: '毎年7月第一土曜日に開催',
+      image: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=640',
+      featured: true
     },
     {
       id: 2,
@@ -376,30 +381,52 @@ const AlumniActivities: React.FC = () => {
             <h2 className="text-lg font-bold text-gray-900 mb-4">今後のイベント</h2>
             <div className="-mx-4 overflow-x-auto px-4 pb-2">
               <div className="flex snap-x snap-mandatory gap-3">
-                {upcomingEvents.map((event) => (
+                {upcomingEvents.map((event: any) => (
                   <div
                     key={event.id}
-                    className="w-[85vw] max-w-[320px] shrink-0 snap-center bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow"
+                    className={`w-[85vw] max-w-[320px] shrink-0 snap-center bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-shadow ${
+                      event.featured ? 'ring-2 ring-blue-400' : ''
+                    }`}
                   >
-                    <div className="h-36 overflow-hidden">
+                    <div className="h-36 overflow-hidden relative">
                       <img
                         src={event.image}
                         alt={event.title}
                         className="w-full h-full object-cover"
                       />
+                      {event.featured && (
+                        <div className="absolute top-2 right-2 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                          注目
+                        </div>
+                      )}
                     </div>
                     <div className="p-3.5">
+                      {event.subtitle && (
+                        <p className="text-xs font-semibold text-blue-600 mb-1">{event.subtitle}</p>
+                      )}
                       <h3 className="font-bold text-gray-900 mb-2 text-sm">{event.title}</h3>
-                      <div className="space-y-1">
+                      <div className="space-y-1 mb-2">
                         <div className="flex items-center gap-2 text-xs text-gray-600">
                           <Calendar className="h-3.5 w-3.5 text-blue-600" />
                           <span>{event.date}</span>
                         </div>
+                        {event.time && (
+                          <div className="flex items-center gap-2 text-xs text-gray-600">
+                            <Calendar className="h-3.5 w-3.5 text-blue-600" />
+                            <span>{event.time}</span>
+                          </div>
+                        )}
                         <div className="flex items-center gap-2 text-xs text-gray-600">
                           <MapPin className="h-3.5 w-3.5 text-blue-600" />
                           <span>{event.location}</span>
                         </div>
                       </div>
+                      {event.note && (
+                        <p className="text-xs font-bold text-red-600 mb-1">{event.note}</p>
+                      )}
+                      {event.recurring && (
+                        <p className="text-xs text-gray-500 italic">{event.recurring}</p>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -691,30 +718,54 @@ const AlumniActivities: React.FC = () => {
           <section className="mb-16">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">今後のイベント</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {upcomingEvents.map((event) => (
+              {upcomingEvents.map((event: any) => (
                 <div
                   key={event.id}
-                  className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                  className={`bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 ${
+                    event.featured ? 'ring-4 ring-blue-400' : ''
+                  }`}
                 >
-                  <div className="h-64 overflow-hidden">
+                  <div className="h-64 overflow-hidden relative">
                     <img
                       src={event.image}
                       alt={event.title}
                       className="w-full h-full object-cover"
                     />
+                    {event.featured && (
+                      <div className="absolute top-4 right-4 bg-blue-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">
+                        注目のイベント
+                      </div>
+                    )}
                   </div>
                   <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-3">{event.title}</h3>
-                    <div className="space-y-2">
+                    {event.subtitle && (
+                      <p className="text-sm font-semibold text-blue-600 mb-2">{event.subtitle}</p>
+                    )}
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">{event.title}</h3>
+                    <div className="space-y-2 mb-4">
                       <div className="flex items-center gap-3 text-gray-600">
                         <Calendar className="h-5 w-5 text-blue-600" />
                         <span>{event.date}</span>
                       </div>
+                      {event.time && (
+                        <div className="flex items-center gap-3 text-gray-600">
+                          <Calendar className="h-5 w-5 text-blue-600" />
+                          <span>{event.time}</span>
+                        </div>
+                      )}
                       <div className="flex items-center gap-3 text-gray-600">
                         <MapPin className="h-5 w-5 text-blue-600" />
                         <span>{event.location}</span>
                       </div>
                     </div>
+                    {event.note && (
+                      <p className="text-base font-bold text-red-600 mb-2">{event.note}</p>
+                    )}
+                    {event.recurring && (
+                      <p className="text-sm text-gray-500 italic border-t border-gray-200 pt-3">
+                        {event.recurring}
+                      </p>
+                    )}
                   </div>
                 </div>
               ))}
