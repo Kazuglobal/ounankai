@@ -81,7 +81,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     { name: 'ホーム', href: '/' },
     { name: '会則', href: '/bylaws' },
     { name: '役員名簿', href: '/board-of-directors' },
-    { name: 'ギャラリー', href: '/gallery' },
+    { name: '学校', href: '/school' },
     { name: '同窓生とつながる', href: '/alumni-profiles' },
     { name: '会報', href: '/newsletter/issue-74' },
     { name: 'お知らせ', href: '/announcements' },

@@ -4,6 +4,7 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import About from './pages/About';
 import Gallery from './pages/Gallery';
+import School from './pages/School';
 import AlumniProfiles from './pages/AlumniProfiles';
 import AlumniProfile from './pages/AlumniProfile';
 import BusinessDetail from './pages/BusinessDetail';
@@ -30,6 +31,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/gallery" element={<Gallery />} />
+          <Route path="/school" element={<School />} />
           <Route path="/alumni-profiles" element={<AlumniProfiles />} />
           <Route path="/alumni-profiles/:id" element={<AlumniProfile />} />
           <Route path="/business/:id" element={<BusinessDetail />} />

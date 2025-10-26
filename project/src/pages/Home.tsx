@@ -239,9 +239,9 @@ const Home: React.FC = () => {
       iconBg: 'bg-white'
     },
     {
-      title: 'ギャラリー',
-      href: '/gallery',
-      icon: ImageIcon,
+      title: '学校',
+      href: '/school',
+      icon: BookOpen,
       bubbleGradient: 'from-indigo-300 via-violet-200 to-purple-200',
       iconColor: 'text-blue-700',
       iconBg: 'bg-white'
