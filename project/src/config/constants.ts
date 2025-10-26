@@ -5,9 +5,9 @@
 
 // アプリケーション情報
 export const APP_INFO = {
-  TITLE: '大南会',
+  TITLE: '盛岡工業高校同窓会',
   VERSION: '1.0.0',
-  DESCRIPTION: '大南会公式ウェブサイト',
+  DESCRIPTION: '岩手県立盛岡工業高等学校同窓会公式ウェブサイト',
 } as const;
 
 // ルーティング定数

@@ -83,6 +83,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     { name: '役員名簿', href: '/board-of-directors' },
     { name: 'ギャラリー', href: '/gallery' },
     { name: '同窓生とつながる', href: '/alumni-profiles' },
+    { name: '会報', href: '/newsletter/issue-74' },
     { name: 'お知らせ', href: '/announcements' },
     { name: 'お問い合わせ', href: '/contact' },
   ];
@@ -102,7 +103,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       {/* Music Control Button */}
       <button
         onClick={toggleMusic}
-        className="fixed bottom-28 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-blue-600/90 text-white shadow-xl transition-all duration-200 hover:bg-blue-700/90 backdrop-blur-sm sm:bottom-auto sm:right-6 sm:top-24"
+        className="fixed bottom-28 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-morioka-600/90 text-white shadow-xl transition-all duration-200 hover:bg-morioka-700/90 backdrop-blur-sm sm:bottom-auto sm:right-6 sm:top-24"
         aria-label={isPlaying ? '音楽を停止' : '音楽を再生'}
       >
         {isPlaying ? <Volume2 className="w-6 h-6" /> : <VolumeX className="w-6 h-6" />}
@@ -119,8 +120,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <div className="flex h-24 items-center justify-between gap-4 xl:h-32">
               <Link to="/" className="flex items-center">
                 <img
-                  src="/images/logo-ounankai.png"
-                  alt="青森県立八戸西高等学校同窓会奥南会"
+                  src="/images/logo-ounankai-header.png"
+                  alt="岩手県立盛岡工業高等学校同窓会"
                   className="h-20 w-auto xl:h-28"
                 />
               </Link>
@@ -131,8 +132,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     to={item.href}
                     className={`rounded-full px-3 py-2 text-sm font-medium transition-all duration-200 ${
                       location.pathname === item.href
-                        ? 'bg-blue-600 text-white shadow-lg'
-                        : 'text-gray-700 hover:bg-white hover:text-blue-600 hover:shadow-md'
+                        ? 'bg-morioka-600 text-white shadow-lg'
+                        : 'text-gray-700 hover:bg-white hover:text-morioka-600 hover:shadow-md'
                     }`}
                   >
                     {item.name}
@@ -151,7 +152,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               className="absolute right-4 top-4 rounded-2xl bg-white/95 p-2 shadow-md transition hover:bg-white"
               aria-label="メニュー"
             >
-              {isMenuOpen ? <X className="h-6 w-6 text-blue-600" /> : <Menu className="h-6 w-6 text-blue-600" />}
+              {isMenuOpen ? <X className="h-6 w-6 text-morioka-600" /> : <Menu className="h-6 w-6 text-morioka-600" />}
             </button>
           </div>
           {isMenuOpen && (
@@ -162,8 +163,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   to={item.href}
                   className={`block rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 ${
                     location.pathname === item.href
-                      ? 'bg-blue-600 text-white shadow-md'
-                      : 'text-gray-700 hover:bg-blue-50'
+                      ? 'bg-morioka-600 text-white shadow-md'
+                      : 'text-gray-700 hover:bg-purple-50'
                   }`}
                 >
                   {item.name}
@@ -191,9 +192,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             {/* Logo and Description */}
             <div className="lg:col-span-2">
               <div className="flex items-center">
-                <img 
-                  src="/images/logo-ounankai.png" 
-                  alt="青森県立八戸西高等学校同窓会奥南会" 
+                <img
+                  src="/images/logo-ounankai.png"
+                  alt="岩手県立盛岡工業高等学校同窓会"
                   className="h-24 sm:h-28 md:h-32 lg:h-36 xl:h-40 w-auto"
                 />
               </div>
@@ -201,16 +202,16 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 卒業生の絆を深め、生涯にわたる関係を築く活気ある同窓生コミュニティを通じて、世代を繋いでいます。
               </p>
               <div className="flex space-x-4 mt-6">
-                <a href="#" className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors duration-200">
+                <a href="#" className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center hover:bg-morioka-600 hover:text-white transition-colors duration-200">
                   <Facebook className="w-5 h-5" />
                 </a>
-                <a href="#" className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors duration-200">
+                <a href="#" className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center hover:bg-morioka-600 hover:text-white transition-colors duration-200">
                   <Twitter className="w-5 h-5" />
                 </a>
-                <a href="#" className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors duration-200">
+                <a href="#" className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center hover:bg-morioka-600 hover:text-white transition-colors duration-200">
                   <Instagram className="w-5 h-5" />
                 </a>
-                <a href="#" className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors duration-200">
+                <a href="#" className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center hover:bg-morioka-600 hover:text-white transition-colors duration-200">
                   <Linkedin className="w-5 h-5" />
                 </a>
               </div>
@@ -220,23 +221,23 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <div>
               <h4 className="text-lg font-semibold text-gray-900 mb-4">クイックリンク</h4>
               <ul className="space-y-3">
-                <li><Link to="/bylaws" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">会則</Link></li>
-                <li><Link to="/board-of-directors" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">役員名簿</Link></li>
-                <li><Link to="/alumni-profiles" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">同窓生とつながる</Link></li>
+                <li><Link to="/bylaws" className="text-gray-600 hover:text-morioka-600 transition-colors duration-200">会則</Link></li>
+                <li><Link to="/board-of-directors" className="text-gray-600 hover:text-morioka-600 transition-colors duration-200">役員名簿</Link></li>
+                <li><Link to="/alumni-profiles" className="text-gray-600 hover:text-morioka-600 transition-colors duration-200">同窓生とつながる</Link></li>
               </ul>
             </div>
 
             {/* Member Registration */}
             <div>
               <h4 className="text-lg font-semibold text-gray-900 mb-4">参加しませんか？</h4>
-              <div className="bg-blue-50 rounded-2xl p-4 mb-4">
-                <p className="text-sm text-blue-900 mb-3">
+              <div className="bg-purple-50 rounded-2xl p-4 mb-4">
+                <p className="text-sm text-morioka-900 mb-3">
                   まだメンバーでない方も、<br />
-                  奥南会に参加できます！
+                  同窓会に参加できます！
                 </p>
                 <Link
                   to="/member-registration"
-                  className="inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-700 transition-colors duration-200 w-full justify-center"
+                  className="inline-flex items-center bg-morioka-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-morioka-700 transition-colors duration-200 w-full justify-center"
                 >
                   メンバー登録
                 </Link>
@@ -251,13 +252,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <h4 className="text-lg font-semibold text-gray-900 mb-4">お問い合わせ</h4>
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
-                  <MapPin className="w-5 h-5 text-blue-600" />
-                  <span className="text-gray-600">〒039-1101<br />青森県八戸市大字尻内町字中根市14</span>
+                  <MapPin className="w-5 h-5 text-morioka-600" />
+                  <span className="text-gray-600">〒020-0863<br />岩手県盛岡市南仙北二丁目23番1号</span>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <Mail className="w-5 h-5 text-blue-600" />
-                  <a href="mailto:ounankai@gmail.com" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">
-                    ounankai@gmail.com
+                  <Mail className="w-5 h-5 text-morioka-600" />
+                  <a href="mailto:morioka-kougyou@alumni.com" className="text-gray-600 hover:text-morioka-600 transition-colors duration-200">
+                    morioka-kougyou@alumni.com
                   </a>
                 </div>
               </div>
@@ -266,7 +267,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
           <div className="border-t border-gray-200 mt-12 pt-8 text-center">
             <p className="text-gray-600">
-              © 2024 青森県立八戸西高等学校同窓会奥南会. All rights reserved.
+              © 2024 岩手県立盛岡工業高等学校同窓会. All rights reserved.
             </p>
           </div>
         </div>
