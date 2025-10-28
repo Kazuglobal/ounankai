@@ -590,60 +590,47 @@ const Home: React.FC = () => {
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
-            <div className="space-y-0.5">
+            <div className="space-y-1">
               {alumniTopics.map((topic, index) => (
                 <Link
                   key={topic.id}
                   to={topic.url ?? '/announcements'}
-                  className={`group flex items-center gap-2 rounded-[10px] p-2 transition-all duration-300 ${
+                  className={`group flex items-center gap-2 rounded-lg p-3 transition-all duration-300 hover:shadow-md ${
                     index === 0
-                      ? 'bg-purple-50/80 shadow-sm ring-1 ring-purple-100 animate-pulse'
-                      : 'hover:bg-gray-100'
+                      ? 'bg-gradient-to-r from-purple-50/90 to-purple-100/50 shadow-sm border border-purple-200'
+                      : 'bg-white border border-gray-200 hover:border-purple-300'
                   }`}
                   aria-label={`${topic.title} - ${topic.category}`}
                   title={topic.title}
                 >
-                  <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md shadow-sm transition-all duration-300 ${
+                  <div className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg shadow-sm transition-all duration-300 ${
                     index === 0
-                      ? 'bg-gradient-to-br from-morioka-500 to-purple-500 scale-105'
-                      : 'bg-gradient-to-br from-gray-100 to-gray-200'
+                      ? 'bg-gradient-to-br from-purple-500 to-purple-600'
+                      : 'bg-gradient-to-br from-gray-50 to-gray-100 group-hover:from-purple-100 group-hover:to-purple-200'
                   }`}>
-                    <Newspaper className={`h-5 w-5 ${index === 0 ? 'text-white' : 'text-morioka-600'}`} />
+                    <Newspaper className={`h-6 w-6 ${index === 0 ? 'text-white' : 'text-purple-600'}`} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className={`truncate text-sm font-semibold ${
-                      index === 0 ? 'text-morioka-700' : 'text-gray-900'
+                    <h3 className={`truncate text-sm font-bold ${
+                      index === 0 ? 'text-purple-900' : 'text-gray-900'
                     }`}>{topic.title}</h3>
-                    <div className="mt-0.5 flex items-center gap-2">
-                      <span className={`text-xs font-medium ${
-                        index === 0 ? 'text-morioka-600' : 'text-gray-500'
+                    <div className="mt-1 flex items-center gap-2">
+                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
+                        index === 0 
+                          ? 'text-purple-700 bg-purple-100' 
+                          : 'text-gray-600 bg-gray-100'
                       }`}>{topic.category}</span>
                       <span className="text-xs text-gray-400" aria-hidden="true">•</span>
-                      <span className="text-xs text-gray-400">{topic.date}</span>
+                      <span className={`text-xs ${index === 0 ? 'text-purple-600' : 'text-gray-500'}`}>{topic.date}</span>
                     </div>
                   </div>
-                  {index === 0 ? (
-                    <div className="flex items-center gap-0.5" aria-label="現在注目のトピック" role="status">
-                      {Array.from({ length: PULSE_BAR_COUNT }, (_, i) => (
-                        <div
-                          key={i}
-                          className="h-7 w-0.5 rounded-full bg-morioka-500"
-                          style={{
-                            animation: 'pulseBar 1s ease-in-out infinite',
-                            animationDelay: `${i * PULSE_BAR_DELAY_STEP}s`
-                          }}
-                        />
-                      ))}
-                    </div>
-                  ) : (
-                    <div
-                      className="flex h-6 w-6 items-center justify-center opacity-0 transition-opacity group-hover:opacity-100"
-                      aria-label="トピックを読む"
-                      role="button"
-                    >
-                      <div className="h-0 w-0 border-y-[6px] border-l-[10px] border-y-transparent border-l-gray-900" />
-                    </div>
-                  )}
+                  <div
+                    className="flex h-7 w-7 items-center justify-center rounded-full opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:bg-purple-100"
+                    aria-label="トピックを読む"
+                    role="button"
+                  >
+                    <div className="h-0 w-0 border-y-[6px] border-l-[10px] border-y-transparent border-l-purple-600" />
+                  </div>
                 </Link>
               ))}
             </div>
@@ -958,3 +945,4 @@ const Home: React.FC = () => {
 };
 
 export default Home;
+

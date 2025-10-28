@@ -19,6 +19,7 @@ import AlumniActivities from './pages/AlumniActivities';
 import ClubActivities from './pages/ClubActivities';
 import BasketballClubArticle from './pages/BasketballClubArticle';
 import BaseballClubArticle from './pages/BaseballClubArticle';
+import LightMusicClubArticle from './pages/LightMusicClubArticle';
 import CareerPaths from './pages/CareerPaths';
 import Donations from './pages/Donations';
 import LegalNotice from './pages/LegalNotice';
@@ -42,6 +43,7 @@ function App() {
           <Route path="/club-activities" element={<ClubActivities />} />
           <Route path="/club-activities/basketball" element={<BasketballClubArticle />} />
           <Route path="/club-activities/baseball" element={<BaseballClubArticle />} />
+          <Route path="/club-activities/lightmusic" element={<LightMusicClubArticle />} />
           <Route path="/career-paths" element={<CareerPaths />} />
           <Route path="/donations" element={<Donations />} />
           <Route path="/legal" element={<LegalNotice />} />

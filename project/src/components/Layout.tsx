@@ -186,89 +186,43 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-white rounded-t-3xl mt-8 shadow-2xl">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-20 lg:pb-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Logo and Description */}
-            <div className="lg:col-span-2">
-              <div className="flex items-center">
-                <img
-                  src="/images/logo-ounankai.png"
-                  alt="岩手県立盛岡工業高等学校同窓会"
-                  className="h-24 sm:h-28 md:h-32 lg:h-36 xl:h-40 w-auto"
-                />
-              </div>
-              <p className="mt-4 text-gray-600 max-w-md">
-                卒業生の絆を深め、生涯にわたる関係を築く活気ある同窓生コミュニティを通じて、世代を繋いでいます。
-              </p>
-              <div className="flex space-x-4 mt-6">
-                <a href="#" className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center hover:bg-morioka-600 hover:text-white transition-colors duration-200">
-                  <Facebook className="w-5 h-5" />
-                </a>
-                <a href="#" className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center hover:bg-morioka-600 hover:text-white transition-colors duration-200">
-                  <Twitter className="w-5 h-5" />
-                </a>
-                <a href="#" className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center hover:bg-morioka-600 hover:text-white transition-colors duration-200">
-                  <Instagram className="w-5 h-5" />
-                </a>
-                <a href="#" className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center hover:bg-morioka-600 hover:text-white transition-colors duration-200">
-                  <Linkedin className="w-5 h-5" />
-                </a>
-              </div>
-            </div>
-
-            {/* Quick Links */}
-            <div>
-              <h4 className="text-lg font-semibold text-gray-900 mb-4">クイックリンク</h4>
-              <ul className="space-y-3">
-                <li><Link to="/bylaws" className="text-gray-600 hover:text-morioka-600 transition-colors duration-200">会則</Link></li>
-                <li><Link to="/board-of-directors" className="text-gray-600 hover:text-morioka-600 transition-colors duration-200">役員名簿</Link></li>
-                <li><Link to="/alumni-profiles" className="text-gray-600 hover:text-morioka-600 transition-colors duration-200">同窓生とつながる</Link></li>
-              </ul>
-            </div>
-
-            {/* Member Registration */}
-            <div>
-              <h4 className="text-lg font-semibold text-gray-900 mb-4">参加しませんか？</h4>
-              <div className="bg-purple-50 rounded-2xl p-4 mb-4">
-                <p className="text-sm text-morioka-900 mb-3">
-                  まだメンバーでない方も、<br />
-                  同窓会に参加できます！
-                </p>
-                <Link
-                  to="/member-registration"
-                  className="inline-flex items-center bg-morioka-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-morioka-700 transition-colors duration-200 w-full justify-center"
-                >
-                  メンバー登録
-                </Link>
-              </div>
-              <p className="text-xs text-gray-500">
-                同窓生ネットワークに参加して、新しいつながりを築きましょう
-              </p>
-            </div>
-
-            {/* Contact Info */}
-            <div>
-              <h4 className="text-lg font-semibold text-gray-900 mb-4">お問い合わせ</h4>
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <MapPin className="w-5 h-5 text-morioka-600" />
-                  <span className="text-gray-600">〒020-0863<br />岩手県盛岡市南仙北二丁目23番1号</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Mail className="w-5 h-5 text-morioka-600" />
-                  <a href="mailto:morioka-kougyou@alumni.com" className="text-gray-600 hover:text-morioka-600 transition-colors duration-200">
-                    morioka-kougyou@alumni.com
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="border-t border-gray-200 mt-12 pt-8 text-center">
-            <p className="text-gray-600">
-              © 2024 岩手県立盛岡工業高等学校同窓会. All rights reserved.
+      <footer className="bg-white rounded-t-3xl mt-8 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="flex flex-col items-center text-center space-y-6">
+            {/* Logo */}
+            <img
+              src="/images/logo-ounankai.png"
+              alt="岩手県立盛岡工業高等学校同窓会"
+              className="h-20 sm:h-24 w-auto"
+            />
+            
+            {/* Description */}
+            <p className="text-gray-600 max-w-md">
+              卒業生の絆を深め、生涯にわたる関係を築く活気ある同窓生コミュニティを通じて、世代を繋いでいます。
             </p>
+
+            {/* Social Media Icons */}
+            <div className="flex space-x-4">
+              <a href="#" className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center hover:bg-morioka-600 hover:text-white transition-colors duration-200">
+                <Facebook className="w-5 h-5" />
+              </a>
+              <a href="#" className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center hover:bg-morioka-600 hover:text-white transition-colors duration-200">
+                <Twitter className="w-5 h-5" />
+              </a>
+              <a href="#" className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center hover:bg-morioka-600 hover:text-white transition-colors duration-200">
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a href="#" className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center hover:bg-morioka-600 hover:text-white transition-colors duration-200">
+                <Linkedin className="w-5 h-5" />
+              </a>
+            </div>
+
+            {/* Copyright */}
+            <div className="border-t border-gray-200 pt-6 w-full">
+              <p className="text-sm text-gray-600">
+                © 2024 岩手県立盛岡工業高等学校同窓会. All rights reserved.
+              </p>
+            </div>
           </div>
         </div>
       </footer>

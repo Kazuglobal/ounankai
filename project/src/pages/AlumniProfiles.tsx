@@ -2232,27 +2232,53 @@ const AlumniProfiles: React.FC = () => {
                         <ArrowRight className="h-4 w-4" />
                       </Link>
                     </div>
-                    <div className="space-y-3">
-                      {alumniTopics.map((topic) => (
+                    <div className="space-y-4">
+                      {alumniTopics.map((topic, index) => (
                         <Link
                           key={topic.id}
                           to={topic.url || '/announcements'}
-                          className="flex items-start gap-4 rounded-2xl border border-blue-200 bg-white p-4 transition hover:border-blue-300 hover:shadow-md"
+                          className={`group flex items-start gap-4 rounded-2xl border p-4 transition-all duration-200 ${
+                            index === 0
+                              ? 'border-purple-300 bg-gradient-to-br from-purple-50 to-purple-100/50 shadow-md hover:border-purple-400 hover:shadow-lg'
+                              : 'border-blue-200 bg-white hover:border-blue-300 hover:shadow-md'
+                          }`}
                         >
-                          <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 text-white shadow">
-                            <Newspaper className="h-6 w-6" />
+                          <div className={`flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl shadow-md transition-all duration-200 group-hover:scale-105 ${
+                            index === 0
+                              ? 'bg-gradient-to-br from-purple-500 to-purple-600'
+                              : 'bg-gradient-to-br from-blue-500 to-indigo-500'
+                          }`}>
+                            <Newspaper className="h-6 w-6 text-white" />
                           </div>
                           <div className="flex-1">
-                            <div className="mb-1 flex items-center gap-2">
-                              <span className="rounded-full bg-blue-100 px-2 py-0.5 text-xs font-semibold text-blue-700">
+                            <div className="mb-1.5 flex items-center gap-2">
+                              <span className={`rounded-full px-2.5 py-1 text-xs font-bold ${
+                                index === 0
+                                  ? 'bg-purple-200 text-purple-800'
+                                  : 'bg-blue-100 text-blue-700'
+                              }`}>
                                 {topic.category}
                               </span>
-                              <span className="text-xs text-gray-500">{topic.date}</span>
+                              <span className={`text-xs ${
+                                index === 0 ? 'text-purple-600' : 'text-gray-500'
+                              }`}>{topic.date}</span>
                             </div>
-                            <h4 className="font-semibold text-gray-900">{topic.title}</h4>
-                            <p className="mt-1 text-sm text-gray-600">{topic.description}</p>
+                            <h4 className={`font-bold ${
+                              index === 0 ? 'text-purple-900' : 'text-gray-900'
+                            }`}>{topic.title}</h4>
+                            <p className={`mt-1.5 text-sm leading-relaxed ${
+                              index === 0 ? 'text-purple-800' : 'text-gray-600'
+                            }`}>{topic.description}</p>
                           </div>
-                          <ArrowRight className="h-5 w-5 flex-shrink-0 text-blue-500" />
+                          <div className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full transition-all duration-200 group-hover:scale-110 ${
+                            index === 0
+                              ? 'group-hover:bg-purple-200'
+                              : 'group-hover:bg-blue-100'
+                          }`}>
+                            <ArrowRight className={`h-5 w-5 ${
+                              index === 0 ? 'text-purple-700' : 'text-blue-500'
+                            }`} />
+                          </div>
                         </Link>
                       ))}
                     </div>
