@@ -25,6 +25,16 @@ const ClubActivities: React.FC = () => {
       bgColor: 'from-green-700 to-blue-700',
       href: '/club-activities/baseball'
     },
+    {
+      id: 3,
+      title: '軽音楽部 高文祭で優秀な成績',
+      description: '顧問：小平創 音楽が大好きで観客を感動させる演奏を目標に活動。地域イベントや児童養護施設での演奏会で地域貢献。中学生体験会に文化部初参加。',
+      stats: '高文祭第3位',
+      date: '2024年',
+      label: '軽音楽部',
+      bgColor: 'from-purple-700 to-pink-700',
+      href: '#lightmusic'
+    },
   ];
 
   return (
@@ -859,17 +869,33 @@ const ClubActivities: React.FC = () => {
             </div>
           </div>
         </section>
-        <section class="bg-white border border-gray-100 rounded-3xl shadow-xl p-8 md:p-12 mt-12">
-          <div class="space-y-10">
+        <section id="lightmusic" className="bg-white border border-gray-100 rounded-3xl shadow-xl p-8 md:p-12 mt-12">
+          <div className="space-y-10">
             <div>
-              <h2 class="text-2xl md:text-3xl font-bold text-gray-900">軽音楽部</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900">軽音楽部 近況報告</h2>
+              <p className="text-lg text-gray-600 mt-2">軽音楽部顧問 小平 創</p>
             </div>
 
-            <div class="space-y-8">
-              <article class="space-y-3">
-                <h3 class="text-xl font-semibold text-gray-900">第47回岩手県高等学校総合文化祭第24回軽音楽発表会</h3>
-                <ul class="list-disc list-outside pl-5 space-y-1 text-gray-700">
-                  <li>優秀賞（第位）バンド名：@fternoon.</li>
+            <div className="space-y-8">
+              <article className="space-y-4">
+                <div className="prose prose-lg max-w-none text-gray-700">
+                  <p>
+                    同窓会の皆様におかれましては、日頃よりご支援ご協力を賜り誠にありがとうございます。
+                    盛工軽音楽部は、平成30年にギター同好会から生徒総会での承認を受けて、正式に部として誕生いたしました。当時熱心に音楽に取り組んでいた部員が部への昇格に提起して成立したことであります。この部員は卒業後もプロのミュージシャンとして全国を巡り、現在も活動を続けております。
+                  </p>
+                  <p>
+                    さて軽音楽部の印象に関してでございますが、90年代においてはエレキギターを持っているだけで、いわゆる不良少年と認知されることも多かったり、また現在でも全国軽音楽協会が発行する月刊誌においても「校内でヒエラルキーの低い部活動」と認知されている高校も少なくないとさえ特集されております。しかし現在所属する部員たちは音楽が大好きで練習に真剣に取り組んでおり、仲間とともに「観客を感動させる演奏」を目標に活動をしています。日常の部活動での練習の成果を、矢巾祭・ペアレン醸造祭などの地元イベントで披露し、また児童養護施設での演奏会などで地域への貢献にも幅広く取り組んでいます。今年度は中学生部活動体験会に盛工の文化部として初めて参加し、体験に来た中学生・保護者からは好評を頂くことが出来ました。また高文祭では全県29バンドが参加した中で第3位の成績を収めることが出来ました。
+                  </p>
+                  <p>
+                    ポップミュージックは時代を彩ってきた音楽で誰しもこの歌を聴くとあの頃を思いだすという曲があると思います。そのような時代とともに移り行く音楽を、多くの皆様に楽しんでいただけるよう軽音楽部は邁進してまいりますので、今後も同窓会の皆様にはご理解ご協力を賜りますようお願い上げて結びの言葉といたします。
+                  </p>
+                </div>
+              </article>
+
+              <article className="space-y-3">
+                <h3 className="text-xl font-semibold text-gray-900">第47回岩手県高等学校総合文化祭第24回軽音楽発表会</h3>
+                <ul className="list-disc list-outside pl-5 space-y-1 text-gray-700">
+                  <li>優秀賞（第3位）バンド名：@fternoon.</li>
                   <li>メンバー：浦田華花 (E3)、小武方幸来 (EI3)、岩下愛理 (AD2)、角掛彩花 (AD2)</li>
                   <li>優良賞（第位）バンド名：Springrainy.</li>
                   <li>メンバー：宮田虎太郎 (M3)、伊藤優芽 (ME2)、戸田拓海 (EI2)、岸本龍斗 (Ch2)、黒崎柊人 (Ch2)</li>
