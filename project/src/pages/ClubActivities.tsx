@@ -51,60 +51,126 @@ const ClubActivities: React.FC = () => {
 
           <div className="-mx-4 overflow-x-auto px-4 pb-2">
             <div className="flex snap-x snap-mandatory gap-4">
-              {recentActivities.map((activity) => (
-                <Link
-                  key={activity.id}
-                  to={activity.href}
-                  className="relative w-[320px] shrink-0 snap-center overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-200 hover:shadow-xl"
-                >
-                  {/* 画像エリア */}
-                  <div className={`relative h-48 bg-gradient-to-br ${activity.bgColor} overflow-hidden`}>
-                    <div className="absolute inset-0 bg-black/20"></div>
-                    <div className="absolute top-4 left-4">
-                      <span className="inline-block bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-full">
-                        {activity.label}
-                      </span>
-                    </div>
-                    {/* 画像プレースホルダー */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-white/30 text-6xl">📸</div>
-                    </div>
-                  </div>
+              {recentActivities.map((activity) => {
+                const isAnchorLink = activity.href.startsWith('#');
 
-                  {/* コンテンツエリア */}
-                  <div className="p-5 relative">
-                    <h3 className="text-base font-bold text-gray-900 mb-2 leading-tight">
-                      {activity.title}
-                    </h3>
-                    <p className="text-sm text-gray-600 mb-4 line-clamp-2">
-                      {activity.description}
-                    </p>
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-blue-600">
-                        <Award className="h-4 w-4" />
-                        <span className="text-sm font-semibold">{activity.stats}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-gray-500">
-                        <Calendar className="h-4 w-4" />
-                        <span className="text-xs">{activity.date}</span>
-                      </div>
-                    </div>
-
-                    {/* 音声再生ボタン */}
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        console.log('Playing audio for:', activity.title);
+                if (isAnchorLink) {
+                  return (
+                    <div
+                      key={activity.id}
+                      onClick={() => {
+                        const element = document.querySelector(activity.href);
+                        if (element) {
+                          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
                       }}
-                      className="absolute bottom-4 right-4 w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200"
-                      aria-label="音声を再生"
+                      className="relative w-[320px] shrink-0 snap-center overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-200 hover:shadow-xl cursor-pointer"
                     >
-                      <Volume2 className="h-5 w-5" />
-                    </button>
-                  </div>
-                </Link>
-              ))}
+                      {/* 画像エリア */}
+                      <div className={`relative h-48 bg-gradient-to-br ${activity.bgColor} overflow-hidden`}>
+                        <div className="absolute inset-0 bg-black/20"></div>
+                        <div className="absolute top-4 left-4">
+                          <span className="inline-block bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-full">
+                            {activity.label}
+                          </span>
+                        </div>
+                        {/* 画像プレースホルダー */}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="text-white/30 text-6xl">📸</div>
+                        </div>
+                      </div>
+
+                      {/* コンテンツエリア */}
+                      <div className="p-5 relative">
+                        <h3 className="text-base font-bold text-gray-900 mb-2 leading-tight">
+                          {activity.title}
+                        </h3>
+                        <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                          {activity.description}
+                        </p>
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2 text-blue-600">
+                            <Award className="h-4 w-4" />
+                            <span className="text-sm font-semibold">{activity.stats}</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-gray-500">
+                            <Calendar className="h-4 w-4" />
+                            <span className="text-xs">{activity.date}</span>
+                          </div>
+                        </div>
+
+                        {/* 音声再生ボタン */}
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            console.log('Playing audio for:', activity.title);
+                          }}
+                          className="absolute bottom-4 right-4 w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200"
+                          aria-label="音声を再生"
+                        >
+                          <Volume2 className="h-5 w-5" />
+                        </button>
+                      </div>
+                    </div>
+                  );
+                }
+
+                return (
+                  <Link
+                    key={activity.id}
+                    to={activity.href}
+                    className="relative w-[320px] shrink-0 snap-center overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-200 hover:shadow-xl"
+                  >
+                    {/* 画像エリア */}
+                    <div className={`relative h-48 bg-gradient-to-br ${activity.bgColor} overflow-hidden`}>
+                      <div className="absolute inset-0 bg-black/20"></div>
+                      <div className="absolute top-4 left-4">
+                        <span className="inline-block bg-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-full">
+                          {activity.label}
+                        </span>
+                      </div>
+                      {/* 画像プレースホルダー */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="text-white/30 text-6xl">📸</div>
+                      </div>
+                    </div>
+
+                    {/* コンテンツエリア */}
+                    <div className="p-5 relative">
+                      <h3 className="text-base font-bold text-gray-900 mb-2 leading-tight">
+                        {activity.title}
+                      </h3>
+                      <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                        {activity.description}
+                      </p>
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2 text-blue-600">
+                          <Award className="h-4 w-4" />
+                          <span className="text-sm font-semibold">{activity.stats}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-gray-500">
+                          <Calendar className="h-4 w-4" />
+                          <span className="text-xs">{activity.date}</span>
+                        </div>
+                      </div>
+
+                      {/* 音声再生ボタン */}
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          console.log('Playing audio for:', activity.title);
+                        }}
+                        className="absolute bottom-4 right-4 w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200"
+                        aria-label="音声を再生"
+                      >
+                        <Volume2 className="h-5 w-5" />
+                      </button>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </section>
