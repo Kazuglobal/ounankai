@@ -571,16 +571,16 @@ const Home: React.FC = () => {
                 );
               })}
             </div>
-          </section>
+            </div>
 
-          {/* 同窓会活動報告セクション */}
-          <section className="mb-4">
-            <h2 className="mb-3 text-lg font-semibold text-gray-900">同窓会活動報告</h2>
-            <div className="space-y-3">
+            {/* 同窓会活動報告（クイックアクセス内） */}
+            <div className="mt-6 space-y-3">
+              <h3 className="text-base font-semibold text-gray-900 px-2">各支部活動報告</h3>
+
               {/* 機友会 */}
               <div className="bg-white rounded-2xl shadow-md p-5">
-                <h3 className="text-base font-bold text-morioka-700 mb-2">機友会 報告</h3>
-                <h4 className="text-sm font-semibold text-gray-800 mb-2">令和六年度機友会総会報告</h4>
+                <h4 className="text-base font-bold text-morioka-700 mb-2">機友会 報告</h4>
+                <h5 className="text-sm font-semibold text-gray-800 mb-2">令和六年度機友会総会報告</h5>
                 <p className="text-xs text-gray-600 mb-3">事務局 小笠原富雄（49年卒）</p>
                 <p className="text-sm text-gray-700 leading-relaxed mb-2">
                   令和六年九月七日（土）に第四六回総会をエスポワールいわてで開催いたしました。
@@ -593,8 +593,8 @@ const Home: React.FC = () => {
 
               {/* 二日会 */}
               <div className="bg-white rounded-2xl shadow-md p-5">
-                <h3 className="text-base font-bold text-morioka-700 mb-2">二日会 報告</h3>
-                <h4 className="text-sm font-semibold text-gray-800 mb-2">二日会第五十五回総会報告</h4>
+                <h4 className="text-base font-bold text-morioka-700 mb-2">二日会 報告</h4>
+                <h5 className="text-sm font-semibold text-gray-800 mb-2">二日会第五十五回総会報告</h5>
                 <p className="text-xs text-gray-600 mb-3">会長 竹田浩久（四八年卒）/ 事務局 中村孝幸（51年卒）</p>
                 <p className="text-sm text-gray-700 leading-relaxed mb-3">
                   令和6年3月2日に例年通りの期日で二日会は開催しました。
@@ -619,8 +619,8 @@ const Home: React.FC = () => {
 
               {/* 桜化会 */}
               <div className="bg-white rounded-2xl shadow-md p-5">
-                <h3 className="text-base font-bold text-morioka-700 mb-2">桜化会 報告</h3>
-                <h4 className="text-sm font-semibold text-gray-800 mb-2">令和六年度桜化会活動報告書</h4>
+                <h4 className="text-base font-bold text-morioka-700 mb-2">桜化会 報告</h4>
+                <h5 className="text-sm font-semibold text-gray-800 mb-2">令和六年度桜化会活動報告書</h5>
                 <p className="text-xs text-gray-600 mb-3">会長 白根敬介（四一年卒）/ 事務局 田村 豊（48年卒）</p>
                 <p className="text-sm text-gray-700 leading-relaxed">
                   去る令和6年8月24日（土）に令和6年度桜化会総会を4年ぶりに開催いたしました。
@@ -630,8 +630,8 @@ const Home: React.FC = () => {
 
               {/* 擬宝珠会 */}
               <div className="bg-white rounded-2xl shadow-md p-5">
-                <h3 className="text-base font-bold text-morioka-700 mb-2">擬宝珠会 報告</h3>
-                <h4 className="text-sm font-semibold text-gray-800 mb-2">令和六年度擬宝珠会総会報告</h4>
+                <h4 className="text-base font-bold text-morioka-700 mb-2">擬宝珠会 報告</h4>
+                <h5 className="text-sm font-semibold text-gray-800 mb-2">令和六年度擬宝珠会総会報告</h5>
                 <p className="text-xs text-gray-600 mb-3">事務局 小山田正敏（42年卒）</p>
                 <p className="text-sm text-gray-700 leading-relaxed">
                   擬宝珠会総会・懇親会は、毎年「十月第二木曜日」である11月18日に開催しております。本年は18日が週初めの月曜日であることから、11月17日（日）にホテルメトロポリタン盛岡本館を会場に開催されます。
@@ -640,8 +640,8 @@ const Home: React.FC = () => {
 
               {/* 桐友会 */}
               <div className="bg-white rounded-2xl shadow-md p-5 border-2 border-purple-200">
-                <h3 className="text-base font-bold text-morioka-700 mb-2">桐友会 報告</h3>
-                <h4 className="text-sm font-semibold text-gray-800 mb-2">令和六年度桐友会活動報告</h4>
+                <h4 className="text-base font-bold text-morioka-700 mb-2">桐友会 報告</h4>
+                <h5 className="text-sm font-semibold text-gray-800 mb-2">令和六年度桐友会活動報告</h5>
                 <p className="text-xs text-gray-600 mb-3">会長 神 初見（四四年卒）/ 事務局 菊池清三（41年卒）</p>
                 <p className="text-sm text-gray-700 leading-relaxed">
                   8月11日（日）にホテルメトロポリタン盛岡NWで、令和六年度桐友会総会を会員35名の出席のもと開催しました。
@@ -651,8 +651,8 @@ const Home: React.FC = () => {
 
               {/* E友会 */}
               <div className="bg-white rounded-2xl shadow-md p-5">
-                <h3 className="text-base font-bold text-morioka-700 mb-2">E友会 報告</h3>
-                <h4 className="text-sm font-semibold text-gray-800 mb-2">E友会活動報告</h4>
+                <h4 className="text-base font-bold text-morioka-700 mb-2">E友会 報告</h4>
+                <h5 className="text-sm font-semibold text-gray-800 mb-2">E友会活動報告</h5>
                 <p className="text-xs text-gray-600 mb-3">会長 川村博昭（三七年卒）/ 事務局 浅沼孝夫（50年卒）</p>
                 <p className="text-sm text-gray-700 leading-relaxed mb-3">
                   コロナ後の昨年から連続で開催した盛工電気科同窓会（E友会）はサンセール盛岡で令和6年9月14日土曜日午後5時半から開催致しました。
@@ -668,8 +668,8 @@ const Home: React.FC = () => {
 
               {/* 東京支部 */}
               <div className="bg-white rounded-2xl shadow-md p-5">
-                <h3 className="text-base font-bold text-morioka-700 mb-2">東京支部 報告</h3>
-                <h4 className="text-sm font-semibold text-gray-800 mb-2">東京支部総会2024報告</h4>
+                <h4 className="text-base font-bold text-morioka-700 mb-2">東京支部 報告</h4>
+                <h5 className="text-sm font-semibold text-gray-800 mb-2">東京支部総会2024報告</h5>
                 <p className="text-xs text-gray-600 mb-3">支部長 嘉倉 治（52年卒）</p>
                 <p className="text-sm text-gray-700 leading-relaxed mb-3">
                   盛工同窓会東京支部総会並びに懇親会は10月6日、日暮里のホテルラングウッドにてコロナ渦など諸事情もあり6年ぶりの開催となりました。
@@ -889,130 +889,6 @@ const Home: React.FC = () => {
               すべての部活動を見る
               <ArrowRight className="w-6 h-6 ml-3" />
             </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* 同窓会活動報告セクション（デスクトップ） */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">同窓会活動報告</h2>
-            <p className="text-lg text-gray-600">各同窓会の活動報告をお届けします</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* 機友会 */}
-            <div className="bg-gradient-to-br from-purple-50 to-white rounded-3xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <h3 className="text-2xl font-bold text-morioka-700 mb-3">機友会 報告</h3>
-              <h4 className="text-lg font-semibold text-gray-800 mb-2">令和六年度機友会総会報告</h4>
-              <p className="text-sm text-gray-600 mb-4">事務局 小笠原富雄（49年卒）</p>
-              <p className="text-base text-gray-700 leading-relaxed mb-3">
-                令和六年九月七日（土）に第四六回総会をエスポワールいわてで開催いたしました。
-                総会では、事業・決算報告及び事業計画・予算案が満場一致で承認されました。役員の改選については、全役員が留任となりました。
-              </p>
-              <p className="text-base text-gray-700 leading-relaxed">
-                恒例の講演会は、講師に岩手県障がい者スポーツ協会会長としてご活躍している元不来方高校長の平藤淳氏をお迎えし「パラスポーツ事情〜オリンピック・パラリンピックと障害の話題〜」と題し、講演をしていただきました。
-              </p>
-            </div>
-
-            {/* 二日会 */}
-            <div className="bg-gradient-to-br from-blue-50 to-white rounded-3xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <h3 className="text-2xl font-bold text-morioka-700 mb-3">二日会 報告</h3>
-              <h4 className="text-lg font-semibold text-gray-800 mb-2">二日会第五十五回総会報告</h4>
-              <p className="text-sm text-gray-600 mb-4">会長 竹田浩久（四八年卒）/ 事務局 中村孝幸（51年卒）</p>
-              <p className="text-base text-gray-700 leading-relaxed mb-4">
-                令和6年3月2日に例年通りの期日で二日会は開催しました。
-                今年は46名ほどのご参加をいただき、盛岡大通組合会館リオで総会を開催した後に、場所を大通のOTTOにて懇親会を開催しました。
-              </p>
-              <div className="bg-white rounded-2xl p-5 shadow-md mb-4">
-                <p className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                  <Calendar className="h-5 w-5 text-morioka-600" />
-                  次回開催予定
-                </p>
-                <p className="text-base text-gray-700 mb-2">令和7年3月2日午後6時から</p>
-                <p className="text-base text-gray-700 mb-3">場所(予定) イタリア料理OTTO (盛岡市大通2丁目8-35)</p>
-                <div className="relative h-48 bg-gradient-to-br from-blue-100 to-purple-100 rounded-xl overflow-hidden">
-                  <img src="/images/alumni-futsukakai-venue.jpg" alt="二日会会場" className="w-full h-full object-cover" onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement!.innerHTML = '<div class="flex items-center justify-center h-full text-gray-400 text-6xl">📸</div>';
-                  }} />
-                </div>
-              </div>
-              <p className="text-sm text-gray-600">
-                事務局連絡先: 中村孝幸 (和見設計舎 019-647-1651)<br />
-                メールアドレス: naka3214@kyi.biglobe.ne.jp
-              </p>
-            </div>
-
-            {/* 桜化会 */}
-            <div className="bg-gradient-to-br from-pink-50 to-white rounded-3xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <h3 className="text-2xl font-bold text-morioka-700 mb-3">桜化会 報告</h3>
-              <h4 className="text-lg font-semibold text-gray-800 mb-2">令和六年度桜化会活動報告書</h4>
-              <p className="text-sm text-gray-600 mb-4">会長 白根敬介（四一年卒）/ 事務局 田村 豊（48年卒）</p>
-              <p className="text-base text-gray-700 leading-relaxed">
-                去る令和6年8月24日（土）に令和6年度桜化会総会を4年ぶりに開催いたしました。
-                この会を43年間続いてきた名残惜しい時間を過ごすこととなりました。
-              </p>
-            </div>
-
-            {/* 擬宝珠会 */}
-            <div className="bg-gradient-to-br from-green-50 to-white rounded-3xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <h3 className="text-2xl font-bold text-morioka-700 mb-3">擬宝珠会 報告</h3>
-              <h4 className="text-lg font-semibold text-gray-800 mb-2">令和六年度擬宝珠会総会報告</h4>
-              <p className="text-sm text-gray-600 mb-4">事務局 小山田正敏（42年卒）</p>
-              <p className="text-base text-gray-700 leading-relaxed">
-                擬宝珠会総会・懇親会は、毎年「十月第二木曜日」である11月18日に開催しております。本年は18日が週初めの月曜日であることから、11月17日（日）にホテルメトロポリタン盛岡本館を会場に開催されます。
-              </p>
-            </div>
-
-            {/* 桐友会 */}
-            <div className="bg-gradient-to-br from-indigo-50 to-white rounded-3xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300 border-2 border-purple-200">
-              <h3 className="text-2xl font-bold text-morioka-700 mb-3">桐友会 報告</h3>
-              <h4 className="text-lg font-semibold text-gray-800 mb-2">令和六年度桐友会活動報告</h4>
-              <p className="text-sm text-gray-600 mb-4">会長 神 初見（四四年卒）/ 事務局 菊池清三（41年卒）</p>
-              <p className="text-base text-gray-700 leading-relaxed">
-                8月11日（日）にホテルメトロポリタン盛岡NWで、令和六年度桐友会総会を会員35名の出席のもと開催しました。
-                総会では、新しく役員が改選され、会長は宇宮保志（49年卒）となりました。
-              </p>
-            </div>
-
-            {/* E友会 */}
-            <div className="bg-gradient-to-br from-yellow-50 to-white rounded-3xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <h3 className="text-2xl font-bold text-morioka-700 mb-3">E友会 報告</h3>
-              <h4 className="text-lg font-semibold text-gray-800 mb-2">E友会活動報告</h4>
-              <p className="text-sm text-gray-600 mb-4">会長 川村博昭（三七年卒）/ 事務局 浅沼孝夫（50年卒）</p>
-              <p className="text-base text-gray-700 leading-relaxed mb-4">
-                コロナ後の昨年から連続で開催した盛工電気科同窓会（E友会）はサンセール盛岡で令和6年9月14日土曜日午後5時半から開催致しました。
-                同窓会会長、体育後援会長、同窓会各支部代表の方々をご来賓として参加していただき開催致しました。
-              </p>
-              <div className="relative h-48 bg-gradient-to-br from-yellow-100 to-orange-100 rounded-xl overflow-hidden">
-                <img src="/images/alumni-eyuukai.jpg" alt="E友会総会" className="w-full h-full object-cover" onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                  e.currentTarget.parentElement!.innerHTML = '<div class="flex items-center justify-center h-full text-gray-400 text-6xl">📸</div>';
-                }} />
-              </div>
-            </div>
-
-            {/* 東京支部 */}
-            <div className="bg-gradient-to-br from-red-50 to-white rounded-3xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
-              <h3 className="text-2xl font-bold text-morioka-700 mb-3">東京支部 報告</h3>
-              <h4 className="text-lg font-semibold text-gray-800 mb-2">東京支部総会2024報告</h4>
-              <p className="text-sm text-gray-600 mb-4">支部長 嘉倉 治（52年卒）</p>
-              <p className="text-base text-gray-700 leading-relaxed mb-4">
-                盛工同窓会東京支部総会並びに懇親会は10月6日、日暮里のホテルラングウッドにてコロナ渦など諸事情もあり6年ぶりの開催となりました。
-                ご来賓として瀬戸和彦様（学校長）、白根敬介様（盛工同窓会会長）、滝浦輝雄様（盛工体育後援会長）、舘澤繁信様（盛工ラガーOB会会長）の4名のご来賓を招いて総勢21名の開催となりました。
-              </p>
-              <div className="relative h-48 bg-gradient-to-br from-red-100 to-pink-100 rounded-xl overflow-hidden mb-4">
-                <img src="/images/alumni-tokyo.jpg" alt="東京支部総会" className="w-full h-full object-cover" onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                  e.currentTarget.parentElement!.innerHTML = '<div class="flex items-center justify-center h-full text-gray-400 text-6xl">📸</div>';
-                }} />
-              </div>
-              <p className="text-base text-gray-700 leading-relaxed">
-                瀬戸校長先生からは盛工生の活躍の話や校舎移転の話もあり盛工の将来への展望もお聞きし嬉しくもあり母校の発展の誇りを感じた次第であります。
-              </p>
-            </div>
           </div>
         </div>
       </section>
