@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Trophy, Award, Calendar, Volume2, ChevronRight, ChevronDown, ChevronUp } from 'lucide-react';
+import { Trophy, Award, Calendar, Volume2, ChevronRight } from 'lucide-react';
 
 const ClubActivities: React.FC = () => {
-  const [expandedCard, setExpandedCard] = useState<number | null>(null);
-
   // 最近の活動データ
   const recentActivities = [
     {
@@ -35,15 +33,7 @@ const ClubActivities: React.FC = () => {
       date: '2024年',
       label: '軽音楽部',
       bgColor: 'from-purple-700 to-pink-700',
-      href: '#lightmusic',
-      fullContent: {
-        subtitle: '軽音楽部顧問 小平 創',
-        paragraphs: [
-          '同窓会の皆様におかれましては、日頃よりご支援ご協力を賜り誠にありがとうございます。盛工軽音楽部は、平成30年にギター同好会から生徒総会での承認を受けて、正式に部として誕生いたしました。当時熱心に音楽に取り組んでいた部員が部への昇格に提起して成立したことであります。この部員は卒業後もプロのミュージシャンとして全国を巡り、現在も活動を続けております。',
-          'さて軽音楽部の印象に関してでございますが、90年代においてはエレキギターを持っているだけで、いわゆる不良少年と認知されることも多かったり、また現在でも全国軽音楽協会が発行する月刊誌においても「校内でヒエラルキーの低い部活動」と認知されている高校も少なくないとさえ特集されております。しかし現在所属する部員たちは音楽が大好きで練習に真剣に取り組んでおり、仲間とともに「観客を感動させる演奏」を目標に活動をしています。日常の部活動での練習の成果を、矢巾祭・ペアレン醸造祭などの地元イベントで披露し、また児童養護施設での演奏会などで地域への貢献にも幅広く取り組んでいます。今年度は中学生部活動体験会に盛工の文化部として初めて参加し、体験に来た中学生・保護者からは好評を頂くことが出来ました。また高文祭では全県29バンドが参加した中で第3位の成績を収めることが出来ました。',
-          'ポップミュージックは時代を彩ってきた音楽で誰しもこの歌を聴くとあの頃を思いだすという曲があると思います。そのような時代とともに移り行く音楽を、多くの皆様に楽しんでいただけるよう軽音楽部は邁進してまいりますので、今後も同窓会の皆様にはご理解ご協力を賜りますようお願い上げて結びの言葉といたします。'
-        ]
-      }
+      href: '#lightmusic'
     },
   ];
 
@@ -62,16 +52,19 @@ const ClubActivities: React.FC = () => {
           <div className="-mx-4 overflow-x-auto px-4 pb-2">
             <div className="flex snap-x snap-mandatory gap-4">
               {recentActivities.map((activity) => {
-                const hasFullContent = activity.fullContent;
-                const isExpanded = expandedCard === activity.id;
+                const isAnchorLink = activity.href.startsWith('#');
 
-                if (hasFullContent) {
+                if (isAnchorLink) {
                   return (
                     <div
                       key={activity.id}
-                      className={`relative shrink-0 snap-center overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-300 ${
-                        isExpanded ? 'w-[600px]' : 'w-[320px]'
-                      }`}
+                      onClick={() => {
+                        const element = document.querySelector(activity.href);
+                        if (element) {
+                          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                      }}
+                      className="relative w-[320px] shrink-0 snap-center overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-200 hover:shadow-xl cursor-pointer"
                     >
                       {/* 画像エリア */}
                       <div className={`relative h-48 bg-gradient-to-br ${activity.bgColor} overflow-hidden`}>
@@ -92,63 +85,19 @@ const ClubActivities: React.FC = () => {
                         <h3 className="text-base font-bold text-gray-900 mb-2 leading-tight">
                           {activity.title}
                         </h3>
-
-                        {!isExpanded && (
-                          <>
-                            <p className="text-sm text-gray-600 mb-4 line-clamp-2">
-                              {activity.description}
-                            </p>
-                            <div className="space-y-2 mb-4">
-                              <div className="flex items-center gap-2 text-blue-600">
-                                <Award className="h-4 w-4" />
-                                <span className="text-sm font-semibold">{activity.stats}</span>
-                              </div>
-                              <div className="flex items-center gap-2 text-gray-500">
-                                <Calendar className="h-4 w-4" />
-                                <span className="text-xs">{activity.date}</span>
-                              </div>
-                            </div>
-                          </>
-                        )}
-
-                        {isExpanded && (
-                          <div className="space-y-4 max-h-[500px] overflow-y-auto">
-                            <p className="text-sm font-semibold text-gray-700">{activity.fullContent.subtitle}</p>
-                            <div className="space-y-2 mb-4">
-                              <div className="flex items-center gap-2 text-blue-600">
-                                <Award className="h-4 w-4" />
-                                <span className="text-sm font-semibold">{activity.stats}</span>
-                              </div>
-                              <div className="flex items-center gap-2 text-gray-500">
-                                <Calendar className="h-4 w-4" />
-                                <span className="text-xs">{activity.date}</span>
-                              </div>
-                            </div>
-                            {activity.fullContent.paragraphs.map((paragraph, index) => (
-                              <p key={index} className="text-sm text-gray-700 leading-relaxed">
-                                {paragraph}
-                              </p>
-                            ))}
+                        <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                          {activity.description}
+                        </p>
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2 text-blue-600">
+                            <Award className="h-4 w-4" />
+                            <span className="text-sm font-semibold">{activity.stats}</span>
                           </div>
-                        )}
-
-                        {/* 展開/折りたたみボタン */}
-                        <button
-                          onClick={() => setExpandedCard(isExpanded ? null : activity.id)}
-                          className="mt-4 w-full py-2 px-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-semibold text-sm flex items-center justify-center gap-2 hover:shadow-lg transition-all duration-200"
-                        >
-                          {isExpanded ? (
-                            <>
-                              <ChevronUp className="h-4 w-4" />
-                              <span>閉じる</span>
-                            </>
-                          ) : (
-                            <>
-                              <ChevronDown className="h-4 w-4" />
-                              <span>詳細を読む</span>
-                            </>
-                          )}
-                        </button>
+                          <div className="flex items-center gap-2 text-gray-500">
+                            <Calendar className="h-4 w-4" />
+                            <span className="text-xs">{activity.date}</span>
+                          </div>
+                        </div>
 
                         {/* 音声再生ボタン */}
                         <button
@@ -157,10 +106,10 @@ const ClubActivities: React.FC = () => {
                             e.stopPropagation();
                             console.log('Playing audio for:', activity.title);
                           }}
-                          className="absolute top-2 right-2 w-10 h-10 bg-gradient-to-br from-purple-600 to-purple-700 rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200"
+                          className="absolute bottom-4 right-4 w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-200"
                           aria-label="音声を再生"
                         >
-                          <Volume2 className="h-4 w-4" />
+                          <Volume2 className="h-5 w-5" />
                         </button>
                       </div>
                     </div>
