@@ -35,6 +35,16 @@ const ClubActivities: React.FC = () => {
       bgColor: 'from-purple-700 to-pink-700',
       href: '/club-activities/lightmusic'
     },
+    {
+      id: 4,
+      title: '高校生ものづくりコンテスト東北大会',
+      description: '建築・デザイン科2年 工藤耕平 山形県で行われた木材加工部門で岩手県代表として参加。県勢初の3位入賞を達成。',
+      stats: '東北大会3位入賞',
+      date: '2024年',
+      label: 'ものづくりコンテスト',
+      bgColor: 'from-amber-700 to-orange-700',
+      href: '/club-activities/woodworking-contest'
+    },
   ];
 
   return (
