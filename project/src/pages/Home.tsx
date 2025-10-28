@@ -571,7 +571,6 @@ const Home: React.FC = () => {
                 );
               })}
             </div>
-            </div>
 
             {/* 同窓会活動報告（クイックアクセス内） */}
             <div className="mt-6 space-y-3">
