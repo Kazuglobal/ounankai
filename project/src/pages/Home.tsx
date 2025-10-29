@@ -96,33 +96,6 @@ const Home: React.FC = () => {
       category: '校',
       image: '/images/principal-greeting.jpg',
       href: '/announcements'
-    },
-    {
-      id: 3,
-      title: '2024年度 同窓会総会のお知らせ',
-      date: '2024年03月15日',
-      category: '楓',
-      image:
-        'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=640',
-      href: '/announcements'
-    },
-    {
-      id: 4,
-      title: '卒業30周年記念リユニオンを開催します',
-      date: '2024年04月02日',
-      category: '祝',
-      image:
-        'https://images.pexels.com/photos/1181438/pexels-photo-1181438.jpeg?auto=compress&cs=tinysrgb&w=640',
-      href: '/announcements'
-    },
-    {
-      id: 5,
-      title: '新しい奨学金制度がスタートしました',
-      date: '2024年04月10日',
-      category: '学',
-      image:
-        'https://images.pexels.com/photos/7096/people-woman-coffee-meeting.jpg?auto=compress&cs=tinysrgb&w=640',
-      href: '/announcements'
     }
   ];
 
@@ -214,7 +187,6 @@ const Home: React.FC = () => {
     },
     {
       title: '部活動報告',
-      subtitle: 'インターハイ・国体出場！',
       href: '/club-activities',
       icon: Trophy,
       bubbleGradient: 'from-yellow-300 via-orange-200 to-red-200',
@@ -635,6 +607,7 @@ const Home: React.FC = () => {
               ))}
             </div>
           </section>
+
         </div>
       </div>
 
