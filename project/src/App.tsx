@@ -24,6 +24,7 @@ import WoodworkingContestArticle from './pages/WoodworkingContestArticle';
 import CareerPaths from './pages/CareerPaths';
 import Donations from './pages/Donations';
 import LegalNotice from './pages/LegalNotice';
+import Secretariat from './pages/Secretariat';
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/bylaws" element={<Bylaws />} />
           <Route path="/board-of-directors" element={<BoardOfDirectors />} />
+          <Route path="/secretariat" element={<Secretariat />} />
           <Route path="/member-registration" element={<MemberRegistration />} />
         </Routes>
       </Layout>
