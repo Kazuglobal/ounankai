@@ -98,13 +98,6 @@ const AlumniActivities: React.FC = () => {
       recurring: '毎年7月第一土曜日に開催',
       image: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=640',
       featured: true
-    },
-    {
-      id: 2,
-      title: '春季コンサート',
-      date: '2024年5月10日',
-      location: '大講堂',
-      image: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=640'
     }
   ];
 
@@ -554,9 +547,9 @@ const AlumniActivities: React.FC = () => {
             <div className="bg-white rounded-2xl p-5 shadow-sm">
               <h2 className="font-bold text-gray-900 mb-4 text-lg">同窓会事務局</h2>
               <div className="space-y-2 text-sm text-gray-700">
-                <p>〒028-0525 岩手県遠野市中央通り3-17</p>
-                <p>TEL: 0198-62-2823</p>
-                <p>Email: info@tono-hs-alumni.jp</p>
+                <p>〒020-0841 岩手県盛岡市羽場１８地割１１−１</p>
+                <p>TEL: 019-638-3141</p>
+                <p>Email: info@morioka-ths-alumni.jp</p>
               </div>
             </div>
           </section>
@@ -945,9 +938,9 @@ const AlumniActivities: React.FC = () => {
             <div className="bg-white rounded-3xl p-8 shadow-lg max-w-2xl mx-auto">
               <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">同窓会事務局</h2>
               <div className="space-y-3 text-gray-700">
-                <p className="text-lg">〒028-0525 岩手県遠野市中央通り3-17</p>
-                <p className="text-lg">TEL: 0198-62-2823</p>
-                <p className="text-lg">Email: info@tono-hs-alumni.jp</p>
+                <p className="text-lg">〒020-0841 岩手県盛岡市羽場１８地割１１−１</p>
+                <p className="text-lg">TEL: 019-638-3141</p>
+                <p className="text-lg">Email: info@morioka-ths-alumni.jp</p>
               </div>
             </div>
           </section>

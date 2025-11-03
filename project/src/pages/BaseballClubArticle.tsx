@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Trophy } from 'lucide-react';
 
 const BaseballClubArticle: React.FC = () => {
+  const navigate = useNavigate();
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
@@ -11,13 +12,13 @@ const BaseballClubArticle: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Back Button */}
-        <Link
-          to="/"
+        <button
+          onClick={() => { if (window.history.length > 1) navigate(-1); else navigate('/'); }}
           className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold mb-8 transition-colors duration-200"
         >
           <ArrowLeft className="h-5 w-5" />
           ホームに戻る
-        </Link>
+        </button>
 
         {/* Article Header */}
         <header className="mb-12">
@@ -89,13 +90,13 @@ const BaseballClubArticle: React.FC = () => {
 
         {/* Back to Top */}
         <div className="mt-12 text-center">
-          <Link
-            to="/"
+          <button
+            onClick={() => { if (window.history.length > 1) navigate(-1); else navigate('/'); }}
             className="inline-flex items-center gap-2 bg-green-600 text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-green-700 transition-all duration-200 transform hover:scale-105 shadow-lg"
           >
             <ArrowLeft className="h-5 w-5" />
             ホームに戻る
-          </Link>
+          </button>
         </div>
       </div>
     </div>

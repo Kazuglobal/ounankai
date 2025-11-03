@@ -38,8 +38,8 @@ const LightMusicClubArticle: React.FC = () => {
         {/* Hero Image */}
         <div className="relative h-96 bg-gradient-to-br from-purple-700 to-pink-700 rounded-3xl overflow-hidden mb-12 shadow-2xl">
           <div className="absolute inset-0 bg-black/20"></div>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-white/30 text-9xl">🎸</div>
+          <div className="absolute inset-0 flex items-center justify-center overflow-visible">
+            <div className="text-white/30 text-9xl leading-none">🎸</div>
           </div>
           <div className="absolute bottom-6 left-6 right-6">
             <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl">

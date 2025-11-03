@@ -29,7 +29,7 @@ const Contact: React.FC = () => {
 
     try {
       const templateParams = {
-        to_email: 'ounankai@gmail.com',
+        to_email: 'info@morioka-ths-alumni.jp',
         from_name: formData.name,
         from_email: formData.email,
         subject: formData.subject,
@@ -41,7 +41,7 @@ const Contact: React.FC = () => {
         console.log('🎯 デモモード: メール送信内容', templateParams);
         // デモ用の遅延
         await new Promise(resolve => setTimeout(resolve, 1500));
-        console.log('✅ デモ: ounankai@gmail.com への送信完了');
+        console.log('✅ デモ: info@morioka-ths-alumni.jp への送信完了');
       } else {
         // 実際のEmailJS送信
         await emailjs.send(
@@ -74,15 +74,15 @@ const Contact: React.FC = () => {
       iconBg: 'bg-blue-100',
       iconColor: 'text-blue-600',
       label: '住所',
-      value: '〒039-1101\n青森県八戸市大字尻内町字中根市14'
+      value: '〒020-0841\n岩手県盛岡市羽場１８地割１１−１'
     },
     {
       icon: Mail,
       iconBg: 'bg-blue-100',
       iconColor: 'text-blue-600',
       label: 'メールアドレス',
-      value: 'ounankai@gmail.com',
-      link: 'mailto:ounankai@gmail.com'
+      value: 'info@morioka-ths-alumni.jp',
+      link: 'mailto:info@morioka-ths-alumni.jp'
     }
   ];
 

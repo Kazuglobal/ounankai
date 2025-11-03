@@ -96,7 +96,7 @@ const Secretariat: React.FC = () => {
                   <MapPin className="h-5 w-5 text-morioka-600 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="text-xs font-semibold text-gray-600 mb-1">所在地</p>
-                    <p className="text-sm text-gray-900">〒028-0525 岩手県遠野市中央通り3-17</p>
+                    <p className="text-sm text-gray-900">〒020-0841 岩手県盛岡市羽場１８地割１１−１</p>
                   </div>
                 </div>
 
@@ -104,7 +104,7 @@ const Secretariat: React.FC = () => {
                   <Phone className="h-5 w-5 text-morioka-600 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="text-xs font-semibold text-gray-600 mb-1">電話</p>
-                    <p className="text-sm text-gray-900">0198-62-2823</p>
+                    <p className="text-sm text-gray-900">019-638-3141</p>
                   </div>
                 </div>
 
@@ -112,7 +112,7 @@ const Secretariat: React.FC = () => {
                   <Mail className="h-5 w-5 text-morioka-600 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="text-xs font-semibold text-gray-600 mb-1">メール</p>
-                    <p className="text-sm text-gray-900">info@tono-hs-alumni.jp</p>
+                    <p className="text-sm text-gray-900">info@morioka-ths-alumni.jp</p>
                   </div>
                 </div>
               </div>
@@ -192,7 +192,7 @@ const Secretariat: React.FC = () => {
                     <MapPin className="h-6 w-6 text-morioka-600" />
                   </div>
                   <p className="text-sm font-semibold text-gray-600 mb-2">所在地</p>
-                  <p className="text-base text-gray-900">〒028-0525<br />岩手県遠野市中央通り3-17</p>
+                  <p className="text-base text-gray-900">〒020-0841<br />岩手県盛岡市羽場１８地割１１−１</p>
                 </div>
 
                 <div className="flex flex-col items-center text-center p-6 rounded-xl bg-gray-50">
@@ -200,7 +200,7 @@ const Secretariat: React.FC = () => {
                     <Phone className="h-6 w-6 text-morioka-600" />
                   </div>
                   <p className="text-sm font-semibold text-gray-600 mb-2">電話</p>
-                  <p className="text-base text-gray-900">0198-62-2823</p>
+                  <p className="text-base text-gray-900">019-638-3141</p>
                 </div>
 
                 <div className="flex flex-col items-center text-center p-6 rounded-xl bg-gray-50">
@@ -208,7 +208,7 @@ const Secretariat: React.FC = () => {
                     <Mail className="h-6 w-6 text-morioka-600" />
                   </div>
                   <p className="text-sm font-semibold text-gray-600 mb-2">メール</p>
-                  <p className="text-base text-gray-900">info@tono-hs-alumni.jp</p>
+                  <p className="text-base text-gray-900">info@morioka-ths-alumni.jp</p>
                 </div>
               </div>
             </div>

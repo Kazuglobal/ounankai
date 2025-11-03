@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   ChevronLeft,
   ChevronRight,
@@ -26,20 +26,35 @@ const PULSE_BAR_COUNT = 4;
 const PULSE_BAR_DELAY_STEP = 0.2; // seconds
 
 const Home: React.FC = () => {
+  const location = useLocation();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [showRugbyModal, setShowRugbyModal] = useState(true);
+  const [showRugbyModal, setShowRugbyModal] = useState(false);
   const [showRugbyDetail, setShowRugbyDetail] = useState(false);
+  const MODAL_SEEN_KEY = 'seen_rugby_modal_v1';
+
+  // 初回訪問時のみモーダルを表示
+  useEffect(() => {
+    try {
+      const seen = localStorage.getItem(MODAL_SEEN_KEY);
+      setShowRugbyModal(!seen);
+    } catch (_) {
+      // localStorageが使えない環境では常に非表示
+      setShowRugbyModal(false);
+    }
+  }, []);
+
+  const handleCloseRugbyModal = () => {
+    setShowRugbyModal(false);
+    try {
+      localStorage.setItem(MODAL_SEEN_KEY, '1');
+    } catch (_) {
+      // noop
+    }
+  };
 
   const heroSlides = [
-    {
-      image: '/images/school-building.png'
-    },
-    {
-      image: '/images/school-aerial.png'
-    },
-    {
-      image: '/images/school-emblem-new.png'
-    }
+    { image: '/images/school-building.png' },
+    { image: '/images/school-aerial.png' },
   ];
 
   const featuredAlumni = [
@@ -170,7 +185,7 @@ const Home: React.FC = () => {
 
   const quickLinks = [
     {
-      title: '広告ページ',
+      title: 'ご挨拶',
       href: '/announcements',
       icon: Megaphone,
       bubbleGradient: 'from-amber-200 via-amber-100 to-yellow-200',
@@ -228,6 +243,19 @@ const Home: React.FC = () => {
     return () => clearInterval(timer);
   }, [heroSlides.length]);
 
+  // ハッシュ（/#alumni-topics など）に応じて対象セクションへスクロール
+  useEffect(() => {
+    if (location.hash) {
+      const target = document.querySelector(location.hash);
+      if (target) {
+        // レイアウトの固定ヘッダー分を考慮し、少し遅らせてスクロール
+        setTimeout(() => {
+          (target as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 0);
+      }
+    }
+  }, [location.hash]);
+
 
   const nextSlide = () => {
     setCurrentSlide((prevSlide) => (prevSlide + 1) % heroSlides.length);
@@ -245,7 +273,7 @@ const Home: React.FC = () => {
           <div className="relative max-w-3xl w-full max-h-[92vh] overflow-y-auto bg-white rounded-2xl sm:rounded-3xl shadow-2xl">
             {/* Close Button */}
             <button
-              onClick={() => setShowRugbyModal(false)}
+              onClick={handleCloseRugbyModal}
               className="sticky top-3 right-3 sm:top-4 sm:right-4 float-right z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/95 hover:bg-gray-100 shadow-lg transition-all duration-200 hover:scale-110"
               aria-label="閉じる"
             >
@@ -545,7 +573,7 @@ const Home: React.FC = () => {
             </div>
           </section>
 
-          <section className="rounded-[20px] bg-white p-2 shadow-lg mb-4">
+          <section id="alumni-topics" className="rounded-[20px] bg-white p-2 shadow-lg mb-4">
             <div className="mb-2 flex items-center gap-2">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-morioka-600 to-purple-600 shadow-md">
                 <Newspaper className="h-6 w-6 text-white" />
@@ -751,7 +779,8 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* President's Greeting */}
+      {/* President's Greeting - removed */}
+      {false && (
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12">
@@ -802,8 +831,10 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
+      )}
 
-      {/* Statistics */}
+      {/* Statistics - removed */}
+      {false && (
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -831,8 +862,10 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
+      )}
 
-      {/* Featured Alumni */}
+      {/* Featured Alumni - removed */}
+      {false && (
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -867,10 +900,10 @@ const Home: React.FC = () => {
                   </div>
                   <p className="text-gray-600 mb-6">{alumni.achievement}</p>
                   <Link
-                    to={`/alumni-profiles/${alumni.id}`}
+                    to="/announcements"
                     className="inline-flex items-center text-morioka-600 font-semibold hover:text-morioka-700 transition-colors duration-200"
                   >
-                    詳細プロフィールを見る
+                    卒業生トピックスへ
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Link>
                 </div>
@@ -880,38 +913,57 @@ const Home: React.FC = () => {
 
           <div className="text-center">
             <Link
-              to="/alumni-profiles"
+              to="/announcements"
               className="inline-flex items-center bg-morioka-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-morioka-700 transition-all duration-200 transform hover:scale-105 shadow-xl"
             >
-              すべての同窓生を見る
+              卒業生トピックスへ
               <ArrowRight className="w-5 h-5 ml-2" />
             </Link>
           </div>
         </div>
       </section>
+      )}
 
-      {/* Call to Action */}
-      <section className="py-20">
+      {/* Alumni Topics (Desktop) */}
+      <section id="alumni-topics" className="py-20 bg-white hidden lg:block">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-morioka-600 to-purple-800 rounded-3xl p-12 text-center text-white shadow-2xl">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-              つながりませんか？
-            </h2>
-            <p className="text-xl mb-8 max-w-3xl mx-auto leading-relaxed">
-              同窓生とのつながりが、新たな人脈を築き、転職の機会を広げ、人生の可能性を無限に広げていきます。
-              先輩・後輩たちとつながろう！
-            </p>
-            <div className="flex justify-center">
+          <div className="mb-12 text-center">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">卒業生トピックス</h2>
+            <p className="text-lg text-gray-600">最新の卒業生ニュース・話題をピックアップ</p>
+          </div>
+
+          <div className="grid grid-cols-3 gap-6">
+            {alumniTopics.slice(0, 6).map((topic) => (
               <Link
-                to="/member-registration"
-                className="bg-white text-morioka-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-50 transition-all duration-200 transform hover:scale-105 border-2 border-white shadow-lg"
+                key={topic.id}
+                to={topic.url ?? '/announcements'}
+                className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-200 border border-gray-100 hover:-translate-y-1"
+                aria-label={`${topic.title} - ${topic.category}`}
+                title={topic.title}
               >
-                メンバー登録をする
+                <div className="p-5">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-xs font-semibold px-2 py-0.5 rounded-full text-purple-700 bg-purple-100">
+                      {topic.category}
+                    </span>
+                    <span className="text-xs text-gray-500">{topic.date}</span>
+                  </div>
+                  <h3 className="text-base font-semibold text-gray-900 leading-snug line-clamp-2">
+                    {topic.title}
+                  </h3>
+                </div>
+                <div className="h-px bg-gray-100" />
+                <div className="p-5 pt-4 text-morioka-600 font-semibold flex items-center gap-2">
+                  詳細を見る
+                  <ArrowRight className="w-4 h-4" />
+                </div>
               </Link>
-            </div>
+            ))}
           </div>
         </div>
       </section>
+
+      {/* Call to Action - removed */}
     </div>
     </div>
   );

@@ -35,7 +35,7 @@ function BusinessDetail() {
         <div className="text-center">
           <h2 className="text-2xl font-bold text-gray-900">ビジネスが見つかりません</h2>
           <Link
-            to="/alumni-profiles?tab=business"
+            to="/announcements"
             className="mt-4 inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-blue-500"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -55,7 +55,7 @@ function BusinessDetail() {
         
         {/* 戻るボタン */}
         <Link
-          to="/alumni-profiles?tab=business"
+          to="/announcements"
           className="absolute left-4 top-4 flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-gray-900 shadow-lg transition hover:bg-white"
         >
           <ArrowLeft className="h-4 w-4" />

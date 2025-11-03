@@ -20,13 +20,6 @@ const tabs: TabItem[] = [
     isActive: (pathname) => pathname === '/',
   },
   {
-    id: 'alumni',
-    label: 'つながる',
-    icon: Users,
-    href: '/alumni-profiles',
-    isActive: (pathname) => pathname.startsWith('/alumni-profiles'),
-  },
-  {
     id: 'news',
     label: 'お知らせ',
     icon: Bell,

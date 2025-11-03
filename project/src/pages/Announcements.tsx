@@ -86,69 +86,12 @@ const Announcements: React.FC = () => {
 
 このように生徒は自分の目標を定め、他者と協働しながら意欲的に学校生活を送っています。本校はこれからも生徒一人ひとりの資質・能力を伸ばし、様々な社会的変化を乗り越え、豊かな人生を切り拓いていく人物の育成を目指し、特色ある教育活動を展開してまいります。これからも同窓会の皆様のご協力・ご支援をよろしくお願いいたします。
       `
-    },
-    {
-      id: 3,
-      title: '2024年度同窓会総会合唱隊のお知らせ',
-      category: 'イベント',
-      categoryColor: 'bg-red-500',
-      date: '2024年3月15日',
-      image: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=640',
-      summary: '今年度の同窓会総会を下記の通り開催いたします。多くの皆様のご参加をお待ちしております。'
-    },
-    {
-      id: 2,
-      title: '園園祭2024のボランティア募集について',
-      category: '募集',
-      categoryColor: 'bg-cyan-500',
-      date: '2024年3月12日',
-      image: 'https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=640',
-      summary: '今年の園園祭開催にあたり、当日のボランティアスタッフを募集いたします。'
-    },
-    {
-      id: 3,
-      title: '新校舎建設計画に関するご報告',
-      category: '寄付支援',
-      categoryColor: 'bg-emerald-500',
-      date: '2024年3月10日',
-      image: 'https://images.pexels.com/photos/267885/pexels-photo-267885.jpeg?auto=compress&cs=tinysrgb&w=640',
-      summary: '学校の新校舎建設計画について、詳細が決定いたしましたのでご報告いたします。'
-    },
-    {
-      id: 4,
-      title: '奨学金制度の変更について',
-      category: 'お知らせ',
-      categoryColor: 'bg-amber-500',
-      date: '2024年3月8日',
-      image: 'https://images.pexels.com/photos/289737/pexels-photo-289737.jpeg?auto=compress&cs=tinysrgb&w=640',
-      summary: '2024年度より奨学金制度の一部が変更となります。詳細をご確認ください。'
-    },
-    {
-      id: 5,
-      title: '卒業生講演会「グローバル社会での活躍」',
-      category: 'イベント',
-      categoryColor: 'bg-purple-500',
-      date: '2024年3月5日',
-      image: 'https://images.pexels.com/photos/2228585/pexels-photo-2228585.jpeg?auto=compress&cs=tinysrgb&w=640',
-      summary: '国際的に活躍する卒業生による講演会を開催いたします。多数のご参加をお待ちしています。'
-    },
-    {
-      id: 6,
-      title: '図書館システム更新のお知らせ',
-      category: 'お知らせ',
-      categoryColor: 'bg-teal-500',
-      date: '2024年3月1日',
-      image: 'https://images.pexels.com/photos/2228585/pexels-photo-2228585.jpeg?auto=compress&cs=tinysrgb&w=640',
-      summary: '図書館の検索システムが新しくなりました。使用方法については図書館で案内しております。'
     }
   ];
 
   const categories = [
     { id: 'all', name: 'すべて' },
-    { id: 'イベント', name: 'イベント' },
-    { id: '募集', name: '募集' },
-    { id: 'お知らせ', name: 'お知らせ' },
-    { id: '寄付支援', name: '寄付支援' }
+    { id: 'ご挨拶', name: 'ご挨拶' }
   ];
 
   const filteredAnnouncements = activeCategory === 'all'

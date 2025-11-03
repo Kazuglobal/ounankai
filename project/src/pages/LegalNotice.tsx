@@ -37,7 +37,7 @@ const LegalNotice: React.FC = () => {
             <div className="sm:grid sm:grid-cols-4 sm:gap-6 sm:items-start">
               <dt className="text-sm font-semibold text-gray-900 sm:col-span-1">連絡先</dt>
               <dd className="mt-1 text-sm text-gray-700 sm:col-span-3 space-y-1">
-                <p>TEL：0198-62-2823（受付時間：平日10:00〜17:00）</p>
+                <p>TEL：019-638-3141（受付時間：平日10:00〜17:00）</p>
                 <p>メール：ounankai50@gmail.com</p>
                 <p>お問い合わせフォーム：<a href="/contact" className="text-blue-600 underline">お問い合わせページ</a></p>
               </dd>

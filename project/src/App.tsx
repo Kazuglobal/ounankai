@@ -5,8 +5,6 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Gallery from './pages/Gallery';
 import School from './pages/School';
-import AlumniProfiles from './pages/AlumniProfiles';
-import AlumniProfile from './pages/AlumniProfile';
 import BusinessDetail from './pages/BusinessDetail';
 import Announcements from './pages/Announcements';
 import NewsletterIssue74 from './pages/NewsletterIssue74';
@@ -35,8 +33,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/school" element={<School />} />
-          <Route path="/alumni-profiles" element={<AlumniProfiles />} />
-          <Route path="/alumni-profiles/:id" element={<AlumniProfile />} />
+          {/* つながる機能（AlumniProfiles）削除 */}
           <Route path="/business/:id" element={<BusinessDetail />} />
           <Route path="/announcements" element={<Announcements />} />
           <Route path="/newsletter/issue-74" element={<NewsletterIssue74 />} />
