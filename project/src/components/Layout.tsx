@@ -83,6 +83,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     { name: '役員名簿', href: '/board-of-directors' },
     { name: 'ギャラリー', href: '/gallery' },
     { name: '同窓生とつながる', href: '/alumni-profiles' },
+    { name: '同窓会活動', href: '/alumni-activities' },
     { name: 'お知らせ', href: '/announcements' },
     { name: 'お問い合わせ', href: '/contact' },
   ];

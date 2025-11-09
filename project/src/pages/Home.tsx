@@ -109,7 +109,7 @@ const Home: React.FC = () => {
       title: '同窓会活動',
       href: '/alumni-activities',
       icon: Users,
-      bubbleGradient: 'from-sky-300 via-sky-200 to-sky-200',
+      bubbleGradient: 'from-sky-300 via-cyan-200 to-sky-200',
       iconColor: 'text-blue-700',
       iconBg: 'bg-white'
     },
@@ -118,14 +118,6 @@ const Home: React.FC = () => {
       href: '/club-activities',
       icon: Trophy,
       bubbleGradient: 'from-pink-300 via-pink-200 to-rose-200',
-      iconColor: 'text-blue-700',
-      iconBg: 'bg-white'
-    },
-    {
-      title: '進路概要',
-      href: '/member-registration',
-      icon: GraduationCap,
-      bubbleGradient: 'from-sky-300 via-cyan-200 to-sky-200',
       iconColor: 'text-blue-700',
       iconBg: 'bg-white'
     },
