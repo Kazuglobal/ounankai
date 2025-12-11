@@ -8,6 +8,7 @@ import School from './pages/School';
 import BusinessDetail from './pages/BusinessDetail';
 import Announcements from './pages/Announcements';
 import NewsletterIssue74 from './pages/NewsletterIssue74';
+import Newsletter from './pages/Newsletter';
 import Contact from './pages/Contact';
 import Bylaws from './pages/Bylaws';
 import BoardOfDirectors from './pages/BoardOfDirectors';
@@ -37,6 +38,7 @@ function App() {
           <Route path="/business/:id" element={<BusinessDetail />} />
           <Route path="/announcements" element={<Announcements />} />
           <Route path="/newsletter/issue-74" element={<NewsletterIssue74 />} />
+          <Route path="/newsletter" element={<Newsletter />} />
           <Route path="/advertisement-gallery" element={<AdvertisementGallery />} />
           <Route path="/alumni-activities" element={<AlumniActivities />} />
           <Route path="/club-activities" element={<ClubActivities />} />

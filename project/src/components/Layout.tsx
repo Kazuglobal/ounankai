@@ -27,12 +27,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     setIsMenuOpen(false);
   }, [location]);
 
-  
+
 
   const navigation = [
     { name: 'ホーム', href: '/' },
     { name: 'ご挨拶', href: '/announcements' },
     { name: '同窓会活動', href: '/alumni-activities' },
+    { name: '会報', href: '/newsletter' },
     { name: '部活動報告', href: '/club-activities' },
     { name: '進路概要', href: '/career-paths' },
     { name: '事務局', href: '/secretariat' },
@@ -42,13 +43,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <div className="min-h-screen bg-[#F7F3F0]">
-      
+
 
       {/* Navigation */}
       <header
-        className={`z-50 w-full transition-all duration-300 ${
-          isScrolled ? 'lg:bg-white/95 lg:backdrop-blur-sm lg:shadow-lg' : 'lg:bg-transparent'
-        } lg:fixed`}
+        className={`z-50 w-full transition-all duration-300 ${isScrolled ? 'lg:bg-white/95 lg:backdrop-blur-sm lg:shadow-lg' : 'lg:bg-transparent'
+          } lg:fixed`}
       >
         <div className="hidden lg:block">
           <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -63,11 +63,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <div className="flex items-center space-x-4 xl:space-x-6">
                 {navigation.map((item) => {
                   const isHashLink = item.href.startsWith('/#');
-                  const commonClass = `rounded-full px-3 py-2 text-sm font-medium transition-all duration-200 ${
-                    location.pathname === item.href
+                  const commonClass = `rounded-full px-3 py-2 text-sm font-medium transition-all duration-200 ${location.pathname === item.href
                       ? 'bg-morioka-600 text-white shadow-lg'
                       : 'text-gray-700 hover:bg-white hover:text-morioka-600 hover:shadow-md'
-                  }`;
+                    }`;
                   return isHashLink ? (
                     <a key={item.name} href={item.href} className={commonClass}>
                       {item.name}
@@ -107,15 +106,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               {isMenuOpen ? <X className="h-6 w-6 text-morioka-600" /> : <Menu className="h-6 w-6 text-morioka-600" />}
             </button>
           </div>
-            {isMenuOpen && (
+          {isMenuOpen && (
             <div className="space-y-2 bg-white/95 px-4 py-4 shadow-lg backdrop-blur-md">
               {navigation.map((item) => {
                 const isHashLink = item.href.startsWith('/#');
-                const mobileClass = `block rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 ${
-                  location.pathname === item.href
+                const mobileClass = `block rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 ${location.pathname === item.href
                     ? 'bg-morioka-600 text-white shadow-md'
                     : 'text-gray-700 hover:bg-purple-50'
-                }`;
+                  }`;
                 return isHashLink ? (
                   <a key={item.name} href={item.href} className={mobileClass}>
                     {item.name}
@@ -151,7 +149,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               alt="盛工同窓会々報"
               className="h-10 sm:h-12 w-auto"
             />
-            
+
             {/* Description */}
             <p className="text-gray-600 max-w-md">
               卒業生の絆を深め、生涯にわたる関係を築く活気ある同窓生コミュニティを通じて、世代を繋いでいます。
